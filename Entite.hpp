@@ -5,12 +5,14 @@ protected :
 	int PV = 1;
 	float HitBox[4][2] = {
 		{0,0},
-		{0,0},
-		{0,0},
 		{0,0}
 	};
 
-public : 
+public :
+	Entite();
+	Entite(const Entite& other);
+
 	int getPV();
 	void setPV(int health);
+	void damage(int damage);
 };
