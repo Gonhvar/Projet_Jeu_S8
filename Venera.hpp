@@ -8,9 +8,7 @@
 
 class Venera {
     public :
-        Venera(){
-
-        };
+        Venera(){};
 
         void waitquit(){   
             SDL_Event event;

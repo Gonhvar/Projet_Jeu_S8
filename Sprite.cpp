@@ -1,4 +1,4 @@
-#include "Sprite.h"
+#include "Sprite.hpp"
 
 double* Sprite::getCoord() {
 	return coord;

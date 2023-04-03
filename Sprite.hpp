@@ -4,7 +4,6 @@ public:
     double coord[3] = { 0, 0, 0 };
     float largeur = 0;
     float hauteur = 0;
-    texture ? ? ;
 
     double* getCoord();
     void setCoord(double& x, double& y, double& theta);
