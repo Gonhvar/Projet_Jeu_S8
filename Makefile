@@ -1,8 +1,8 @@
-prog: Projet.o  
-	g++ -o prog Projet.o
+prog: affichage.o  
+	g++ -o prog affichage.o -lSDL2
 
-Projet.o : Projet.cpp Projet.hpp 
-	g++ -Wall Projet.cpp -c
+affichage.o : affichage.cpp affichage.hpp 
+	g++ -Wall affichage.cpp -c
 
 clean:
 	rm -f *.o
