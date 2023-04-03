@@ -12,15 +12,9 @@ protected :
     bool onScreen = 0;
 
 public:
-<<<<<<< HEAD
-    double coord[3] = { 0, 0, 0 };
-    float largeur = 0;
-    float hauteur = 0;
-=======
     Sprite();
     Sprite(const Sprite& other);
     Sprite(char* textureFileName);
->>>>>>> e8dac6f1e2da5d90376278f0dcd92e51c5b2825d
 
     float* getCoord();
     void setCoord(float& x, float& y, float& theta);

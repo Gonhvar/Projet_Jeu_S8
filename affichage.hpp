@@ -9,34 +9,37 @@
 
 #include "Sprite.hpp"
 
-class affichage {
+class Affichage {
     private :
-    std::vector<Sprite> sprites;
+    std::vector<Sprite*> sprites;
     SDL_Renderer *renderer;
 
     public :
-        affichage(SDL_Renderer *rend) : renderer(rend){
+        Affichage(SDL_Renderer *rend) : renderer(rend){
 
         };
 
-        void visit(Sprite s) const{
+        void visit(Sprite* s) const{
             sprites.push_back(s);
         };
 
         void affiche_all() const{
             SDL_Rect dest;
-        //On affiche la texture du sprite avec 
+            //On affiche la texture du sprite avec 
             for(Sprite s : sprites){
                 if(onScreen){
 
-                    dest.x = s.coord[0];
-                    dest.y = s.coord[1];
+                    dest.x = s.getCoord()[0];
+                    dest.y = s.getCoord()[1];
 
-                    dest.w = s.largeur;
-                    dest.h = s.hauteur;
+                    dest.w = s.getLargeur();
+                    dest.h = s.getHauteur();
 
                     SDL_QueryTexture(s.texture, NULL, NULL, &dest.w, &dest.h);
                     SDL_RenderCopy(renderer, texture, NULL, &dest);
+                }
+                else{
+                    //Enlever de la liste 
                 }
             }
         };

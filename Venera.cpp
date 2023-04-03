@@ -6,7 +6,7 @@ int main(){
 
     app.window = SDL_CreateWindow("Jeu", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 512, 512, SDL_WINDOW_RESIZABLE);
 
-    affichage aff(app.renderer);
+    Affichage aff(app.renderer);
 
     while(1){
         
