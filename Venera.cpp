@@ -2,7 +2,7 @@
 
 int main(){
     Venera venera = Venera();
-    App app();
+    App app;
 
     app.window = SDL_CreateWindow("Jeu", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 512, 512, SDL_WINDOW_RESIZABLE);
 

@@ -28,4 +28,8 @@ public:
     virtual void accept(class Affichage& a) = 0;
 
     SDL_Texture* loadTexture(char* filename);
+
+    SDL_Texture* getTexture(){return texture;};
+
+    bool getOnScreen(){return onScreen;};
 };

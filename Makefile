@@ -1,14 +1,20 @@
-prog: affichage.o Venera.o Sprite.o 
+prog: affichage.o Venera.o Sprite.o Entite.o Mc.o 
 	g++ -o prog affichage.o Venera.o Sprite.o -lSDL2
 
 Sprite.o : Sprite.cpp Sprite.hpp
 	g++ -Wall Sprite.cpp -c
 
-Venera.o : Venera.cpp Venera.hpp 
-	g++ -Wall Venera.cpp -c
+Entite.o : Entite.cpp Entite.hpp Sprite.hpp
+	g++ -Wall Entite.cpp -c
+	
+Mc.o : Mc.cpp Mc.hpp Entite.hpp 
+	g++ -Wall Mc.cpp -c
 
 affichage.o : affichage.cpp affichage.hpp Sprite.hpp
 	g++ -Wall affichage.cpp -c
+
+Venera.o : Venera.cpp Venera.hpp affichage.hpp
+	g++ -Wall Venera.cpp -c
 
 clean:
 	rm -f *.o

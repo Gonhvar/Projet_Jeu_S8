@@ -5,6 +5,12 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include "affichage.hpp"
+
+typedef struct {
+	SDL_Renderer *renderer;
+	SDL_Window *window;
+} App;
 
 class Venera {
     public :
@@ -26,6 +32,7 @@ class Venera {
                 }
             }
         };
+        
 };
 
 #endif

@@ -1,3 +1,4 @@
+
 #include "Entite.hpp"
 
 Entite::Entite() {};
@@ -15,4 +16,9 @@ void Entite::setPV(int health) {
 
 void Entite::damage(int damage) {
 	PV -= damage;
+
+	if(PV<=0){
+		//Tuer l'entitee
+	}
 }
+
