@@ -21,7 +21,3 @@ clean:
 
 vclean: clean
 	rm -f prog
-
-
-
-

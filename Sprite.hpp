@@ -2,6 +2,11 @@
 #include <iostream>
 #include <string>
 
+#ifndef ENTITE_HPP
+#define ENTITE_HPP
+
+class SDL_Texture {};
+
 class Sprite {
 protected :
     std::string name;
@@ -12,9 +17,11 @@ protected :
     bool onScreen = 0;
 
 public:
+    /* CONSTRUCTEURS ET DESTRUCTEURS */
     Sprite();
     Sprite(const Sprite& other);
-    Sprite(char* textureFileName);
+    Sprite(std::string textureFileName);
+    /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
     float* getCoord();
     void setCoord(float& x, float& y, float& theta);
@@ -25,11 +32,13 @@ public:
     float& getHauteur();
     void setHauteur(float H);
 
-    virtual void accept(class Affichage& a) = 0;
+    bool getOnScreen();
+    void setOnScreen(bool toBe);
 
-    SDL_Texture* loadTexture(char* filename);
+    //virtual void accept(class Affichage& a) = 0;
 
-    SDL_Texture* getTexture(){return texture;};
+    //SDL_Texture* loadTexture(char* filename);
 
-    bool getOnScreen(){return onScreen;};
+    //SDL_Texture* getTexture();
+
 };
