@@ -8,8 +8,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-//class Affichage;
 #include "affichage.hpp"
+#include "Entite.hpp"
+#include "Mc.hpp"
 
 typedef struct {
 	SDL_Renderer* renderer;
@@ -17,7 +18,7 @@ typedef struct {
 } App;
 
 class Venera {
-public :
+public : // J'ai mis ça public parce que sinon on ne pouvait pas y accéder dans le main. On réglera ça plus tard.
 	App* app;
 	Affichage* afficheur;
 

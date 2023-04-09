@@ -13,7 +13,7 @@
 
 #include "Sprite.hpp"
 
-#define PATH_TO_TEXTURE_FOLDER "/Texture/" // Chemin relatif vers le dossier où se trouvent les textures.
+#define PATH_TO_TEXTURE_FOLDER "Texture/" // Chemin relatif vers le dossier où se trouvent les textures.
 
 typedef struct { // Permet d'associé un Sprite à des textures (des partce qu'un Sprite peut changer d'état et donc de texture)
     Sprite* sprite;
@@ -46,6 +46,9 @@ public :
     /* CONSTRUCTEURS ET DESTRUCTEURS */
     Affichage(SDL_Renderer *rend);
     /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+
+    void setZoom(float z);
+    void setCamPos(float x, float y);
 
     void enleveSprite(const Sprite& s);
 

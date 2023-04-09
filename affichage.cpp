@@ -8,6 +8,15 @@ Affichage::Affichage(SDL_Renderer* rend) : renderer(rend){
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
+void Affichage::setZoom(float z) {
+	zoom = z;
+}
+
+void Affichage::setCamPos(float x, float y) {
+	camPos[0] = x;
+	camPos[1] = y;
+}
+
 void Affichage::visit(Sprite* s, std::string& spriteName){
 	// Ajoute s dans sprites et va chercher ses textures
 	SDL_Texture* textureChargee;
@@ -17,9 +26,12 @@ void Affichage::visit(Sprite* s, std::string& spriteName){
 		textureChargee = imIterator->second;
 	}
 	else { // Sinon on la charge et on la stocke dans imageChargees
-		const char* filename = (PATH_TO_TEXTURE_FOLDER + spriteName + imageFormat).c_str();
+		std::string pathComplet = PATH_TO_TEXTURE_FOLDER + spriteName + imageFormat;
+		const char* filename = pathComplet.c_str();
 		textureChargee = IMG_LoadTexture(renderer, filename);
-		
+		if (!textureChargee) {
+			std::cout << "Erreur de chargement de " << spriteName << " ---> a ete cherche a : " << pathComplet << std::endl;
+		}
 		// if (loadeing error) do something
 		// else :
 		imageChargees[spriteName] = textureChargee;
@@ -50,7 +62,7 @@ void Affichage::affiche_all() const{
 			dest.w = s.sprite->getLargeur() * zoom;
 			dest.h = s.sprite->getHauteur() * zoom;
 
-			SDL_QueryTexture(s.textures[0], NULL, NULL, &dest.w, &dest.h);
+			//SDL_QueryTexture(s.textures[0], NULL, NULL, &dest.w, &dest.h);
 			SDL_RenderCopy(renderer, s.textures[0], NULL, &dest);
 		}
 		else{

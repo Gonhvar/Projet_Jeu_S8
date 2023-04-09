@@ -12,8 +12,8 @@ class Sprite {
 protected :
     std::string name;
     float _coord[3] = { 0, 0, 0 }; // Coordonnées en haut à gauche x, y, theta
-    float _largeur = 0; // Largeur voulue de la texture associée au sprite
-    float _hauteur = 0; // Hauteur voulue de la texture associée au sprite
+    float _largeur = 1; // Largeur voulue de la texture associée au sprite
+    float _hauteur = 1; // Hauteur voulue de la texture associée au sprite
     bool onScreen = 0;
 
     uint8_t etat = 0; // 0 est l'état par défaut
@@ -28,7 +28,7 @@ public:
     /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
     float* getCoord();
-    void setCoord(float& x, float& y, float& theta);
+    void setCoord(float x, float y, float theta);
     void setCoord(float* coord);
 
     float& getLargeur();

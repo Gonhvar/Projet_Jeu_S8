@@ -19,7 +19,7 @@ float* Sprite::getCoord() {
 	return _coord;
 }
 
-void Sprite::setCoord(float& x, float& y, float& theta) {
+void Sprite::setCoord(float x, float y, float theta) {
 	_coord[0] = x;
 	_coord[1] = y;
 	_coord[2] = theta;
