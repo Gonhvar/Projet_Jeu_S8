@@ -9,7 +9,7 @@
 class Entite : public Sprite {
 protected :
 	int PV = 1;
-	float HitBox[HITBOX_PTS][2] = {
+	float hitBox[HITBOX_PTS][2] = {
 		{0,0},
 		{0,0}
 	};
@@ -19,14 +19,14 @@ public :
 	/* CONSTRUCTEURS ET DESTRUCTEURS */
 	Entite();
 	Entite(const Entite& other);
-	Entite(std::string& textureFileName);
+	Entite(std::string& spriteName, Affichage& aff);
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 	int getPV();
 	void setPV(int health);
 	void changePV(int change);
 
-	translate(float dx, float dy);
+	void translate(float dx, float dy);
 
 	virtual void mort();
 };

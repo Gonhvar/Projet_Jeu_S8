@@ -2,25 +2,29 @@
 #include <iostream>
 #include <string>
 
-#ifndef ENTITE_HPP
-#define ENTITE_HPP
 
-class SDL_Texture {};
+#ifndef SPRITE_HPP
+#define SPRITE_HPP
+
+class Affichage;
 
 class Sprite {
 protected :
     std::string name;
-    float _coord[3] = { 0, 0, 0 }; // x, y, theta
-    float _largeur = 0;
-    float _hauteur = 0;
-    SDL_Texture* texture = nullptr;
+    float _coord[3] = { 0, 0, 0 }; // Coordonnées en haut à gauche x, y, theta
+    float _largeur = 0; // Largeur voulue de la texture associée au sprite
+    float _hauteur = 0; // Hauteur voulue de la texture associée au sprite
     bool onScreen = 0;
+
+    uint8_t etat = 0; // 0 est l'état par défaut
+
+    Affichage* afficheur;
 
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
     Sprite();
     Sprite(const Sprite& other);
-    Sprite(std::string textureFileName);
+    Sprite(std::string& spriteName, Affichage& aff);
     /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
     float* getCoord();
@@ -42,3 +46,5 @@ public:
     //SDL_Texture* getTexture();
 
 };
+
+#endif

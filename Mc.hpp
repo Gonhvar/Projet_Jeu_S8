@@ -8,15 +8,7 @@ class Mc : public Entite {
 protected :
 
 public :
-	Mc(Affichage a){
-		name = "Mc";
-		texture = loadTexture("Texture/robot.png");
-		PV = 20;
-		
-		//HitBox
-
-		a.visit(*this);
-	}
+	Mc(std::string& spriteName, Affichage& aff);
 };
 
 #endif

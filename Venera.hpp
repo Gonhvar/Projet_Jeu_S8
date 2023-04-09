@@ -2,37 +2,29 @@
 #define VENERA_HPP
 #include <stdio.h>
 #include <stdint.h>
+#include <iostream>
+
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+
+//class Affichage;
 #include "affichage.hpp"
 
 typedef struct {
-	SDL_Renderer *renderer;
-	SDL_Window *window;
+	SDL_Renderer* renderer;
+	SDL_Window* window;
 } App;
 
 class Venera {
-    public :
-        Venera(){};
+public :
+	App* app;
+	Affichage* afficheur;
 
-        void waitquit(){   
-            SDL_Event event;
+public :
+	Venera();
 
-            while (SDL_PollEvent(&event))
-            {
-                switch (event.type)
-                {
-                    case SDL_QUIT:
-                        exit(0);
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-        };
-        
+	void waitquit();  
 };
 
 #endif

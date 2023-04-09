@@ -1,7 +1,7 @@
-prog: affichage.o Venera.o Sprite.o Entite.o Mc.o 
-	g++ -o prog affichage.o Venera.o Sprite.o -lSDL2
+prog: Sprite.o affichage.o Venera.o Entite.o Mc.o 
+	g++ -o prog affichage.o Venera.o Sprite.o -lSDL2 -lSDL2_image
 
-Sprite.o : Sprite.cpp Sprite.hpp
+Sprite.o : Sprite.cpp Sprite.hpp affichage.hpp
 	g++ -Wall Sprite.cpp -c
 
 Entite.o : Entite.cpp Entite.hpp Sprite.hpp

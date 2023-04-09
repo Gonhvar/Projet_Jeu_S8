@@ -10,7 +10,7 @@ protected:
 	std::vector<uint8_t> item;	// Tableau donnant les items que ce Drop peut posséder
 
 public:
-	Drop(std::string textureFileName);
+	Drop(std::string& spriteName, Affichage& aff);
 
 	virtual void mort();
 };

@@ -1,4 +1,5 @@
 #include "Drop.hpp"
 
-Drop::Drop(std::string textureFileName) : Entite(textureFileName) {}
+Drop::Drop(std::string& spriteName, Affichage& aff) : Entite(spriteName, aff) {}
+
 void Drop::mort() {}

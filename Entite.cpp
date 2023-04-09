@@ -3,7 +3,7 @@
 
 Entite::Entite() {}
 Entite::Entite(const Entite& other) {}
-Entite(std::string& textureFileName) : Sprite(textureFileName) {}
+Entite::Entite(std::string& spriteName, Affichage& aff) : Sprite(spriteName, aff) {}
 
 int Entite::getPV() {
 	return PV;
@@ -29,4 +29,8 @@ void Entite::translate(float dx, float dy) {
 		hitBox[i][0] += dx;
 		hitBox[i][1] += dy;
 	}
+}
+
+void Entite::mort() {
+	std::cout << "Entite.mort() de " << this << std::endl;
 }
