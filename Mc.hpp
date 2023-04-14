@@ -3,12 +3,18 @@
 
 #pragma once
 #include "Entite.hpp"
+#include <SDL2/SDL.h>
 
 class Mc : public Entite {
 protected :
+	//std::string defaultName = "robot"; 
 
 public :
-	Mc(std::string& spriteName, Affichage& aff);
+	Mc(std::string& defaultName, Affichage& aff);
+
+	void get_keypress();
+
+	void doKeyDown(SDL_KeyboardEvent *event);
 };
 
 #endif

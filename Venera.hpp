@@ -24,8 +24,8 @@ public : // J'ai mis ça public parce que sinon on ne pouvait pas y accéder dan
 
 public :
 	Venera();
+	void keyboard_event();
 
-	void waitquit();  
 };
 
 #endif

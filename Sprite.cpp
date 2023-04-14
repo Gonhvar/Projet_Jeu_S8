@@ -53,7 +53,6 @@ void Sprite::setOnScreen(bool toBe){
 }
 
 
-
 // SDL_Texture* Sprite::loadTexture(char* filename)
 // {
 // 	if (texture != nullptr) {

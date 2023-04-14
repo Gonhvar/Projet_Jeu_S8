@@ -16,40 +16,25 @@ Venera::Venera() {
 	}
 }
 
-void Venera::waitquit() {   
-	SDL_Event event;
+void Venera::keyboard_event(){
 
-	while (SDL_PollEvent(&event))
-	{
-		switch (event.type)
-		{
-			case SDL_QUIT:
-				exit(0);
-				break;
-
-			default:
-				break;
-		}
-	}
-};  
+}
 
 int main(){
 	Venera venera;
+	std::string mc_name = "robot";
 
-	std::string s1Type = "robot";
-	Sprite s1(s1Type, *(venera.afficheur));
-	s1.setOnScreen(true);
-	s1.setCoord(200, 200, 0);
-	s1.setLargeur(100);
-	s1.setHauteur(100);
+	Mc p1(mc_name,*venera.afficheur);
+
+	// s1.setOnScreen(true);
+	// s1.setCoord(200, 200, 0);
+	// s1.setLargeur(100);
+	// s1.setHauteur(100);
 	//venera.waitquit();
 
-	int i = 0;
-	while(i++ < 40){
-		std::cout << i << std::endl;
-		s1.setCoord((float)1*i, (float)2*i, 0);
-
-		venera.waitquit();
+	while(1){
+		
+		p1.get_keypress();
 		venera.afficheur->affiche_all();
 		SDL_Delay(20);
 	}

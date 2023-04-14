@@ -14,6 +14,7 @@ protected :
 		{0,0}
 	};
 	short int orientation = 1; // Prend -1 ou 1 : <- ou ->
+	float vitesse = 1;
 
 public :
 	/* CONSTRUCTEURS ET DESTRUCTEURS */
