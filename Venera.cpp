@@ -22,21 +22,22 @@ void Venera::keyboard_event(){
 
 int main(){
 	Venera venera;
+	Uint32 FrameStartTimeMs;
+	
 	std::string mc_name = "robot";
-
 	Mc p1(mc_name,*venera.afficheur);
 
-	// s1.setOnScreen(true);
-	// s1.setCoord(200, 200, 0);
-	// s1.setLargeur(100);
-	// s1.setHauteur(100);
-	//venera.waitquit();
-
 	while(1){
-		
+		//On récupére le temps actuel
+		FrameStartTimeMs = SDL_GetTicks();
+
+		//On récupére la touche pressé par le joueur
 		p1.get_keypress();
+		//On affiche tous les sprites qui sont sur la camera
 		venera.afficheur->affiche_all();
-		SDL_Delay(20);
+		
+		//On attends le temps requis pour avoir un nombre de FPS
+		while(SDL_GetTicks() - FrameStartTimeMs < 1000/FPS); 
 	}
 
 }

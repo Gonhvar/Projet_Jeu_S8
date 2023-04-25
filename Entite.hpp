@@ -5,6 +5,7 @@
 #include "Sprite.hpp"
 
 #define HITBOX_PTS 2
+#define FPS 60
 
 class Entite : public Sprite {
 protected :
@@ -15,6 +16,8 @@ protected :
 	};
 	short int orientation = 1; // Prend -1 ou 1 : <- ou ->
 	float vitesse = 1;
+	float dx = 0;
+    float dy = 0;
 
 public :
 	/* CONSTRUCTEURS ET DESTRUCTEURS */

@@ -22,13 +22,16 @@ void Entite::changePV(int change) {
 }
 
 void Entite::translate(float dx, float dy) {
-	_coord[0] += dx;
-	_coord[1] += dy;
-
+	_coord[0] += dx/FPS;
+	_coord[1] += dy/FPS;
+	
 	for (int i = 0; i < HITBOX_PTS; i++) {
-		hitBox[i][0] += dx;
-		hitBox[i][1] += dy;
+		//On déplace les points qui compose le rectangle de la hitbox
+		hitBox[i][0] += dx/FPS;
+		hitBox[i][1] += dy/FPS;
 	}
+	
+	//printf("hitbox1 : %f et %f\n", hitBox[0][0], hitBox[0][1]);
 }
 
 void Entite::mort() {

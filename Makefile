@@ -13,6 +13,9 @@ Mc.o : Mc.cpp Mc.hpp Entite.hpp
 affichage.o : affichage.cpp affichage.hpp Sprite.hpp
 	g++ -Wall affichage.cpp -c
 
+camera.o : Camera.cpp Camera.hpp 
+	g++ -Wall Camera.cpp -c
+
 Venera.o : Venera.cpp Venera.hpp affichage.hpp Entite.hpp Mc.hpp
 	g++ -Wall Venera.cpp -c
 

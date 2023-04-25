@@ -8,6 +8,7 @@
 class Mc : public Entite {
 protected :
 	//std::string defaultName = "robot"; 
+	
 
 public :
 	Mc(std::string& defaultName, Affichage& aff);
@@ -15,6 +16,7 @@ public :
 	void get_keypress();
 
 	void doKeyDown(SDL_KeyboardEvent *event);
+	void doKeyUp(SDL_KeyboardEvent *event);
 };
 
 #endif
