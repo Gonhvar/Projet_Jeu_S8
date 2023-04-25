@@ -1,9 +1,10 @@
 
 #include "Entite.hpp"
 
-Entite::Entite() {}
+Entite::Entite() : Sprite() {}
+Entite::Entite(std::string& spriteName) : Sprite(spriteName) {}
 Entite::Entite(const Entite& other) {}
-Entite::Entite(std::string& spriteName, Affichage& aff) : Sprite(spriteName, aff) {}
+
 
 int Entite::getPV() {
 	return PV;

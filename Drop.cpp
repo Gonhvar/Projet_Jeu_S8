@@ -1,5 +1,5 @@
 #include "Drop.hpp"
 
-Drop::Drop(std::string& spriteName, Affichage& aff) : Entite(spriteName, aff) {}
+Drop::Drop() : Entite() {}
 
 void Drop::mort() {}

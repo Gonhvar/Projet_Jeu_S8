@@ -1,6 +1,8 @@
 #include "affichage.hpp"
 
 /* CONSTRUCTEURS ET DESTRUCTEURS */
+Affichage::Affichage(){};
+
 Affichage::Affichage(SDL_Renderer* rend) : renderer(rend){
 	camPos[0] = 0;
 	camPos[1] = 0;
@@ -18,6 +20,7 @@ void Affichage::setCamPos(float x, float y) {
 }
 
 void Affichage::visit(Sprite* s, std::string& spriteName){
+
 	// Ajoute s dans sprites et va chercher ses textures
 	SDL_Texture* textureChargee;
 	// On vérifie si l'image n'a pas déjà été chargée

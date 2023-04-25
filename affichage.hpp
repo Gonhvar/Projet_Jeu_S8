@@ -13,7 +13,7 @@
 
 #include "Sprite.hpp"
 
-#define PATH_TO_TEXTURE_FOLDER "Texture/" // Chemin relatif vers le dossier où se trouvent les textures.
+#define PATH_TO_TEXTURE_FOLDER "Textures/" // Chemin relatif vers le dossier où se trouvent les textures.
 
 typedef struct { // Permet d'associé un Sprite à des textures (des partce qu'un Sprite peut changer d'état et donc de texture)
     Sprite* sprite;
@@ -45,6 +45,7 @@ protected :
 public :
     /* CONSTRUCTEURS ET DESTRUCTEURS */
     Affichage(SDL_Renderer *rend);
+    Affichage();
     /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
     void setZoom(float z);
@@ -55,6 +56,7 @@ public :
     void visit(Sprite* s, std::string& spriteName); // Un Sprite n'a pas à savoir le nom ou le chemin du fichier de l'image qu'il possède. Il doit juste connaître son nom et son état.
 
     void affiche_all() const;
+
 };
 
 #endif

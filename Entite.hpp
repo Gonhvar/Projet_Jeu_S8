@@ -10,6 +10,7 @@
 class Entite : public Sprite {
 protected :
 	int PV = 1;
+	
 	float hitBox[HITBOX_PTS][2] = {
 		{0,0},
 		{0,0}
@@ -19,11 +20,14 @@ protected :
 	float dx = 0;
     float dy = 0;
 
+
+
 public :
 	/* CONSTRUCTEURS ET DESTRUCTEURS */
 	Entite();
 	Entite(const Entite& other);
 	Entite(std::string& spriteName, Affichage& aff);
+	Entite(std::string& spriteName);
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 	int getPV();

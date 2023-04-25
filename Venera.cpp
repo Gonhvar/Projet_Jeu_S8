@@ -24,8 +24,9 @@ int main(){
 	Venera venera;
 	Uint32 FrameStartTimeMs;
 	
-	std::string mc_name = "robot";
-	Mc p1(mc_name,*venera.afficheur);
+
+	Mc p1(*venera.afficheur);
+	
 
 	while(1){
 		//On récupére le temps actuel

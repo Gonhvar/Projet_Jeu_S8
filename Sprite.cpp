@@ -1,8 +1,11 @@
 #include "Sprite.hpp"
 #include "affichage.hpp"
 
+
+Affichage* Sprite::afficheur = new Affichage();
+Sprite* Sprite::joueur = new Sprite();
+
 /* CONSTRUCTEURS ET DESTRUCTEURS */
-Sprite::Sprite() {};
 
 Sprite::Sprite(const Sprite& other) {
 	*this = other;
@@ -11,6 +14,16 @@ Sprite::Sprite(const Sprite& other) {
 Sprite::Sprite(std::string& spriteName, Affichage& aff) {
 	afficheur = &aff;
 	aff.visit(this, spriteName);
+}
+
+Sprite::Sprite(std::string& spriteName) {
+	
+	std::cout << spriteName << std::endl;
+	afficheur->visit(this, spriteName);
+}
+
+Sprite::Sprite(){
+	//afficheur->visit(this, name);
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
@@ -52,6 +65,9 @@ void Sprite::setOnScreen(bool toBe){
 	onScreen = toBe;
 }
 
+void Sprite::addSprite(){
+	afficheur->visit(this, name);
+}
 
 // SDL_Texture* Sprite::loadTexture(char* filename)
 // {

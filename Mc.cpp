@@ -1,8 +1,13 @@
 #include "Mc.hpp"
 
-
-Mc::Mc(std::string& defaultName, Affichage& aff) : Entite(defaultName, aff) {
-    name = defaultName;
+//Constructeur spécial pour le MC (fait toutes les déclarations de Sprite)
+Mc::Mc(Affichage& aff) : Entite() {
+    name = "robot";
+    //On donne en référence le joueur pour l'utiliser plus tard
+    Sprite::joueur = this;
+    Sprite::afficheur = &aff;
+    addSprite();
+    
     PV = 20;
     vitesse = 60.0;
 
@@ -11,6 +16,7 @@ Mc::Mc(std::string& defaultName, Affichage& aff) : Entite(defaultName, aff) {
 
     this->setCoord(10,20,0);
     this->setOnScreen(true);
+
 }
 
 void Mc::get_keypress(){

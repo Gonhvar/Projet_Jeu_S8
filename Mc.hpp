@@ -7,11 +7,9 @@
 
 class Mc : public Entite {
 protected :
-	//std::string defaultName = "robot"; 
-	
 
 public :
-	Mc(std::string& defaultName, Affichage& aff);
+	Mc(Affichage& aff);
 
 	void get_keypress();
 

@@ -3,6 +3,7 @@
 
 #pragma once
 #include "Entite.hpp"
+#include <vector>
 
 class Drop : public Entite {
 protected:
@@ -10,7 +11,7 @@ protected:
 	std::vector<uint8_t> item;	// Tableau donnant les items que ce Drop peut posséder
 
 public:
-	Drop(std::string& spriteName, Affichage& aff);
+	Drop();
 
 	virtual void mort();
 };

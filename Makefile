@@ -1,5 +1,5 @@
-prog: Sprite.o affichage.o Entite.o Mc.o Venera.o 
-	g++ -o prog Sprite.o affichage.o Entite.o Mc.o Venera.o -lSDL2 -lSDL2_image
+prog: Sprite.o affichage.o Entite.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o 
+	g++ -o prog Sprite.o affichage.o Entite.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o -lSDL2 -lSDL2_image
 
 Sprite.o : Sprite.cpp Sprite.hpp affichage.hpp
 	g++ -Wall Sprite.cpp -c
@@ -9,6 +9,15 @@ Entite.o : Entite.cpp Entite.hpp Sprite.hpp
 	
 Mc.o : Mc.cpp Mc.hpp Entite.hpp 
 	g++ -Wall Mc.cpp -c
+	
+Drop.o : Drop.cpp Drop.hpp Entite.hpp 
+	g++ -Wall Drop.cpp -c
+
+Enemies.o : Enemies.cpp Enemies.hpp Drop.hpp 
+	g++ -Wall Enemies.cpp -c
+
+BasicSkeleton.o : BasicSkeleton.cpp BasicSkeleton.hpp Enemies.hpp 
+	g++ -Wall BasicSkeleton.cpp -c
 
 affichage.o : affichage.cpp affichage.hpp Sprite.hpp
 	g++ -Wall affichage.cpp -c
