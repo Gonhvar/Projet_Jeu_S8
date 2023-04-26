@@ -12,6 +12,7 @@
 #include <SDL2/SDL_image.h>
 
 #include "Sprite.hpp"
+#include "Enemies.hpp"
 
 #define PATH_TO_TEXTURE_FOLDER "Textures/" // Chemin relatif vers le dossier où se trouvent les textures.
 
@@ -32,12 +33,6 @@ protected :
 
     std::string imageFormat = ".png";
     static const std::map<std::string, std::string> nomFichiers; // J'aimerai que ce soit initialisé lors du make. Exemple de ce que je veux dire par là :
-    /*
-    std::string array[3] = {"nomSprite1" : "nomFichier1",
-                            "nomSprite2" : "nomFichier2",
-                            "nomSprite3" : "nomFichier3"
-                            } 
-    */
 
     float camPos[2]; // Position de la caméra
     float zoom; // Zoom de la caméra
@@ -54,6 +49,10 @@ public :
     void enleveSprite(const Sprite& s);
 
     void visit(Sprite* s, std::string& spriteName); // Un Sprite n'a pas à savoir le nom ou le chemin du fichier de l'image qu'il possède. Il doit juste connaître son nom et son état.
+
+    void update();
+
+    void enemiesUpdate();
 
     void affiche_all() const;
 

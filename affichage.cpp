@@ -51,6 +51,24 @@ void Affichage::enleveSprite(const Sprite& s) {
 	//remove(sprites.begin(), sprites.end(), &s);
 }
 
+void Affichage::update(){
+	enemiesUpdate();
+	affiche_all();
+}
+
+void Affichage::enemiesUpdate(){
+	for(stt s : sprites){
+		//On regarde si le sprite est un enemie (Soit ça, soit on stock les enemies dans un tableau ?)
+		if(dynamic_cast<Enemies*>(s.sprite) != nullptr){
+			Enemies* en = dynamic_cast<Enemies*>(s.sprite);
+			en->deplacementBehaviour();
+			en->attackBehaviour();
+			
+		}
+		
+	}
+}
+
 void Affichage::affiche_all() const{
 	SDL_RenderClear(renderer); // ça n'est peut-être pas nécessaire mais la doc conseille de le faire
 

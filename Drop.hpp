@@ -12,6 +12,7 @@ protected:
 
 public:
 	Drop();
+	Drop(std::string& spriteName);
 
 	virtual void mort();
 };

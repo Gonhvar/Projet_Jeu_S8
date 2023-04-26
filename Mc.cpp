@@ -2,6 +2,7 @@
 
 //Constructeur spécial pour le MC (fait toutes les déclarations de Sprite)
 Mc::Mc(Affichage& aff) : Entite() {
+    //std::cout << "as " << std::endl;
     name = "robot";
     //On donne en référence le joueur pour l'utiliser plus tard
     Sprite::joueur = this;

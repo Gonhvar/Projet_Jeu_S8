@@ -37,6 +37,10 @@ public :
 	void translate(float dx, float dy);
 
 	virtual void mort();
+
+	float getDx();
+	float getDy();
+
 };
 
 #endif

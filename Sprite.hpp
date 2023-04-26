@@ -30,9 +30,14 @@ public:
     Sprite(const Sprite& other);
     Sprite(std::string& spriteName, Affichage& aff);
     Sprite(std::string& spriteName);
+
+    virtual ~Sprite() {};
     /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
     float* getCoord();
+    float getX();
+    float getY();
+
     void setCoord(float x, float y, float theta);
     void setCoord(float* coord);
 

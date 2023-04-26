@@ -8,8 +8,10 @@ class BasicSkeleton : public virtual Enemies {
 protected:
 
 public:
-	BasicSkeleton();
+	BasicSkeleton(float _x, float _y);
+
 	void deplacementBehaviour();
+	void attackBehaviour();
 };
 
 #endif

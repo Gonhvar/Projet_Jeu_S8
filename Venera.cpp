@@ -24,9 +24,8 @@ int main(){
 	Venera venera;
 	Uint32 FrameStartTimeMs;
 	
-
 	Mc p1(*venera.afficheur);
-	
+	BasicSkeleton sk(100.0, 100.0);
 
 	while(1){
 		//On récupére le temps actuel
@@ -34,8 +33,8 @@ int main(){
 
 		//On récupére la touche pressé par le joueur
 		p1.get_keypress();
-		//On affiche tous les sprites qui sont sur la camera
-		venera.afficheur->affiche_all();
+		//On update et affiche tous les sprites qui sont sur la camera
+		venera.afficheur->update();
 		
 		//On attends le temps requis pour avoir un nombre de FPS
 		while(SDL_GetTicks() - FrameStartTimeMs < 1000/FPS); 

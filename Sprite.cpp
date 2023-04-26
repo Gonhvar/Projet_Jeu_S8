@@ -17,9 +17,9 @@ Sprite::Sprite(std::string& spriteName, Affichage& aff) {
 }
 
 Sprite::Sprite(std::string& spriteName) {
-	
-	std::cout << spriteName << std::endl;
-	afficheur->visit(this, spriteName);
+	// std::cout << spriteName << std::endl;
+	name = spriteName;
+	afficheur->visit(this, name);
 }
 
 Sprite::Sprite(){
@@ -30,6 +30,12 @@ Sprite::Sprite(){
 
 float* Sprite::getCoord() {
 	return _coord;
+}
+float Sprite::getX() {
+	return _coord[0];
+}
+float Sprite::getY() {
+	return _coord[1];
 }
 
 void Sprite::setCoord(float x, float y, float theta) {

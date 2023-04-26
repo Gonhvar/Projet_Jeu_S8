@@ -11,6 +11,7 @@
 #include "affichage.hpp"
 #include "Entite.hpp"
 #include "Mc.hpp"
+#include "BasicSkeleton.hpp"
 
 
 

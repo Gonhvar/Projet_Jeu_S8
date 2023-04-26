@@ -38,3 +38,11 @@ void Entite::translate(float dx, float dy) {
 void Entite::mort() {
 	std::cout << "Entite.mort() de " << this << std::endl;
 }
+
+float Entite::getDx(){
+		return dx;
+	}
+
+float Entite::getDy(){
+		return dy;
+}

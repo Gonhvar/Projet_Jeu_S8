@@ -9,6 +9,8 @@ protected:
 
 public:
 	Enemies();
+	Enemies(std::string spriteName);
+
 	virtual void deplacementBehaviour() = 0;
 	virtual void attackBehaviour() = 0;
 };
