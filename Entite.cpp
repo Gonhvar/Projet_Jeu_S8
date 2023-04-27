@@ -1,4 +1,3 @@
-
 #include "Entite.hpp"
 
 Entite::Entite() : Sprite() {}
@@ -18,7 +17,7 @@ void Entite::changePV(int change) {
 	PV += change;
 
 	if(PV<=0){
-		//Tuer l'entitee
+		//Tuer l'Entite
 	}
 }
 
@@ -34,6 +33,7 @@ void Entite::translate(float dx, float dy) {
 	
 	//printf("hitbox1 : %f et %f\n", hitBox[0][0], hitBox[0][1]);
 }
+
 
 void Entite::mort() {
 	std::cout << "Entite.mort() de " << this << std::endl;

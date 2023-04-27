@@ -3,10 +3,14 @@
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 Affichage::Affichage(){};
 
-Affichage::Affichage(SDL_Renderer* rend) : renderer(rend){
+Affichage::Affichage(SDL_Renderer* rend) : renderer(rend) {
 	camPos[0] = 0;
 	camPos[1] = 0;
 	zoom = 1;
+
+	Sprite::afficheur = this;
+
+	noTexture = IMG_LoadTexture(renderer, NO_TEXTURE_FOUND);
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
@@ -19,32 +23,37 @@ void Affichage::setCamPos(float x, float y) {
 	camPos[1] = y;
 }
 
-void Affichage::visit(Sprite* s, std::string& spriteName){
-
+void Affichage::visit(Sprite* s, std::string& spriteName, uint8_t nbEtats, std::vector<uint8_t>& nbFrameParEtat) {
 	// Ajoute s dans sprites et va chercher ses textures
-	SDL_Texture* textureChargee;
+
 	// On vérifie si l'image n'a pas déjà été chargée
 	imIterator = imageChargees.find(spriteName);
 	if (imIterator != imageChargees.end()) { // Déjà chargée
-		textureChargee = imIterator->second;
+		s->getTexture() = imIterator->second;
 	}
 	else { // Sinon on la charge et on la stocke dans imageChargees
-		std::string pathComplet = PATH_TO_TEXTURE_FOLDER + spriteName + imageFormat;
-		const char* filename = pathComplet.c_str();
-		textureChargee = IMG_LoadTexture(renderer, filename);
-		if (!textureChargee) {
-			std::cout << "Erreur de chargement de " << spriteName << " ---> a ete cherche a : " << pathComplet << std::endl;
+		SDL_Texture* textureChargee;
+		TexturePack* newTexture = new TexturePack(nbEtats);
+		for (int etat=0; etat<nbEtats; etat++) {
+			(*newTexture)[etat].resize(nbFrameParEtat[etat]);
+			for (int frame=0; frame<nbFrameParEtat[etat]; frame++) {
+				std::string pathComplet = PATH_TO_TEXTURE_FOLDER + spriteName + std::to_string(etat) + "/" + std::to_string(frame) + imageFormat;
+				const char* filename = pathComplet.c_str();
+				
+				textureChargee = IMG_LoadTexture(renderer, filename);
+				if (!textureChargee) { // L'image n'a pas pu être chargée. On prend la texture par défaut.
+					std::cout << "Erreur de chargement de " << spriteName << " ---> a ete cherche a : " << pathComplet << std::endl;
+					textureChargee = noTexture;
+				}
+				(*newTexture)[etat][frame] = textureChargee;
+			}
 		}
-		// if (loadeing error) do something
-		// else :
+		s->getTexture() = newTexture;
+		
 		imageChargees[spriteName] = textureChargee;
 	}
 
-	stt* aPush = new stt();
-	aPush->sprite = s;
-	aPush->textures.push_back(textureChargee);
-
-	sprites.push_back(*aPush);
+	sprites.push_back(s);
 };
 
 void Affichage::enleveSprite(const Sprite& s) {

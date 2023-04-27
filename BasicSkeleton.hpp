@@ -3,6 +3,7 @@
 
 #pragma once
 #include "Enemies.hpp"
+#include <math.h>
 
 class BasicSkeleton : public virtual Enemies {
 protected:

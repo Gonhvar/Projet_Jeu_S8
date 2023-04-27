@@ -1,12 +1,21 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <vector>
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 
 #ifndef SPRITE_HPP
 #define SPRITE_HPP
 
 class Affichage;
+
+typedef struct { 
+    std::vector<std::vector<SDL_Texture*>>;
+} TexturePack; // Ensemble des textures associées à un nom.
+
 
 class Sprite {
 protected :
@@ -21,14 +30,20 @@ protected :
     float _hauteur = 1; // Hauteur voulue de la texture associée au sprite
     bool onScreen = 0;
 
-    uint8_t etat = 0; // 0 est l'état par défaut
+    uint8_t nbEtats = 0;
+    std::vector<uint8_t> nbFrameParEtat;
+    uint8_t delay = 0; // Temps entre chaque texture
+    TexturePack* texture; // Liste des Texture en fonction de l'état et de la frame.
+
+    uint8_t etat = 0; // état dans lequel est le Sprite;
+    uint8_t frame = 0; // 0 est l'état par défaut
 
 
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
     Sprite();
     Sprite(const Sprite& other);
-    Sprite(std::string& spriteName, Affichage& aff);
+    //Sprite(std::string& spriteName, Affichage& aff);
     Sprite(std::string& spriteName);
 
     virtual ~Sprite() {};
@@ -50,6 +65,8 @@ public:
     void setOnScreen(bool toBe);
 
     void addSprite();
+    TexturePack* getTexture();
+    SDL_Texture* getRightTexture(); // Sert à renvoyer la texture que ce Sprite veut afficher
 
 };
 

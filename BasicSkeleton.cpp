@@ -13,7 +13,7 @@ BasicSkeleton::BasicSkeleton(float _x, float _y) : Enemies("skeleton") {
 void BasicSkeleton::deplacementBehaviour(){
 
     //Déplacement de base pour voir si tout fonctionne (rajouter de l'inertie)
-    if(joueur->getX() < _coord[0]){
+/*    if(joueur->getX() < _coord[0]){
         dx = -vitesse;
     }else{
         dx = vitesse;
@@ -23,7 +23,16 @@ void BasicSkeleton::deplacementBehaviour(){
     }else{
         dy = vitesse;
     }
-    
+*/
+    float ux = (joueur->getX() - _coord[0]);
+    float uy = (joueur->getY() - _coord[1]);
+    double norme = 0.5*sqrt(ux*ux + uy*uy);
+    ux /= norme;
+    uy /= norme;
+
+    dx = ux * vitesse;
+    dy = uy * vitesse;
+
     //Faire le test des hitbox maitenant 
     this->translate(dx, dy);
 }

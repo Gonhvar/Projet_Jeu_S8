@@ -1,12 +1,11 @@
 #include "Mc.hpp"
 
 //Constructeur spécial pour le MC (fait toutes les déclarations de Sprite)
-Mc::Mc(Affichage& aff) : Entite() {
+Mc::Mc() : Killable() {
     //std::cout << "as " << std::endl;
     name = "robot";
     //On donne en référence le joueur pour l'utiliser plus tard
     Sprite::joueur = this;
-    Sprite::afficheur = &aff;
     addSprite();
     
     PV = 20;
@@ -17,7 +16,6 @@ Mc::Mc(Affichage& aff) : Entite() {
 
     this->setCoord(10,20,0);
     this->setOnScreen(true);
-
 }
 
 void Mc::get_keypress(){

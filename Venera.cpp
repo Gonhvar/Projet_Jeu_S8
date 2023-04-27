@@ -26,7 +26,6 @@ int main(){
 	
 	Mc p1(*venera.afficheur);
 	BasicSkeleton sk(100.0, 100.0);
-
 	while(1){
 		//On récupére le temps actuel
 		FrameStartTimeMs = SDL_GetTicks();

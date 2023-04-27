@@ -2,10 +2,10 @@
 #define MC_HPP
 
 #pragma once
-#include "Entite.hpp"
+#include "Killable.hpp"
 #include <SDL2/SDL.h>
 
-class Mc : public Entite {
+class Mc : public Killable {
 protected :
 
 public :

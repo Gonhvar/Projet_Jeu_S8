@@ -11,10 +11,10 @@ Sprite::Sprite(const Sprite& other) {
 	*this = other;
 };
 
-Sprite::Sprite(std::string& spriteName, Affichage& aff) {
-	afficheur = &aff;
-	aff.visit(this, spriteName);
-}
+// Sprite::Sprite(std::string& spriteName, Affichage& aff) {
+// 	afficheur = &aff;
+// 	aff.visit(this, spriteName);
+// }
 
 Sprite::Sprite(std::string& spriteName) {
 	// std::cout << spriteName << std::endl;
@@ -75,15 +75,10 @@ void Sprite::addSprite(){
 	afficheur->visit(this, name);
 }
 
-// SDL_Texture* Sprite::loadTexture(char* filename)
-// {
-// 	if (texture != nullptr) {
-// 		delete texture;
-// 	}
-// 	texture = IMG_LoadTexture(app.renderer, filename);
-// 	return nullptr_t;
-// }
+TexturePack* getTexture() {
+	return texture;
+}
 
-// SDL_Texture* getTexture(){
-// 	return texture;
-// }
+SDL_Texture* getRightTexture() {
+	return texture[etat][frame];
+}
