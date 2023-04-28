@@ -29,7 +29,7 @@ void Affichage::visit(Sprite* s, std::string& spriteName, uint8_t nbEtats, std::
 	// On vérifie si l'image n'a pas déjà été chargée
 	imIterator = imageChargees.find(spriteName);
 	if (imIterator != imageChargees.end()) { // Déjà chargée
-		s->getTexture() = imIterator->second;
+		s->setTexture(imIterator->second);
 	}
 	else { // Sinon on la charge et on la stocke dans imageChargees
 		SDL_Texture* textureChargee;
@@ -48,9 +48,9 @@ void Affichage::visit(Sprite* s, std::string& spriteName, uint8_t nbEtats, std::
 				(*newTexture)[etat][frame] = textureChargee;
 			}
 		}
-		s->getTexture() = newTexture;
+		s->setTexture(newTexture);
 		
-		imageChargees[spriteName] = textureChargee;
+		imageChargees[spriteName] = newTexture;
 	}
 
 	sprites.push_back(s);
@@ -61,39 +61,39 @@ void Affichage::enleveSprite(const Sprite& s) {
 }
 
 void Affichage::update(){
-	enemiesUpdate();
+	//enemiesUpdate(); ça ne devrait pas être là
 	affiche_all();
 }
 
-void Affichage::enemiesUpdate(){
-	for(stt s : sprites){
-		//On regarde si le sprite est un enemie (Soit ça, soit on stock les enemies dans un tableau ?)
-		if(dynamic_cast<Enemies*>(s.sprite) != nullptr){
-			Enemies* en = dynamic_cast<Enemies*>(s.sprite);
-			en->deplacementBehaviour();
-			en->attackBehaviour();
+// void Affichage::enemiesUpdate(){
+// 	for(stt s : sprites){
+// 		//On regarde si le sprite est un enemie (Soit ça, soit on stock les enemies dans un tableau ?)
+// 		if(dynamic_cast<Enemies*>(s.sprite) != nullptr){
+// 			Enemies* en = dynamic_cast<Enemies*>(s.sprite);
+// 			en->deplacementBehaviour();
+// 			en->attackBehaviour();
 			
-		}
+// 		}
 		
-	}
-}
+// 	}
+// }
 
 void Affichage::affiche_all() const{
 	SDL_RenderClear(renderer); // ça n'est peut-être pas nécessaire mais la doc conseille de le faire
 
 	SDL_Rect dest;
 	//On affiche la texture du sprite avec 
-	for(stt s : sprites){
-		if(s.sprite->getOnScreen()){
+	for(Sprite* s : sprites){
+		if(s->getOnScreen()){
 			// position relative du Sprite par rapport à la caméra
-			dest.x = (s.sprite->getCoord()[0] - camPos[0]) * zoom;
-			dest.y = (s.sprite->getCoord()[1] - camPos[1]) * zoom;
+			dest.x = (s->getCoord()[0] - camPos[0]) * zoom;
+			dest.y = (s->getCoord()[1] - camPos[1]) * zoom;
 
-			dest.w = s.sprite->getLargeur() * zoom;
-			dest.h = s.sprite->getHauteur() * zoom;
+			dest.w = s->getLargeur() * zoom;
+			dest.h = s->getHauteur() * zoom;
 
 			//SDL_QueryTexture(s.textures[0], NULL, NULL, &dest.w, &dest.h);
-			SDL_RenderCopy(renderer, s.textures[0], NULL, &dest);
+			SDL_RenderCopy(renderer, s->getRightTexture(), NULL, &dest);
 		}
 		else{
 			//Enlever de la liste 

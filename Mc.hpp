@@ -9,7 +9,7 @@ class Mc : public Killable {
 protected :
 
 public :
-	Mc(Affichage& aff);
+	Mc();
 
 	void get_keypress();
 

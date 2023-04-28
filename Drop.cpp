@@ -1,7 +1,7 @@
 #include "Drop.hpp"
 
-Drop::Drop() : Entite() {}
+Drop::Drop() : Killable() {}
 
-Drop::Drop(std::string& spriteName) : Entite(spriteName) {}
+Drop::Drop(std::string& spriteName) : Killable(spriteName) {}
 
 void Drop::mort() {}

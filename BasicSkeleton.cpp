@@ -8,6 +8,10 @@ BasicSkeleton::BasicSkeleton(float _x, float _y) : Enemies("skeleton") {
 
     this->setCoord(_x,_y,0);
     this->setOnScreen(true);
+
+    nbEtats = 1;
+    nbFrameParEtat.resize(1);
+    nbFrameParEtat[0] = 1;
 }
 
 void BasicSkeleton::deplacementBehaviour(){

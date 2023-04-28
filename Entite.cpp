@@ -1,8 +1,10 @@
 #include "Entite.hpp"
 
 Entite::Entite() : Sprite() {}
-Entite::Entite(std::string& spriteName) : Sprite(spriteName) {}
 Entite::Entite(const Entite& other) {}
+Entite::Entite(std::string& spriteName, Killable* parent) : Sprite(spriteName) {
+	possesseur = parent;
+}
 
 
 int Entite::getPV() {

@@ -20,7 +20,7 @@ protected :
                                 // Il serait bien qu'un Sprite* n'apparaîsse qu'une seule fois dans sprites
                                 // Il faudrait remplacer les Sprite* par des smart pointers ou faire gaffe lors de la suppression d'un Sprite
     std::map<std::string, TexturePack*> imageChargees; // Dictionnaire stockant les texture chargées avec comme clée le nom de sprite associé
-    std::map<std::string, SDL_Texture*>::iterator imIterator; // Permet simplement de ne pas avoir à allouer de la mémoire à chaque fois que l'on veut itérer sur imageChargees
+    std::map<std::string, TexturePack*>::iterator imIterator; // Permet simplement de ne pas avoir à allouer de la mémoire à chaque fois que l'on veut itérer sur imageChargees
 
     SDL_Renderer* renderer;
 
@@ -43,11 +43,11 @@ public :
 
     void enleveSprite(const Sprite& s);
 
-    void visit(Sprite* s, std::string& spriteName); // Un Sprite n'a pas à savoir le nom ou le chemin du fichier de l'image qu'il possède. Il doit juste connaître son nom et son état.
+    void visit(Sprite* s, std::string& spriteName, uint8_t nbEtats, std::vector<uint8_t>& nbFrameParEtat); // Un Sprite n'a pas à savoir le nom ou le chemin du fichier de l'image qu'il possède. Il doit juste connaître son nom et son état.
 
     void update();
 
-    void enemiesUpdate();
+    // void enemiesUpdate();
 
     void affiche_all() const;
 

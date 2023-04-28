@@ -16,10 +16,10 @@ Sprite::Sprite(const Sprite& other) {
 // 	aff.visit(this, spriteName);
 // }
 
-Sprite::Sprite(std::string& spriteName) {
+Sprite::Sprite(std::string& spriteName) { // on assume que nbEtats et nbFrameParEtat ont déjà été renseignés.
 	// std::cout << spriteName << std::endl;
 	name = spriteName;
-	afficheur->visit(this, name);
+	afficheur->visit(this, name, nbEtats, nbFrameParEtat);
 }
 
 Sprite::Sprite(){
@@ -72,13 +72,21 @@ void Sprite::setOnScreen(bool toBe){
 }
 
 void Sprite::addSprite(){
-	afficheur->visit(this, name);
+	afficheur->visit(this, name, nbEtats, nbFrameParEtat);
 }
 
-TexturePack* getTexture() {
+TexturePack* Sprite::getTexture() {
 	return texture;
 }
 
-SDL_Texture* getRightTexture() {
-	return texture[etat][frame];
+void Sprite::setTexture(TexturePack* t) {
+	if (t != nullptr) {
+		std::cout << "gros risque de fuite de mémoire à Sprite::setTexture" << std::endl;
+		// Techniquement ce n'est peut-être pas une fuite de mémoire étant donné que ce n'est pas le Sprite qui stocke directement ses textures
+	}
+	texture = t;
+}
+
+SDL_Texture* Sprite::getRightTexture() {
+	return (*texture)[etat][frame];
 }

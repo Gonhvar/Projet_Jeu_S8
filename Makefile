@@ -1,16 +1,19 @@
-prog: Sprite.o affichage.o Entite.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o 
-	g++ -o prog Sprite.o affichage.o Entite.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o -lSDL2 -lSDL2_image
+prog: Sprite.o affichage.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o 
+	g++ -o prog Sprite.o affichage.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o -lSDL2 -lSDL2_image
 
 Sprite.o : Sprite.cpp Sprite.hpp affichage.hpp
 	g++ -Wall Sprite.cpp -c
 
 Entite.o : Entite.cpp Entite.hpp Sprite.hpp
 	g++ -Wall Entite.cpp -c
-	
-Mc.o : Mc.cpp Mc.hpp Entite.hpp 
+
+Killable.o : Killable.cpp Killable.hpp Entite.hpp
+	g++ -Wall Killable.cpp -c
+
+Mc.o : Mc.cpp Mc.hpp Killable.hpp 
 	g++ -Wall Mc.cpp -c
 	
-Drop.o : Drop.cpp Drop.hpp Entite.hpp 
+Drop.o : Drop.cpp Drop.hpp Killable.hpp 
 	g++ -Wall Drop.cpp -c
 
 Enemies.o : Enemies.cpp Enemies.hpp Drop.hpp 
@@ -25,7 +28,7 @@ affichage.o : affichage.cpp affichage.hpp Sprite.hpp
 camera.o : Camera.cpp Camera.hpp 
 	g++ -Wall Camera.cpp -c
 
-Venera.o : Venera.cpp Venera.hpp affichage.hpp Entite.hpp Mc.hpp
+Venera.o : Venera.cpp Venera.hpp affichage.hpp Killable.hpp Mc.hpp BasicSkeleton.hpp
 	g++ -Wall Venera.cpp -c
 
 clean:

@@ -24,7 +24,9 @@ int main(){
 	Venera venera;
 	Uint32 FrameStartTimeMs;
 	
-	Mc p1(*venera.afficheur);
+	Sprite::afficheur = venera.afficheur;
+
+	Mc p1;
 	BasicSkeleton sk(100.0, 100.0);
 	while(1){
 		//On récupére le temps actuel
