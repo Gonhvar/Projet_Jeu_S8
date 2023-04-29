@@ -17,13 +17,17 @@ protected :
     std::vector<Entite*> entite;
 
 public :
-    //Killable() = default;
-    //Killable(std::string& spriteName, uint8_t nbStates, std::vector<uint8_t>& nbFPE);
-
-
-    void translate(float dx, float dy);
+    /* CONSTRUCTEURS ET DESTRUCTEURS */
+    Killable() = default;
+    Killable(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]);
+	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
     void update();
+    
+    void translate(float dx, float dy);
+
+
+	virtual void mort();
 };
 
 #endif

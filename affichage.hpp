@@ -43,7 +43,6 @@ public :
 
     void enleveSprite(const Sprite& s);
 
-    //void visit(Sprite* s, std::string& spriteName, uint8_t nbEtats, std::vector<uint8_t>& nbFrameParEtat); // Un Sprite n'a pas à savoir le nom ou le chemin du fichier de l'image qu'il possède. Il doit juste connaître son nom et son état.
     void visit(Sprite* s, const States* states);
 
     void update();

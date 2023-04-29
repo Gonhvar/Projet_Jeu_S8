@@ -6,15 +6,13 @@ Affichage* Sprite::afficheur;
 Sprite* Sprite::joueur;
 
 /* CONSTRUCTEURS ET DESTRUCTEURS */
-Sprite::Sprite(){}
-
 Sprite::Sprite(const Sprite& other) {
 	*this = other;
 }
 
 
 
-Sprite::Sprite(std::string sName, uint8_t nbE, uint8_t nbFPE[10]) {
+Sprite::Sprite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]) {
 	States* newStates = new States(); // newStates est un pointeur temporaire
 	newStates->spriteName = sName; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
 	newStates->nbEtats = nbE;
@@ -88,9 +86,9 @@ void Sprite::setTexture(TexturePack* t) {
 }
 
 SDL_Texture* Sprite::getRightTexture() {
-	std::cout << "in Sprite::getRightTexture, etat=" << etat << "  frame=" << frame << std::endl;
-	std::cout << "texture : " << texture << std::endl;
-	std::cout << "texture[" << (*texture).size() << "][" << (*texture)[0].size() << "]" << std::endl;
+	// std::cout << "in Sprite::getRightTexture, etat=" << etat << "  frame=" << frame << std::endl;
+	// std::cout << "texture : " << texture << std::endl;
+	// std::cout << "texture[" << (*texture).size() << "][" << (*texture)[0].size() << "]" << std::endl;
 	return (*texture)[etat][frame];
 }
 
@@ -98,6 +96,18 @@ const States* Sprite::getStates() {
 	return states;
 }
 
+void Sprite::setEtat(uint8_t toBe) {
+	if (toBe >= states->nbEtats) {
+		std::cout << "Dans Sprite::setEtat : on demande à passer dans l'état " << (int)toBe << ",  mais il n'y en a que " << (int) states->nbEtats << std::endl;
+	} else {
+		etat = toBe;
+	}
+}
+
 void Sprite::update() {
-	frame = (frame+1)%states->nbFrameParEtat[etat];
+	if (!delay) {
+		frame = (frame+1)%states->nbFrameParEtat[etat];
+		delay = maxDelay;
+	}
+	else delay--;
 }

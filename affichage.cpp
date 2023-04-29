@@ -26,7 +26,6 @@ void Affichage::setCamPos(float x, float y) {
 	camPos[1] = y;
 }
 
-//void Affichage::visit(Sprite* s, std::string& spriteName, uint8_t nbEtats, std::vector<uint8_t>& nbFrameParEtat) {
 void Affichage::visit(Sprite* s, const States* states) {
 	// Ajoute s dans sprites et va chercher ses textures
 
@@ -39,12 +38,12 @@ void Affichage::visit(Sprite* s, const States* states) {
 	else { // Sinon on la charge et on la stocke dans imageChargees
 		SDL_Texture* textureChargee;
 		TexturePack* newTexture = new TexturePack(states->nbEtats);
-		std::cout << "nb d'états de la nouvelle texture : " << (*newTexture).size() << std::endl;
 		for (int etat=0; etat<states->nbEtats; etat++) {
 			(*newTexture)[etat].resize(states->nbFrameParEtat[etat]);
-			std::cout << "taille de l'état " << etat << " : " << (*newTexture)[etat].size() << std::endl;
 			for (int frame=0; frame<states->nbFrameParEtat[etat]; frame++) {
 				std::string pathComplet = PATH_TO_TEXTURE_FOLDER + states->spriteName + "/" + std::to_string(etat) + "/" + std::to_string(frame) + imageFormat;
+				std::cout << "Loading : " << pathComplet << std::endl;
+				
 				const char* filename = pathComplet.c_str();
 				
 				textureChargee = IMG_LoadTexture(renderer, filename);
@@ -82,7 +81,7 @@ void Affichage::affiche_all() const{
 	SDL_Rect dest;
 	// On affiche la texture du sprite avec 
 	for(Sprite* s : sprites){
-		std::cout << "affichage de : " << s << " dont le nom est : " << s->getStates()->spriteName << std::endl;
+		// std::cout << "affichage de : " << s << " dont le nom est : " << s->getStates()->spriteName << std::endl;
 		if(s->getOnScreen()){
 			// position relative du Sprite par rapport à la caméra
 			dest.x = (s->getCoord()[0] - camPos[0]) * zoom;
@@ -91,7 +90,7 @@ void Affichage::affiche_all() const{
 			dest.w = s->getLargeur() * zoom;
 			dest.h = s->getHauteur() * zoom;
 
-			std::cout << "coordonnées récupérées" << std::endl;
+			// std::cout << "coordonnées récupérées" << std::endl;
 
 			//SDL_QueryTexture(s.textures[0], NULL, NULL, &dest.w, &dest.h);
 			SDL_RenderCopy(renderer, s->getRightTexture(), NULL, &dest);
@@ -99,7 +98,7 @@ void Affichage::affiche_all() const{
 		else{
 			//Enlever de la liste 
 		}
-		std::cout << "fin affichage " << s->name << std::endl;
+		// std::cout << "fin affichage " << s->name << std::endl;
 	}
 	SDL_RenderPresent(renderer); // Met à jour l'écran avec le backbuffer du renderer
 };

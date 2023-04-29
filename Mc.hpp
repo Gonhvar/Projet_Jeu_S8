@@ -15,7 +15,11 @@ class Mc : public Killable {
 protected :
 
 public :
+    /* CONSTRUCTEURS ET DESTRUCTEURS */
 	Mc();
+	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+
+	void update();
 
 	void get_keypress();
 

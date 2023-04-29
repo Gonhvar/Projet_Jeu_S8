@@ -1,8 +1,6 @@
 #include "Enemies.hpp"
 
-Enemies::Enemies(){}
-
-Enemies::Enemies(std::string& spriteName, uint8_t nbStates, std::vector<uint8_t>& nbFPE) : Drop(spriteName, nbStates, nbFPE) {}
+Enemies::Enemies(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]) : Drop(sName, nbE, nbFPE) {}
 
 
 void Enemies::update() {

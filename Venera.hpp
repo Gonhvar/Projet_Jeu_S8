@@ -9,7 +9,6 @@
 #include <SDL2/SDL_image.h>
 
 #include "affichage.hpp"
-//#include "Killable.hpp"
 #include "Mc.hpp"
 #include "BasicSkeleton.hpp"
 

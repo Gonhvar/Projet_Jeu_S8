@@ -8,14 +8,16 @@ class Enemies : public Drop {
 protected:
 
 public:
-	Enemies();
+    /* CONSTRUCTEURS ET DESTRUCTEURS */
+	Enemies() = default;
+	Enemies(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]);
+	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
-	Enemies(std::string& spriteName, uint8_t nbStates, std::vector<uint8_t>& nbFPE);
+	void update();
 
 	virtual void deplacementBehaviour() = 0;
 	virtual void attackBehaviour() = 0;
 
-	void update();
 };
 
 #endif

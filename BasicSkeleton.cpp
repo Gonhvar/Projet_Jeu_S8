@@ -10,11 +10,10 @@ BasicSkeleton::BasicSkeleton(float _x, float _y) {
     this->setOnScreen(true);
 
     states = &(etatsDesBasicSkeleton);
+
+    std::cout << "Création de BasicSkeleton : " << states->spriteName << std::endl;
+
     addSprite();
-}
-
-void BasicSkeleton::Initialisation() {
-
 }
 
 void BasicSkeleton::deplacementBehaviour(){
@@ -31,17 +30,8 @@ void BasicSkeleton::deplacementBehaviour(){
         dy = vitesse;
     }
 */
-    float ux = (joueur->getX() - _coord[0]);
-    float uy = (joueur->getY() - _coord[1]);
-    double norme = 0.5*sqrt(ux*ux + uy*uy);
-    ux /= norme;
-    uy /= norme;
-
-    dx = ux * vitesse;
-    dy = uy * vitesse;
-
     //Faire le test des hitbox maitenant 
-    this->translate(dx, dy);
+    move((joueur->getX() - _coord[0]), (joueur->getY() - _coord[1]));
 }
 
 void BasicSkeleton::attackBehaviour(){

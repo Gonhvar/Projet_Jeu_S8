@@ -11,10 +11,11 @@ protected:
 	std::vector<uint8_t> item;	// Tableau donnant les items que ce Drop peut posséder
 
 public:
+    /* CONSTRUCTEURS ET DESTRUCTEURS */
 	Drop() = default;
-	Drop(std::string& spriteName, uint8_t nbStates, std::vector<uint8_t>& nbFPE);
+	Drop(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]);
+	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
-	virtual void mort();
 };
 
 #endif

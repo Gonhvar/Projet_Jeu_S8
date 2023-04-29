@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <math.h>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -12,16 +13,13 @@
 
 class Affichage;
 
-// typedef struct { 
-//     std::vector<std::vector<SDL_Texture*>>;
-// } TexturePack; // Ensemble des textures associées à un nom.
-
 typedef std::vector<std::vector<SDL_Texture*>> TexturePack;
 
+#define MAX_FPE 10
 typedef struct States_t{ // sert à décrire les états qu'un Sprite peut avoir, ainsi que son nom (in-game type)
     std::string spriteName;
     uint8_t nbEtats = 0;
-    uint8_t nbFrameParEtat[10];
+    uint8_t nbFrameParEtat[MAX_FPE];
 } States;
 
 
@@ -34,6 +32,7 @@ protected :
     bool onScreen = 0;
 
     const States* states = nullptr; // Ne pas modifier ce qu'il y a à l'adresse merci !
+    uint8_t maxDelay = 0; // Temps entre chaque texture
     uint8_t delay = 0; // Temps entre chaque texture
     TexturePack* texture = nullptr; // Liste des Texture en fonction de l'état et de la frame.
 
@@ -50,13 +49,15 @@ public:
 
 
     /* CONSTRUCTEURS ET DESTRUCTEURS */
-    Sprite();
+    Sprite() = default;
     Sprite(const Sprite& other);
     //Sprite(std::string& spriteName, Affichage& aff);
-    Sprite(std::string sName, uint8_t nbE, uint8_t nbFPE[10]);
+    Sprite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]);
 
     virtual ~Sprite() {};
     /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+    
+    void update();
 
     float* getCoord();
     float getX();
@@ -77,10 +78,9 @@ public:
     TexturePack* getTexture();
     void setTexture(TexturePack* t);
     SDL_Texture* getRightTexture(); // Sert à renvoyer la texture que ce Sprite veut afficher
+    
     const States* getStates();
-
-    void update();
-
+    void setEtat(uint8_t toBe);
 };
 
 #endif

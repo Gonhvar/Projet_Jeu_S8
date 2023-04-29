@@ -1,7 +1,6 @@
 #include "Killable.hpp"
 
-// Killable::Killable(std::string& spriteName, uint8_t nbStates, std::vector<uint8_t>& nbFPE) : Entite(spriteName, nbStates, nbFPE) {}
-
+Killable::Killable(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]) : Entite(sName, nbE, nbFPE, this) {}
 
 void Killable::translate(float dx, float dy) {
     Entite::translate(dx, dy); // Le Killable se déplace lui-même.
@@ -11,7 +10,10 @@ void Killable::translate(float dx, float dy) {
 }
 
 void Killable::update() {
+    Sprite::update();
     for (Entite* ent : entite) {
        ent->update();
     }
 }
+
+void Killable::mort() {}

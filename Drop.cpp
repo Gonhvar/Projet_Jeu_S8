@@ -1,5 +1,4 @@
 #include "Drop.hpp"
 
-Drop::Drop(std::string& spriteName, uint8_t nbStates, std::vector<uint8_t>& nbFPE) {}
+Drop::Drop(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]) : Killable(sName, nbE, nbFPE) {}
 
-void Drop::mort() {}

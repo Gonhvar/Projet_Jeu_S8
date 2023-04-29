@@ -26,7 +26,9 @@ void Venera::initialisation() {
 
 void Venera::update() {
 	//mc->update();
-	mc->get_keypress();
+
+	// On récupére la touche pressé par le joueur
+	mc->update();
 
 	for (Enemies* enemy : enemies) {
 		enemy->update();
@@ -48,11 +50,7 @@ int main(){
 	//venera.initialisation();
 	Uint32 FrameStartTimeMs;
 	
-
-	// Mc p1;
-	// BasicSkeleton sk(100.0, 100.0);
-	int i=0;
-	while(i++ < 200){
+	while(true){
 		//On récupére le temps actuel
 		FrameStartTimeMs = SDL_GetTicks();
 

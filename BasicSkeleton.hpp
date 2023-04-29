@@ -3,7 +3,6 @@
 
 #pragma once
 #include "Enemies.hpp"
-#include <math.h>
 
 const States etatsDesBasicSkeleton = { // Eviter de le modifier
 	"BasicSkeleton",
@@ -15,10 +14,11 @@ class BasicSkeleton : public virtual Enemies {
 protected:
 
 public:
+    /* CONSTRUCTEURS ET DESTRUCTEURS */
 	BasicSkeleton(float _x, float _y);
+	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
-	static void Initialisation();
-	
+
 	void deplacementBehaviour();
 	void attackBehaviour();
 };

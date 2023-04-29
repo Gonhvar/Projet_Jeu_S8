@@ -17,10 +17,16 @@ Mc::Mc() {
     this->setOnScreen(true);
     
     states = &(etatsDesMc);
+    maxDelay = 20; // Change de frame tous les 20 ticks
 
-    std::cout << "states spriteName : " << states->spriteName << std::endl;
+    std::cout << "Création de Mc : " << states->spriteName << std::endl;
 
     addSprite();
+}
+
+void Mc::update() {
+    Sprite::update();
+    get_keypress();
 }
 
 void Mc::get_keypress(){
@@ -41,7 +47,7 @@ void Mc::get_keypress(){
         }
     }
     //printf("dx : %f | dy : %f \n", dx, dy);
-    this->translate(dx, dy);
+    move(dx, dy);
 }
 
 void Mc::doKeyDown(SDL_KeyboardEvent *event)
@@ -52,27 +58,27 @@ void Mc::doKeyDown(SDL_KeyboardEvent *event)
         if(event->keysym.scancode == SDL_SCANCODE_ESCAPE){
             exit(0);
         }
-        //On est actuellement en WASD
-		if (event->keysym.scancode == SDL_SCANCODE_Z)
+        //On est actuellement en ZQSD
+		if (event->keysym.scancode == SDL_SCANCODE_W)
 		{
             //printf("Z\n");
-            dy -=vitesse;
+            dy = -vitesse;
 		}
         else if (event->keysym.scancode == SDL_SCANCODE_S)
 		{
             //printf("S\n"); 
-            dy += vitesse;
+            dy = vitesse;
 		}
 
-		if (event->keysym.scancode == SDL_SCANCODE_Q)
+		if (event->keysym.scancode == SDL_SCANCODE_A)
 		{
             //printf("Q\n"); 
-            dx -= vitesse;
+            dx = -vitesse;
 		}
         else if (event->keysym.scancode == SDL_SCANCODE_D)
 		{
             //printf("D\n"); 
-            dx += vitesse;
+            dx = vitesse;
 		}
 	}
     //Lorsque la touche est appuyé longtemps 
@@ -85,8 +91,8 @@ void Mc::doKeyUp(SDL_KeyboardEvent *event)
 {
     if (event->repeat == 0)
         {  
-        //On est actuellement en WASD
-        if (event->keysym.scancode == SDL_SCANCODE_Z)
+        //On est actuellement en ZQSD
+        if (event->keysym.scancode == SDL_SCANCODE_W)
         {
             //printf("Z\n");
             dy = 0;
@@ -97,7 +103,7 @@ void Mc::doKeyUp(SDL_KeyboardEvent *event)
             dy = 0;
         }
 
-        if (event->keysym.scancode == SDL_SCANCODE_Q)
+        if (event->keysym.scancode == SDL_SCANCODE_A)
         {
             //printf("Q\n"); 
             dx = 0;
