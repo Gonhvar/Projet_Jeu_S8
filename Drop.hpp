@@ -11,7 +11,7 @@ protected:
 	std::vector<uint8_t> item;	// Tableau donnant les items que ce Drop peut posséder
 
 public:
-	Drop();
+	Drop() = default;
 	Drop(std::string& spriteName, uint8_t nbStates, std::vector<uint8_t>& nbFPE);
 
 	virtual void mort();

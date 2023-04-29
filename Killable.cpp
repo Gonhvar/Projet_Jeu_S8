@@ -1,6 +1,6 @@
 #include "Killable.hpp"
 
-Killable::Killable(std::string& spriteName, uint8_t nbStates, std::vector<uint8_t>& nbFPE) : Entite(spriteName, nbStates, nbFPE) {}
+// Killable::Killable(std::string& spriteName, uint8_t nbStates, std::vector<uint8_t>& nbFPE) : Entite(spriteName, nbStates, nbFPE) {}
 
 
 void Killable::translate(float dx, float dy) {

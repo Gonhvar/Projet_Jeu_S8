@@ -17,8 +17,8 @@ protected :
     std::vector<Entite*> entite;
 
 public :
-    Killable() = default;
-    Killable(std::string& spriteName, uint8_t nbStates, std::vector<uint8_t>& nbFPE);
+    //Killable() = default;
+    //Killable(std::string& spriteName, uint8_t nbStates, std::vector<uint8_t>& nbFPE);
 
 
     void translate(float dx, float dy);

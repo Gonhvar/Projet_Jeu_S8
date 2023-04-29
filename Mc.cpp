@@ -1,6 +1,6 @@
 #include "Mc.hpp"
 
-//Constructeur spécial pour le MC (fait toutes les déclarations de Sprite)
+//Constructeur spécial pour le MC (renseigne Sprite::joueur)
 Mc::Mc() {
     //std::cout << "as " << std::endl;
     //name = "robot";

@@ -45,7 +45,7 @@ void Venera::keyboard_event(){
 
 int main(){
 	Venera venera;
-	venera.initialisation();
+	//venera.initialisation();
 	Uint32 FrameStartTimeMs;
 	
 

@@ -39,7 +39,7 @@ void Affichage::visit(Sprite* s, const States* states) {
 	else { // Sinon on la charge et on la stocke dans imageChargees
 		SDL_Texture* textureChargee;
 		TexturePack* newTexture = new TexturePack(states->nbEtats);
-		std::cout << "taille de la nouvelle texture : " << (*newTexture).size() << std::endl;
+		std::cout << "nb d'états de la nouvelle texture : " << (*newTexture).size() << std::endl;
 		for (int etat=0; etat<states->nbEtats; etat++) {
 			(*newTexture)[etat].resize(states->nbFrameParEtat[etat]);
 			std::cout << "taille de l'état " << etat << " : " << (*newTexture)[etat].size() << std::endl;
@@ -82,7 +82,7 @@ void Affichage::affiche_all() const{
 	SDL_Rect dest;
 	// On affiche la texture du sprite avec 
 	for(Sprite* s : sprites){
-		std::cout << "affichage de : " << s << " dont le nom est : " << s->name << std::endl;
+		std::cout << "affichage de : " << s << " dont le nom est : " << s->getStates()->spriteName << std::endl;
 		if(s->getOnScreen()){
 			// position relative du Sprite par rapport à la caméra
 			dest.x = (s->getCoord()[0] - camPos[0]) * zoom;

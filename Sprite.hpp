@@ -17,6 +17,7 @@ class Affichage;
 // } TexturePack; // Ensemble des textures associées à un nom.
 
 typedef std::vector<std::vector<SDL_Texture*>> TexturePack;
+
 typedef struct States_t{ // sert à décrire les états qu'un Sprite peut avoir, ainsi que son nom (in-game type)
     std::string spriteName;
     uint8_t nbEtats = 0;
@@ -32,7 +33,7 @@ protected :
     float _hauteur = 1; // Hauteur voulue de la texture associée au sprite
     bool onScreen = 0;
 
-    const States* states; // Ne pas modifier ce qu'il y a à l'adresse merci !
+    const States* states = nullptr; // Ne pas modifier ce qu'il y a à l'adresse merci !
     uint8_t delay = 0; // Temps entre chaque texture
     TexturePack* texture = nullptr; // Liste des Texture en fonction de l'état et de la frame.
 
@@ -52,8 +53,8 @@ public:
     Sprite();
     Sprite(const Sprite& other);
     //Sprite(std::string& spriteName, Affichage& aff);
-    Sprite(std::string& spriteName, uint8_t nbStates, std::vector<uint8_t>& nbFPE);
-    
+    Sprite(std::string sName, uint8_t nbE, uint8_t nbFPE[10]);
+
     virtual ~Sprite() {};
     /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
@@ -76,6 +77,7 @@ public:
     TexturePack* getTexture();
     void setTexture(TexturePack* t);
     SDL_Texture* getRightTexture(); // Sert à renvoyer la texture que ce Sprite veut afficher
+    const States* getStates();
 
     void update();
 

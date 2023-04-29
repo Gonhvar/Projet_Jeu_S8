@@ -10,13 +10,19 @@ Sprite::Sprite(){}
 
 Sprite::Sprite(const Sprite& other) {
 	*this = other;
-};
+}
 
 
 
-Sprite::Sprite(std::string& spriteName, uint8_t nbStates, std::vector<uint8_t>& nbFPE) {
-	
-	//afficheur->visit(this, name, nbStates, nbFPE);
+Sprite::Sprite(std::string sName, uint8_t nbE, uint8_t nbFPE[10]) {
+	States* newStates = new States(); // newStates est un pointeur temporaire
+	newStates->spriteName = sName; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
+	newStates->nbEtats = nbE;
+	for (int i=0; i<nbE; i++) {
+		newStates->nbFrameParEtat[i] = nbFPE[i];
+	}
+	states = newStates;
+	addSprite();
 }
 
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
@@ -86,6 +92,10 @@ SDL_Texture* Sprite::getRightTexture() {
 	std::cout << "texture : " << texture << std::endl;
 	std::cout << "texture[" << (*texture).size() << "][" << (*texture)[0].size() << "]" << std::endl;
 	return (*texture)[etat][frame];
+}
+
+const States* Sprite::getStates() {
+	return states;
 }
 
 void Sprite::update() {

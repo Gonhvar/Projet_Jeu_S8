@@ -5,7 +5,7 @@
 #include "Enemies.hpp"
 #include <math.h>
 
-const States etatsDesBasicSkeleton = {
+const States etatsDesBasicSkeleton = { // Eviter de le modifier
 	"BasicSkeleton",
 	1,
 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
