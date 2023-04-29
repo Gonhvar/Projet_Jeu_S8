@@ -2,7 +2,7 @@
 
 Entite::Entite() : Sprite() {}
 Entite::Entite(const Entite& other) {}
-Entite::Entite(std::string& spriteName, Killable* parent) : Sprite(spriteName) {
+Entite::Entite(std::string& spriteName, uint8_t nbStates, std::vector<uint8_t>& nbFPE, Killable* parent) : Sprite(spriteName, nbStates, nbFPE) {
 	possesseur = parent;
 }
 

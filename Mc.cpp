@@ -1,7 +1,7 @@
 #include "Mc.hpp"
 
 //Constructeur spécial pour le MC (fait toutes les déclarations de Sprite)
-Mc::Mc() : Killable("robot") {
+Mc::Mc() {
     //std::cout << "as " << std::endl;
     //name = "robot";
     //On donne en référence le joueur pour l'utiliser plus tard
@@ -15,6 +15,12 @@ Mc::Mc() : Killable("robot") {
 
     this->setCoord(10,20,0);
     this->setOnScreen(true);
+    
+    states = &(etatsDesMc);
+
+    std::cout << "states spriteName : " << states->spriteName << std::endl;
+
+    addSprite();
 }
 
 void Mc::get_keypress(){

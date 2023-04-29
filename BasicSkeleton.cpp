@@ -1,6 +1,6 @@
 #include "BasicSkeleton.hpp"
 
-BasicSkeleton::BasicSkeleton(float _x, float _y) : Enemies("skeleton") {
+BasicSkeleton::BasicSkeleton(float _x, float _y) {
     PV = 10;
     vitesse = 30.0;
     _hauteur = 64;
@@ -9,9 +9,12 @@ BasicSkeleton::BasicSkeleton(float _x, float _y) : Enemies("skeleton") {
     this->setCoord(_x,_y,0);
     this->setOnScreen(true);
 
-    nbEtats = 1;
-    nbFrameParEtat.resize(1);
-    nbFrameParEtat[0] = 1;
+    states = &(etatsDesBasicSkeleton);
+    addSprite();
+}
+
+void BasicSkeleton::Initialisation() {
+
 }
 
 void BasicSkeleton::deplacementBehaviour(){
@@ -44,4 +47,3 @@ void BasicSkeleton::deplacementBehaviour(){
 void BasicSkeleton::attackBehaviour(){
 
 }
-

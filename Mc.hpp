@@ -3,10 +3,21 @@
 
 #pragma once
 #include "Killable.hpp"
-#include <SDL2/SDL.h>
+//#include <SDL2/SDL.h>
+
+const States etatsDesMc = {
+	"Robot",
+	1,
+	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+};
 
 class Mc : public Killable {
 protected :
+	// static States etatDesMc {
+	// 	"Mc",
+	// 	1,
+	// 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+	// };
 
 public :
 	Mc();

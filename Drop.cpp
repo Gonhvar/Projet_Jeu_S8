@@ -1,7 +1,7 @@
 #include "Drop.hpp"
 
-Drop::Drop() : Killable() {}
+Drop::Drop() {}
 
-Drop::Drop(std::string& spriteName) : Killable(spriteName) {}
+Drop::Drop(std::string& spriteName, uint8_t nbStates, std::vector<uint8_t>& nbFPE) {}
 
 void Drop::mort() {}

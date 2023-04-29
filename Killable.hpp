@@ -18,9 +18,12 @@ protected :
 
 public :
     Killable() = default;
-    Killable(std::string spriteName);
+    Killable(std::string& spriteName, uint8_t nbStates, std::vector<uint8_t>& nbFPE);
+
 
     void translate(float dx, float dy);
+
+    void update();
 };
 
 #endif

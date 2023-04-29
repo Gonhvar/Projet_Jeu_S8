@@ -29,7 +29,7 @@ public :
 	Entite();
 	Entite(const Entite& other);
 	Entite(std::string& spriteName, Affichage& aff);
-	Entite(std::string& spriteName, Killable* parent = nullptr); // Si on indique pas de parent, ce sera nullptr par défaut
+	Entite(std::string& spriteName, uint8_t nbStates, std::vector<uint8_t>& nbFPE, Killable* parent = nullptr); // Si on indique pas de parent, ce sera nullptr par défaut
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 	int getPV();

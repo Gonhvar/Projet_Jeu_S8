@@ -12,7 +12,7 @@ protected:
 
 public:
 	Drop();
-	Drop(std::string& spriteName);
+	Drop(std::string& spriteName, uint8_t nbStates, std::vector<uint8_t>& nbFPE);
 
 	virtual void mort();
 };

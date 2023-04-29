@@ -2,29 +2,23 @@
 #include "affichage.hpp"
 
 
-Affichage* Sprite::afficheur = new Affichage();
-Sprite* Sprite::joueur = new Sprite();
+Affichage* Sprite::afficheur;
+Sprite* Sprite::joueur;
 
 /* CONSTRUCTEURS ET DESTRUCTEURS */
+Sprite::Sprite(){}
 
 Sprite::Sprite(const Sprite& other) {
 	*this = other;
 };
 
-// Sprite::Sprite(std::string& spriteName, Affichage& aff) {
-// 	afficheur = &aff;
-// 	aff.visit(this, spriteName);
-// }
 
-Sprite::Sprite(std::string& spriteName) { // on assume que nbEtats et nbFrameParEtat ont déjà été renseignés.
-	// std::cout << spriteName << std::endl;
-	name = spriteName;
-	afficheur->visit(this, name, nbEtats, nbFrameParEtat);
+
+Sprite::Sprite(std::string& spriteName, uint8_t nbStates, std::vector<uint8_t>& nbFPE) {
+	
+	//afficheur->visit(this, name, nbStates, nbFPE);
 }
 
-Sprite::Sprite(){
-	//afficheur->visit(this, name);
-}
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 
@@ -72,7 +66,7 @@ void Sprite::setOnScreen(bool toBe){
 }
 
 void Sprite::addSprite(){
-	afficheur->visit(this, name, nbEtats, nbFrameParEtat);
+	afficheur->visit(this, states);
 }
 
 TexturePack* Sprite::getTexture() {
@@ -80,7 +74,7 @@ TexturePack* Sprite::getTexture() {
 }
 
 void Sprite::setTexture(TexturePack* t) {
-	if (t != nullptr) {
+	if (texture != nullptr) {
 		std::cout << "gros risque de fuite de mémoire à Sprite::setTexture" << std::endl;
 		// Techniquement ce n'est peut-être pas une fuite de mémoire étant donné que ce n'est pas le Sprite qui stocke directement ses textures
 	}
@@ -88,5 +82,12 @@ void Sprite::setTexture(TexturePack* t) {
 }
 
 SDL_Texture* Sprite::getRightTexture() {
+	std::cout << "in Sprite::getRightTexture, etat=" << etat << "  frame=" << frame << std::endl;
+	std::cout << "texture : " << texture << std::endl;
+	std::cout << "texture[" << (*texture).size() << "][" << (*texture)[0].size() << "]" << std::endl;
 	return (*texture)[etat][frame];
+}
+
+void Sprite::update() {
+	frame = (frame+1)%states->nbFrameParEtat[etat];
 }

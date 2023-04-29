@@ -9,10 +9,13 @@ protected:
 
 public:
 	Enemies();
-	Enemies(std::string spriteName);
+
+	Enemies(std::string& spriteName, uint8_t nbStates, std::vector<uint8_t>& nbFPE);
 
 	virtual void deplacementBehaviour() = 0;
 	virtual void attackBehaviour() = 0;
+
+	void update();
 };
 
 #endif

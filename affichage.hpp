@@ -30,7 +30,7 @@ protected :
     float camPos[2]; // Position de la caméra
     float zoom; // Zoom de la caméra
 
-    SDL_Texture* noTexture;
+    SDL_Texture* noTexture; // Texture mise par défaut lorsqu'aucune n'a été trouvée
 
 public :
     /* CONSTRUCTEURS ET DESTRUCTEURS */
@@ -43,14 +43,12 @@ public :
 
     void enleveSprite(const Sprite& s);
 
-    void visit(Sprite* s, std::string& spriteName, uint8_t nbEtats, std::vector<uint8_t>& nbFrameParEtat); // Un Sprite n'a pas à savoir le nom ou le chemin du fichier de l'image qu'il possède. Il doit juste connaître son nom et son état.
+    //void visit(Sprite* s, std::string& spriteName, uint8_t nbEtats, std::vector<uint8_t>& nbFrameParEtat); // Un Sprite n'a pas à savoir le nom ou le chemin du fichier de l'image qu'il possède. Il doit juste connaître son nom et son état.
+    void visit(Sprite* s, const States* states);
 
     void update();
 
-    // void enemiesUpdate();
-
     void affiche_all() const;
-
 };
 
 #endif

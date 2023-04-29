@@ -13,7 +13,30 @@ Venera::Venera() {
 	}
 	else {
 		afficheur = new Affichage(app->renderer);
+		Sprite::afficheur = afficheur;
 	}
+
+	initialisation();
+}
+
+void Venera::initialisation() {
+	mc = new Mc();
+	enemies.push_back(new BasicSkeleton(100, 100));
+}
+
+void Venera::update() {
+	//mc->update();
+	mc->get_keypress();
+
+	for (Enemies* enemy : enemies) {
+		enemy->update();
+	}
+
+	for (Drop* droper : drop) {
+		droper->update();
+	}
+
+	afficheur->update();
 }
 
 void Venera::keyboard_event(){
@@ -22,21 +45,24 @@ void Venera::keyboard_event(){
 
 int main(){
 	Venera venera;
+	venera.initialisation();
 	Uint32 FrameStartTimeMs;
 	
-	Sprite::afficheur = venera.afficheur;
 
-	Mc p1;
-	BasicSkeleton sk(100.0, 100.0);
-	while(1){
+	// Mc p1;
+	// BasicSkeleton sk(100.0, 100.0);
+	int i=0;
+	while(i++ < 200){
 		//On récupére le temps actuel
 		FrameStartTimeMs = SDL_GetTicks();
 
-		//On récupére la touche pressé par le joueur
-		p1.get_keypress();
-		//On update et affiche tous les sprites qui sont sur la camera
-		venera.afficheur->update();
-		
+		// //On récupére la touche pressé par le joueur
+		// p1.get_keypress();
+		// //On update et affiche tous les sprites qui sont sur la camera
+		// venera.afficheur->update();
+
+		venera.update();
+
 		//On attends le temps requis pour avoir un nombre de FPS
 		while(SDL_GetTicks() - FrameStartTimeMs < 1000/FPS); 
 	}
