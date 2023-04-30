@@ -39,6 +39,7 @@ void Venera::update() {
 		//test si c'est bien un spawnpoint (peut etre pas necessaire en fonction de la suite du code)
 		if (dynamic_cast<SpawnPoint*>(sp) != nullptr)
 		{
+			//Le dynamic cast est obligé
 			dynamic_cast<SpawnPoint*>(sp)->update();
 		}
 	}
@@ -70,11 +71,7 @@ int main(){
 		//On récupére le temps actuel
 		FrameStartTimeMs = SDL_GetTicks();
 
-		// //On récupére la touche pressé par le joueur
-		// p1.get_keypress();
-		// //On update et affiche tous les sprites qui sont sur la camera
-		// venera.afficheur->update();
-
+		//Update
 		venera.update();
 
 		FrameEndTimeMs = SDL_GetTicks();
@@ -83,7 +80,7 @@ int main(){
 		while(SDL_GetTicks() - FrameStartTimeMs < FrameNormalTimeMs);
 
 		FrameTimeMS = FrameEndTimeMs - FrameStartTimeMs;
-		FrameTimeMS = 1000 / FrameTimeMS;
+		FrameTimeMS = 1000 / (float) FrameTimeMS;
 		
 		moyenne += FrameTimeMS;
 		if (!compteur--) {
