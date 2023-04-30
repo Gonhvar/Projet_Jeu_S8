@@ -58,16 +58,39 @@ int main(){
 	Venera venera;
 	//venera.initialisation();
 	Uint32 FrameStartTimeMs;
+	Uint32 FrameEndTimeMs;
+	Uint32 FrameNormalTimeMs = 1000/FPS;
+	long FrameTimeMS;
+	long moyenne = 0;
+	Uint8 echantillon = 15;
+	Uint8 compteur = echantillon;
 	
+	// uint8_t i=5;
 	while(true){
 		//On récupére le temps actuel
 		FrameStartTimeMs = SDL_GetTicks();
 
-		//Update tous les éléments du jeu (si besoin)
+		// //On récupére la touche pressé par le joueur
+		// p1.get_keypress();
+		// //On update et affiche tous les sprites qui sont sur la camera
+		// venera.afficheur->update();
+
 		venera.update();
 
-		//On attends le temps requis pour avoir un nombre de FPS
-		while(SDL_GetTicks() - FrameStartTimeMs < 1000/FPS); 
-	}
+		FrameEndTimeMs = SDL_GetTicks();
 
+		//On attends le temps requis pour avoir un nombre de FPS
+		while(SDL_GetTicks() - FrameStartTimeMs < FrameNormalTimeMs);
+
+		FrameTimeMS = FrameEndTimeMs - FrameStartTimeMs;
+		FrameTimeMS = 1000 / FrameTimeMS;
+		
+		moyenne += FrameTimeMS;
+		if (!compteur--) {
+			moyenne /= echantillon;
+			std::cout << "FPS : " << moyenne << std::endl;
+			moyenne = 0;
+			compteur = echantillon;
+		}
+	}
 }
