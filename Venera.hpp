@@ -11,8 +11,9 @@
 #include "affichage.hpp"
 #include "Mc.hpp"
 #include "BasicSkeleton.hpp"
+#include "SpawnPoint.hpp"
 
-
+class SpawnPoint;
 
 typedef struct {
 	SDL_Renderer* renderer;
@@ -26,6 +27,8 @@ private :
 	std::vector<Drop*> drop; // On fait la distinction entre les Enemies et les Drop car les Enemies prennent des décisions.
 							// ça évite de faire des cast.
 	//Map map;
+	std::vector<Entite*> spawnpoints;
+
 
 public : // J'ai mis ça public parce que sinon on ne pouvait pas y accéder dans le main. On réglera ça plus tard.
 	App* app;
@@ -34,7 +37,7 @@ public : // J'ai mis ça public parce que sinon on ne pouvait pas y accéder dan
 public :
 	Venera();
 	void initialisation();
-	void keyboard_event();
+	void pushBackEnemies(Enemies* en);
 
 	void update();
 };

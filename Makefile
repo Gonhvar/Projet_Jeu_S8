@@ -1,5 +1,5 @@
-prog: Sprite.o affichage.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o 
-	g++ -o prog Sprite.o affichage.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o -lSDL2 -lSDL2_image
+prog: Sprite.o affichage.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o
+	g++ -o prog Sprite.o affichage.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o -lSDL2 -lSDL2_image
 
 Sprite.o : Sprite.cpp Sprite.hpp affichage.hpp
 	g++ -Wall Sprite.cpp -c
@@ -22,13 +22,16 @@ Enemies.o : Enemies.cpp Enemies.hpp Drop.hpp
 BasicSkeleton.o : BasicSkeleton.cpp BasicSkeleton.hpp Enemies.hpp 
 	g++ -Wall BasicSkeleton.cpp -c
 
+SpawnPoint.o : SpawnPoint.cpp SpawnPoint.hpp Entite.hpp
+	g++ -Wall SpawnPoint.cpp -c
+
 affichage.o : affichage.cpp affichage.hpp Sprite.hpp
 	g++ -Wall affichage.cpp -c
 
 camera.o : Camera.cpp Camera.hpp 
 	g++ -Wall Camera.cpp -c
 
-Venera.o : Venera.cpp Venera.hpp affichage.hpp Killable.hpp Mc.hpp BasicSkeleton.hpp
+Venera.o : Venera.cpp Venera.hpp affichage.hpp Killable.hpp Mc.hpp BasicSkeleton.hpp SpawnPoint.hpp
 	g++ -Wall Venera.cpp -c
 
 clean:

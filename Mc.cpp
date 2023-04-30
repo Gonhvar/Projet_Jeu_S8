@@ -8,7 +8,7 @@ Mc::Mc() {
     Sprite::joueur = this;
     
     PV = 20;
-    vitesse = 60.0;
+    vitesse = 75.0;
 
     _hauteur = 64;
     _largeur = 48;
