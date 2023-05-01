@@ -10,6 +10,10 @@ int Entite::getPV() {
 	return PV;
 }
 
+int Entite::getPVMax() {
+	return PVMax;
+}
+
 void Entite::setPV(int health) {
 	PV = health;
 }

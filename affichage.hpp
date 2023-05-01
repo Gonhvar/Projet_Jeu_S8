@@ -10,6 +10,12 @@
 
 #include "Sprite.hpp"
 #include "Enemies.hpp"
+#include "Mc.hpp"
+
+#include <stdlib.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+
 
 #define PATH_TO_TEXTURE_FOLDER "Textures/" // Chemin relatif vers le dossier où se trouvent les textures.
 #define NO_TEXTURE_FOUND "Textures/noTexture.png"
@@ -26,6 +32,8 @@ protected :
 
     std::string imageFormat = ".png";
     static const std::map<std::string, std::string> nomFichiers; // J'aimerai que ce soit initialisé lors du make. Exemple de ce que je veux dire par là :
+
+    Mc* player;
 
     float camPos[2]; // Position de la caméra
     float zoom; // Zoom de la caméra
@@ -48,6 +56,8 @@ public :
     void update();
 
     void affiche_all() const;
+
+    void afficheHealth();
 };
 
 #endif

@@ -33,7 +33,7 @@ void Affichage::visit(Sprite* s, const States* states) {
 	imIterator = imageChargees.find(states->spriteName);
 	if (imIterator != imageChargees.end()) { // Déjà chargée
 		s->setTexture(imIterator->second);
-		std::cout << "Image de " << states->spriteName << " déjà chargée :)" << std::endl;
+		//std::cout << "Image de " << states->spriteName << " déjà chargée :)" << std::endl;
 	}
 	else { // Sinon on la charge et on la stocke dans imageChargees
 		SDL_Texture* textureChargee;
@@ -55,8 +55,12 @@ void Affichage::visit(Sprite* s, const States* states) {
 			}
 		}
 		s->setTexture(newTexture);
-		
 		imageChargees[states->spriteName] = newTexture;
+
+		//On stock le pointeur vers le joueur
+		if(s->getName() == "Robot"){
+			player = dynamic_cast<Mc*>(s);
+		}
 	}
 
 	sprites.push_back(s);
@@ -67,17 +71,40 @@ void Affichage::enleveSprite(const Sprite& s) {
 }
 
 void Affichage::update(){
-	//enemiesUpdate(); ça ne devrait pas être là
+	//Ne fonctionne pas encore
+	//afficheHealth();
 	affiche_all();
 }
 
+//Cette fonction ne marche pas encore 
+void Affichage::afficheHealth(){
+
+	//this opens a font style and sets a size
+	TTF_Font* font = TTF_OpenFont("Sans.ttf", 24);
+
+	SDL_Color textColor = {255, 255, 255};
+
+	//On va chercher les caractéristiques du joueur
+	char strtext[100];
+	sprintf(strtext, "PV : %d/%d", player->getPV(), player->getPVMax());
+
+	SDL_Surface* textSurface = TTF_RenderText_Solid(font, strtext, textColor);
+	SDL_Texture* text = SDL_CreateTextureFromSurface(renderer, textSurface);
+
+	int text_width = textSurface->w;
+	int text_height = textSurface->h;
+
+	SDL_FreeSurface(textSurface);
+	//x, y, w, h
+	SDL_Rect renderQuad = { 20, 30, text_width, text_height };
+
+	SDL_RenderCopy(renderer, text, NULL, &renderQuad);
+	SDL_DestroyTexture(text);
+
+}
 
 void Affichage::affiche_all() const{
 	SDL_RenderClear(renderer);
-	
-	//std::cout << "affichage de : " << sprites[0] << " dont le nom est : " << sprites[0]->name << std::endl;
-	//std::cout << "affichage de : " << sprites[1] << " dont le nom est : " << sprites[1]->name << std::endl;
-	
 	SDL_Rect dest;
 	// On affiche la texture du sprite avec 
 	for(Sprite* s : sprites){

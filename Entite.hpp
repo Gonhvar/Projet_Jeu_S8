@@ -12,6 +12,7 @@ class Killable;
 class Entite : public Sprite {
 protected :
 	int PV = 1;
+	int PVMax = 1;
 	
 	float hitBox[HITBOX_PTS][2] = {
 		{0,0},
@@ -32,6 +33,7 @@ public :
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 	int getPV();
+	int getPVMax();
 	void setPV(int health);
 	void changePV(int change);
 

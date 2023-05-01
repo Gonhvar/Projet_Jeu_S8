@@ -13,7 +13,7 @@ const States etatsDesMc = { // Eviter de le modifier
 
 class Mc : public Killable {
 protected :
-
+	
 public :
     /* CONSTRUCTEURS ET DESTRUCTEURS */
 	Mc();

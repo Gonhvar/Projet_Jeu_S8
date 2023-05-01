@@ -81,6 +81,7 @@ public:
     
     const States* getStates();
     void setEtat(uint8_t toBe);
+    const std::string getName();
 };
 
 #endif

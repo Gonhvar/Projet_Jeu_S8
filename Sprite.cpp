@@ -111,3 +111,7 @@ void Sprite::update() {
 	}
 	else delay--;
 }
+
+const std::string Sprite::getName(){
+	return states->spriteName;
+}
