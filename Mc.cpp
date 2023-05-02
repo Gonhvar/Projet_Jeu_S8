@@ -22,7 +22,7 @@ Mc::Mc() {
     maxDelay = 20; // Change de frame tous les 20 ticks
 
     std::cout << "Création de Mc : " << states->spriteName << std::endl;
-
+    autoSetHitBox();
     addSprite();
 }
 
@@ -49,7 +49,7 @@ void Mc::get_keypress(){
         }
     }
     //printf("dx : %f | dy : %f \n", dx, dy);
-    move(dx, dy);
+    if (dx || dy)   move(dx, dy); // N'appelle move que s'il se déplace
 }
 
 void Mc::doKeyDown(SDL_KeyboardEvent *event)
@@ -82,6 +82,13 @@ void Mc::doKeyDown(SDL_KeyboardEvent *event)
             //printf("D\n"); 
             dx = vitesse;
 		}
+        
+        if (event->keysym.scancode == SDL_SCANCODE_Q) {
+            rotate(-0.1);
+        }
+        if (event->keysym.scancode == SDL_SCANCODE_E) {
+            rotate(0.1);
+        }
 	}
     //Lorsque la touche est appuyé longtemps 
     else{

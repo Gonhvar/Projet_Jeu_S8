@@ -4,8 +4,8 @@
 #pragma once
 #include "Sprite.hpp"
 
-#define HITBOX_PTS 2
-#define FPS 60
+#define HITBOX_PTS 4
+#define FPS 100
 
 class Killable;
 
@@ -16,8 +16,11 @@ protected :
 	
 	float hitBox[HITBOX_PTS][2] = {
 		{0,0},
+		{0,0},
+		{0,0},
 		{0,0}
 	};
+	float rayon = 0;
 	float vitesse = 1;
 	float dx = 0;
     float dy = 0;
@@ -37,8 +40,13 @@ public :
 	void setPV(int health);
 	void changePV(int change);
 
-	void translate(float dx, float dy);
+	void autoSetHitBox();
+
+	void translate(float depX, float depY);
 	void move(float moveX, float moveY);
+	float* collision(float* d);
+
+	void rotate(float alpha);
 
 	virtual void mort();
 

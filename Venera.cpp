@@ -34,7 +34,6 @@ void Venera::initialisation() {
 void Venera::update() {
 	// On récupére la touche pressé par le joueur
 	mc->update();
-	
 	for (Entite* sp : spawnpoints) {
 		//test si c'est bien un spawnpoint (peut etre pas necessaire en fonction de la suite du code)
 		if (dynamic_cast<SpawnPoint*>(sp) != nullptr)
@@ -74,6 +73,7 @@ int main(){
 		//Update
 		venera.update();
 
+
 		FrameEndTimeMs = SDL_GetTicks();
 
 		//On attends le temps requis pour avoir un nombre de FPS
@@ -85,7 +85,7 @@ int main(){
 		moyenne += FrameTimeMS;
 		if (!compteur--) {
 			moyenne /= echantillon;
-			std::cout << "FPS : " << moyenne << std::endl;
+			// std::cout << "FPS : " << moyenne << std::endl;
 			moyenne = 0;
 			compteur = echantillon;
 		}

@@ -35,6 +35,9 @@ float Sprite::getX() {
 float Sprite::getY() {
 	return _coord[1];
 }
+float Sprite::getAngle() {
+	return _coord[2];
+}
 
 void Sprite::setCoord(float x, float y, float theta) {
 	_coord[0] = x;

@@ -120,7 +120,10 @@ void Affichage::affiche_all() const{
 			// std::cout << "coordonnées récupérées" << std::endl;
 
 			//SDL_QueryTexture(s.textures[0], NULL, NULL, &dest.w, &dest.h);
-			SDL_RenderCopy(renderer, s->getRightTexture(), NULL, &dest);
+
+			SDL_RenderCopyEx(renderer, s->getRightTexture(), NULL, &dest,
+			s->getAngle()*180/M_PI, NULL, SDL_FLIP_NONE);
+			// SDL_RenderCopy(renderer, s->getRightTexture(), NULL, &dest);
 		}
 		else{
 			//Enlever de la liste 

@@ -23,8 +23,8 @@ public :
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
     void update();
-    
-    void translate(float dx, float dy);
+
+    void translate(float depX, float depY);
 
 
 	virtual void mort();
