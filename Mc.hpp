@@ -3,7 +3,9 @@
 
 #pragma once
 #include "Killable.hpp"
-//#include <SDL2/SDL.h>
+#include "Attacks.hpp"
+
+class Attacks;
 
 const States etatsDesMc = { // Eviter de le modifier
 	"Robot",
@@ -11,9 +13,16 @@ const States etatsDesMc = { // Eviter de le modifier
 	{2, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 };
 
+
 class Mc : public Killable {
 protected :
-	
+	//Multiplicateur de vitesse
+	float dashValue = 0;
+	bool dashOn = false;
+	uint32_t startDashTime;
+	uint32_t actualDashTime;
+	Attacks* attack;
+
 public :
     /* CONSTRUCTEURS ET DESTRUCTEURS */
 	Mc();

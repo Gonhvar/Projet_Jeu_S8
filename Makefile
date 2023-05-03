@@ -1,5 +1,7 @@
-prog: Sprite.o affichage.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o
-	g++ -o prog Sprite.o affichage.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o -lSDL2 -lSDL2_image -lSDL2_ttf
+prog: Sprite.o affichage.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o Attacks.o
+	g++ -o prog Sprite.o affichage.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o Attacks.o -lSDL2 -lSDL2_image -lSDL2_ttf
+
+
 
 Sprite.o : Sprite.cpp Sprite.hpp affichage.hpp
 	g++ -Wall Sprite.cpp -c
@@ -10,7 +12,7 @@ Entite.o : Entite.cpp Entite.hpp Sprite.hpp
 Killable.o : Killable.cpp Killable.hpp Entite.hpp
 	g++ -Wall Killable.cpp -c
 
-Mc.o : Mc.cpp Mc.hpp Killable.hpp 
+Mc.o : Mc.cpp Mc.hpp Killable.hpp Attacks.hpp
 	g++ -Wall Mc.cpp -c
 	
 Drop.o : Drop.cpp Drop.hpp Killable.hpp 
@@ -18,6 +20,9 @@ Drop.o : Drop.cpp Drop.hpp Killable.hpp
 
 Enemies.o : Enemies.cpp Enemies.hpp Drop.hpp 
 	g++ -Wall Enemies.cpp -c
+
+Attacks.o : Attacks.cpp Attacks.hpp Mc.hpp
+	g++ -Wall Attacks.cpp -c
 
 BasicSkeleton.o : BasicSkeleton.cpp BasicSkeleton.hpp Enemies.hpp 
 	g++ -Wall BasicSkeleton.cpp -c

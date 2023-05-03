@@ -44,6 +44,7 @@ void Entite::move(float moveX, float moveY) { // Fait se déplacer selon un vect
 	double norme = sqrt(moveX*moveX + moveY*moveY) + 0.000001;
     moveX /= norme;
     moveY /= norme;
+	//std::cout << "move X :" << moveX << " move Y :" << moveY << std::endl;
 	translate(moveX * vitesse,  moveY * vitesse);
 }
 

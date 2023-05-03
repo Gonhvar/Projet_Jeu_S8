@@ -11,6 +11,7 @@ Mc::Mc() {
     PVMax = PV;
 
     vitesse = 75.0;
+    dashValue = 4.0;
 
     _hauteur = 64;
     _largeur = 48;
@@ -24,11 +25,23 @@ Mc::Mc() {
     std::cout << "Création de Mc : " << states->spriteName << std::endl;
 
     addSprite();
+    attack = new Attacks(this);
 }
 
 void Mc::update() {
     Sprite::update();
-    get_keypress();
+    if(!dashOn){
+        get_keypress();
+    }else{
+        //Regarde si le temps de dash est fini (bloque les autres mouvement)
+        actualDashTime = SDL_GetTicks() - startDashTime;
+        //std::cout << actualDashTime << std::endl;
+        if(actualDashTime > 1000/dashValue){
+            dashOn = false;
+            vitesse /=dashValue;
+        }
+    }
+    move(dx, dy);
 }
 
 void Mc::get_keypress(){
@@ -48,8 +61,9 @@ void Mc::get_keypress(){
             default : break;
         }
     }
+    
     //printf("dx : %f | dy : %f \n", dx, dy);
-    move(dx, dy);
+    
 }
 
 void Mc::doKeyDown(SDL_KeyboardEvent *event)
@@ -60,6 +74,18 @@ void Mc::doKeyDown(SDL_KeyboardEvent *event)
         if(event->keysym.scancode == SDL_SCANCODE_ESCAPE){
             exit(0);
         }
+
+        if (event->keysym.scancode == SDL_SCANCODE_SPACE){
+            //std::cout << "dash" << std::endl;
+            //std::cout << "direction dx " << dx << " dy : "<< dy  << std::endl;
+            if(!dashOn){
+                vitesse *=dashValue;
+                startDashTime = SDL_GetTicks();
+            }
+            
+            dashOn = true;
+        }
+        
         //On est actuellement en ZQSD
 		if (event->keysym.scancode == SDL_SCANCODE_W)
 		{
@@ -82,6 +108,17 @@ void Mc::doKeyDown(SDL_KeyboardEvent *event)
             //printf("D\n"); 
             dx = vitesse;
 		}
+
+        if (event->keysym.scancode == SDL_SCANCODE_J)
+		{
+            //light
+            attack->updateAttack(1);
+		}
+        else if(event->keysym.scancode == SDL_SCANCODE_K){
+            //heavy
+            attack->updateAttack(2);
+        }
+
 	}
     //Lorsque la touche est appuyé longtemps 
     else{
@@ -96,24 +133,36 @@ void Mc::doKeyUp(SDL_KeyboardEvent *event)
         //On est actuellement en ZQSD
         if (event->keysym.scancode == SDL_SCANCODE_W)
         {
-            //printf("Z\n");
-            dy = 0;
+            if(dy < 0){
+                //printf("Z\n");
+                dy = 0;
+            }
         }
         else if (event->keysym.scancode == SDL_SCANCODE_S)
         {
-            //printf("S\n"); 
-            dy = 0;
+            if(dy > 0){
+                //printf("S\n"); 
+                dy = 0;
+            }
         }
 
         if (event->keysym.scancode == SDL_SCANCODE_A)
         {
-            //printf("Q\n"); 
-            dx = 0;
+            if(dx < 0){
+                //printf("Q\n"); 
+                dx = 0;
+            }
         }
         else if (event->keysym.scancode == SDL_SCANCODE_D)
         {
-            //printf("D\n"); 
-            dx = 0;
+            if(dx > 0){
+                //printf("D\n"); 
+                dx = 0;
+            }
+        }
+
+        if (event->keysym.scancode == SDL_SCANCODE_SPACE){
+            //std::cout << "release dash" << std::endl;
         }
     }
 }
