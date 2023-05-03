@@ -10,7 +10,7 @@ class Attacks : public Entite {
 protected:
 	int state;
 	Mc* joueur;
-	std::vector<char> combo;
+	std::string combo;
 
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
@@ -20,6 +20,7 @@ public:
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 	void updateAttack(int attack);
+	void update();
 
 };
 

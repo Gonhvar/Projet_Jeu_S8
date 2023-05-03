@@ -27,7 +27,7 @@ private :
 	std::vector<Drop*> drop; // On fait la distinction entre les Enemies et les Drop car les Enemies prennent des décisions.
 							// ça évite de faire des cast.
 	//Map map;
-	std::vector<Entite*> spawnpoints;
+	std::vector<Entite*> entities;
 
 
 public : // J'ai mis ça public parce que sinon on ne pouvait pas y accéder dans le main. On réglera ça plus tard.

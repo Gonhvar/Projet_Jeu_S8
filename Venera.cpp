@@ -27,19 +27,13 @@ void Venera::pushBackEnemies(Enemies* en){
 void Venera::initialisation() {
 	mc = new Mc();
 	//enemies.push_back(new BasicSkeleton(100, 100));
-	spawnpoints.push_back(new SpawnPoint(50, 50, this));
-	
+	entities.push_back(new SpawnPoint(50, 50, this));
 }
 
 void Venera::update() {
 	
-	for (Entite* sp : spawnpoints) {
-		//test si c'est bien un spawnpoint (peut etre pas necessaire en fonction de la suite du code)
-		if (dynamic_cast<SpawnPoint*>(sp) != nullptr)
-		{
-			//Le dynamic cast est obligé
-			dynamic_cast<SpawnPoint*>(sp)->update();
-		}
+	for (Entite* sp : entities) {
+		sp->update();
 	}
 
 	for (Enemies* enemy : enemies) {
