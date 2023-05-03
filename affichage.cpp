@@ -14,6 +14,24 @@ Affichage::Affichage(SDL_Renderer* rend) : renderer(rend) {
 	if (!noTexture) { // L'image n'a pas pu être chargée. On prend la texture par défaut.
 		std::cout << "Erreur de chargement de noTexture : ça sans pas bon là" << std::endl;
 	}
+
+	if ( TTF_Init() < 0 ) {
+		std::cout << "Error initializing SDL_ttf: " << TTF_GetError() << std::endl;
+	}else{
+		//this opens a font style and sets a size
+		font = TTF_OpenFont("Textures/Font/OpenSans-Regular.ttf", 20);
+		if(!font){
+			printf("TTF_OpenFont: %s\n", TTF_GetError());
+		}
+
+		//Blanc
+		textColor = {255, 255, 255};
+	}
+}
+
+Affichage::~Affichage(){
+	TTF_CloseFont(font);
+	TTF_Quit();
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
@@ -71,40 +89,41 @@ void Affichage::enleveSprite(const Sprite& s) {
 }
 
 void Affichage::update(){
-	//Ne fonctionne pas encore
-	//afficheHealth();
+	SDL_RenderClear(renderer);
+	afficheHealth();
 	affiche_all();
 }
 
 //Cette fonction ne marche pas encore 
 void Affichage::afficheHealth(){
+	SDL_Rect dest;
+	SDL_Surface* textSurface;
+	SDL_Texture* text;
 
-	//this opens a font style and sets a size
-	TTF_Font* font = TTF_OpenFont("Sans.ttf", 24);
+	//On va chercher les caractéristiques du joueur (jsp qui est le moins couteux entre ces deux méthodes)
+	// char strtext[100];
+	// sprintf(strtext, "PV : %d/%d", player->getPV(), player->getPVMax());
 
-	SDL_Color textColor = {255, 255, 255};
+	std::string strtext = "PV : " + std::to_string(player->getPV()) + "/" + std::to_string(player->getPVMax());
+	
+	//std::cout << strtext << std::endl;
+	
+	textSurface = TTF_RenderText_Solid(font, strtext.c_str(), textColor);
+	text = SDL_CreateTextureFromSurface(renderer, textSurface);
 
-	//On va chercher les caractéristiques du joueur
-	char strtext[100];
-	sprintf(strtext, "PV : %d/%d", player->getPV(), player->getPVMax());
+	dest.x = 10;
+	dest.y = 0;
+	dest.w = textSurface->w;
+	dest.h = textSurface->h;
+	
+	SDL_RenderCopy(renderer, text, NULL, &dest);
 
-	SDL_Surface* textSurface = TTF_RenderText_Solid(font, strtext, textColor);
-	SDL_Texture* text = SDL_CreateTextureFromSurface(renderer, textSurface);
-
-	int text_width = textSurface->w;
-	int text_height = textSurface->h;
-
-	SDL_FreeSurface(textSurface);
-	//x, y, w, h
-	SDL_Rect renderQuad = { 20, 30, text_width, text_height };
-
-	SDL_RenderCopy(renderer, text, NULL, &renderQuad);
 	SDL_DestroyTexture(text);
-
+	SDL_FreeSurface(textSurface);
 }
 
 void Affichage::affiche_all() const{
-	SDL_RenderClear(renderer);
+	
 	SDL_Rect dest;
 	// On affiche la texture du sprite avec 
 	for(Sprite* s : sprites){

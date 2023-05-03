@@ -39,11 +39,14 @@ protected :
     float zoom; // Zoom de la caméra
 
     SDL_Texture* noTexture; // Texture mise par défaut lorsqu'aucune n'a été trouvée
-
+    TTF_Font* font;
+    SDL_Color textColor;
+    
 public :
     /* CONSTRUCTEURS ET DESTRUCTEURS */
     Affichage(SDL_Renderer *rend);
     Affichage();
+    ~Affichage();
     /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
     void setZoom(float z);
