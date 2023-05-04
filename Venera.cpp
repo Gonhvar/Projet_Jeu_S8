@@ -15,7 +15,6 @@ Venera::Venera() {
 		afficheur = new Affichage(app->renderer);
 		Sprite::afficheur = afficheur;
 	}
-
 	initialisation();
 }
 
@@ -27,21 +26,12 @@ void Venera::pushBackEnemies(Enemies* en){
 void Venera::initialisation() {
 	mc = new Mc();
 	//enemies.push_back(new BasicSkeleton(100, 100));
-	spawnpoints.push_back(new SpawnPoint(50, 50, this));
-	
+	entities.push_back(new SpawnPoint(50, 50, this));
 }
 
 void Venera::update() {
-	// On récupére la touche pressé par le joueur
-	mc->update();
-	
-	for (Entite* sp : spawnpoints) {
-		//test si c'est bien un spawnpoint (peut etre pas necessaire en fonction de la suite du code)
-		if (dynamic_cast<SpawnPoint*>(sp) != nullptr)
-		{
-			//Le dynamic cast est obligé
-			dynamic_cast<SpawnPoint*>(sp)->update();
-		}
+	for (Entite* sp : entities) {
+		sp->update();
 	}
 
 	for (Enemies* enemy : enemies) {
@@ -53,6 +43,8 @@ void Venera::update() {
 		droper->update();
 	}
 
+	// On récupére la touche pressé par le joueur
+	mc->update();
 	afficheur->update();
 }
 
@@ -87,7 +79,7 @@ int main(){
 		moyenne += FrameTimeMS;
 		if (!compteur--) {
 			moyenne /= echantillon;
-			std::cout << "FPS : " << moyenne << std::endl;
+			//std::cout << "FPS : " << moyenne << std::endl;
 			moyenne = 0;
 			compteur = echantillon;
 		}

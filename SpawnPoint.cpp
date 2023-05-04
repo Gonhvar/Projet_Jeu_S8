@@ -8,6 +8,8 @@ SpawnPoint::SpawnPoint(float x, float y, Venera* main) : _main(main) {
     i = 0;
     phase = 0;
     FrameStartTimeMs = SDL_GetTicks();
+
+    states = &(etatsDesSpawnPoint);
 };;
 
 void SpawnPoint::spawn(int select, float timing){

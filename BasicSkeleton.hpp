@@ -4,7 +4,7 @@
 #pragma once
 #include "Enemies.hpp"
 
-const States etatsDesBasicSkeleton = { // Eviter de le modifier
+const States etatsDesBasicSkeleton = {
 	"BasicSkeleton",
 	1,
 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
