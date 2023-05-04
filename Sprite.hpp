@@ -13,6 +13,7 @@
 
 class Affichage;
 
+
 typedef std::vector<std::vector<SDL_Texture*>> TexturePack;
 
 #define MAX_FPE 10

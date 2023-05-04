@@ -4,7 +4,7 @@ prog: Sprite.o affichage.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o Ba
 Sprite.o : Sprite.cpp Sprite.hpp affichage.hpp
 	g++ -Wall Sprite.cpp -c
 
-Entite.o : Entite.cpp Entite.hpp Sprite.hpp
+Entite.o : Entite.cpp Entite.hpp Sprite.hpp Venera.hpp
 	g++ -Wall Entite.cpp -c
 
 Killable.o : Killable.cpp Killable.hpp Entite.hpp

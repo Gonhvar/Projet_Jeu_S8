@@ -3,7 +3,6 @@
 
 #pragma once
 #include "Killable.hpp"
-//#include <SDL2/SDL.h>
 
 const States etatsDesMc = { // Eviter de le modifier
 	"Robot",

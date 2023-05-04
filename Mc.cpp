@@ -10,7 +10,7 @@ Mc::Mc() {
     PV = 20;
     PVMax = PV;
 
-    vitesse = 75.0;
+    vitesse = 150.0;
 
     _hauteur = 64;
     _largeur = 48;
@@ -23,6 +23,7 @@ Mc::Mc() {
 
     std::cout << "Création de Mc : " << states->spriteName << std::endl;
 
+    autoSetHitBox();
     addSprite();
 }
 

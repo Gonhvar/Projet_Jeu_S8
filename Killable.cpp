@@ -1,6 +1,8 @@
 #include "Killable.hpp"
 
-Killable::Killable(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]) : Entite(sName, nbE, nbFPE, this) {}
+Killable::Killable(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]) : Entite(sName, nbE, nbFPE, this) {
+    possesseur = this;
+}
 
 void Killable::translate(float dx, float dy) {
     Entite::translate(dx, dy); // Le Killable se déplace lui-même.

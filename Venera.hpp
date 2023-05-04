@@ -29,6 +29,8 @@ private :
 	//Map map;
 	std::vector<Entite*> spawnpoints;
 
+	std::vector<Entite*> allEntites;
+
 
 public : // J'ai mis ça public parce que sinon on ne pouvait pas y accéder dans le main. On réglera ça plus tard.
 	App* app;

@@ -37,7 +37,7 @@ void SpawnPoint::spawnWave(int selectWave){
             switch(phase){
                 case 0 : 
                     //std::cout << "Phase 0" << std::endl;
-                    if(i<5){
+                    if(i<1){
                         spawn(0, 2000.0);
                         
                     }

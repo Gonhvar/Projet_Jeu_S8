@@ -45,6 +45,7 @@ void Venera::update() {
 	}
 
 	for (Enemies* enemy : enemies) {
+		enemy->contact(mc);
 		enemy->update();
 	}
 
@@ -56,6 +57,7 @@ void Venera::update() {
 }
 
 int main(){
+	std::cout << "main start" << std::endl;
 	Venera venera;
 	//venera.initialisation();
 	Uint32 FrameStartTimeMs;
