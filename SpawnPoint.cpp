@@ -10,7 +10,7 @@ SpawnPoint::SpawnPoint(float x, float y, Venera* main) : _main(main) {
     FrameStartTimeMs = SDL_GetTicks();
 
     states = &(etatsDesSpawnPoint);
-};;
+}
 
 void SpawnPoint::spawn(int select, float timing){
     //timing -> 1000 = 1 seconde

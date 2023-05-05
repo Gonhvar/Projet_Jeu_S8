@@ -25,13 +25,17 @@ void Venera::pushBackEnemies(Enemies* en){
 
 void Venera::initialisation() {
 	mc = new Mc();
-	//enemies.push_back(new BasicSkeleton(100, 100));
+	enemies.push_back(new BasicSkeleton(100, 100));
 	entities.push_back(new SpawnPoint(50, 50, this));
 }
 
 void Venera::update() {
 	for (Entite* sp : entities) {
-		sp->update();
+		sp->update(); // Appel le update de Entite pas de SpawnPoint
+						// Il vaut mieux avoir une liste de spawnPoint
+						// OU update() devient un attribut de type pointeur de fonction
+						// On peut alors donner à chaque Entite une fonction update ou il se static_cast correctement dedans;
+
 	}
 
 	for (Enemies* enemy : enemies) {

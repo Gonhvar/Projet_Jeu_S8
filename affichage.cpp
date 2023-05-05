@@ -127,16 +127,13 @@ void Affichage::affiche_all() const{
 	SDL_Rect dest;
 	// On affiche la texture du sprite avec 
 	for(Sprite* s : sprites){
-		// std::cout << "affichage de : " << s << " dont le nom est : " << s->getStates()->spriteName << std::endl;
 		if(s->getOnScreen()){
 			// position relative du Sprite par rapport à la caméra
-			dest.x = (s->getCoord()[0] - camPos[0]) * zoom;
-			dest.y = (s->getCoord()[1] - camPos[1]) * zoom;
+			dest.x = (s->getSpriteX() - camPos[0]) * zoom;
+			dest.y = (s->getSpriteY() - camPos[1]) * zoom;
 
 			dest.w = s->getLargeur() * zoom;
 			dest.h = s->getHauteur() * zoom;
-
-			// std::cout << "coordonnées récupérées" << std::endl;
 
 			//SDL_QueryTexture(s.textures[0], NULL, NULL, &dest.w, &dest.h);
 			SDL_RenderCopy(renderer, s->getRightTexture(), NULL, &dest);
@@ -144,7 +141,6 @@ void Affichage::affiche_all() const{
 		else{
 			//Enlever de la liste 
 		}
-		// std::cout << "fin affichage " << s->name << std::endl;
 	}
 	SDL_RenderPresent(renderer); // Met à jour l'écran avec le backbuffer du renderer
 };

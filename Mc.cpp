@@ -15,6 +15,7 @@ Mc::Mc() {
 
     _hauteur = 64;
     _largeur = 48;
+    rayon = 24;
 
     this->setCoord(10,20,0);
     this->setOnScreen(true);
@@ -39,10 +40,11 @@ void Mc::update() {
         //std::cout << actualDashTime << std::endl;
         if(actualDashTime > 1000/dashValue){
             dashOn = false;
-            vitesse /=dashValue;
+            vitesse /= dashValue;
         }
     }
-    move(dx, dy);
+    Vector2D v(dx, dy);
+    translate(move(v));
 }
 
 void Mc::get_keypress(){
@@ -80,7 +82,7 @@ void Mc::doKeyDown(SDL_KeyboardEvent *event)
             //std::cout << "dash" << std::endl;
             //std::cout << "direction dx " << dx << " dy : "<< dy  << std::endl;
             if(!dashOn){
-                vitesse *=dashValue;
+                vitesse *= dashValue;
                 startDashTime = SDL_GetTicks();
             }
             

@@ -36,6 +36,14 @@ float Sprite::getY() {
 	return _coord[1];
 }
 
+float Sprite::getSpriteX() {
+	return _coord[0] - _largeur/2;
+}
+
+float Sprite::getSpriteY() {
+	return _coord[1] - _hauteur/2;
+}
+
 void Sprite::setCoord(float x, float y, float theta) {
 	_coord[0] = x;
 	_coord[1] = y;

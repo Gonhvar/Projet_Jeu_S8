@@ -5,6 +5,7 @@ BasicSkeleton::BasicSkeleton(float _x, float _y) {
     vitesse = 30.0;
     _hauteur = 64;
     _largeur = 48;
+    rayon = 24;
 
     this->setCoord(_x,_y,0);
     this->setOnScreen(true);
@@ -31,8 +32,9 @@ void BasicSkeleton::deplacementBehaviour(){
         dy = vitesse;
     }
 */
-    //Faire le test des hitbox maitenant 
-    move((joueur->getX() - _coord[0]), (joueur->getY() - _coord[1]));
+    //Faire le test des hitbox maitenant
+    Vector2D v(joueur->getX() - _coord[0], joueur->getY() - _coord[1]);
+    translate(moveCollisionCercle(static_cast<Entite*>(joueur), move(v)));
 }
 
 void BasicSkeleton::attackBehaviour(){

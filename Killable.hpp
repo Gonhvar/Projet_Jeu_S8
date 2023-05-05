@@ -24,7 +24,7 @@ public :
 
     void update();
     
-    void translate(float dx, float dy);
+    void translate(Vector2D& v);
 
 
 	virtual void mort();

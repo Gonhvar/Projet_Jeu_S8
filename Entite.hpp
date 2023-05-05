@@ -3,6 +3,7 @@
 
 #pragma once
 #include "Sprite.hpp"
+#include "Vector2D.hpp"
 
 #define HITBOX_PTS 2
 #define FPS 60
@@ -18,6 +19,8 @@ protected :
 		{0,0},
 		{0,0}
 	};
+	float rayon = 0;
+
 	float vitesse = 1;
 	float dx = 0;
     float dy = 0;
@@ -39,9 +42,12 @@ public :
 	void setPV(int health);
 	void changePV(int change);
 
-	void translate(float dx, float dy);
-	void move(float moveX, float moveY);
+	void translate(Vector2D& v);
+	Vector2D& move(Vector2D& v);
+	Vector2D& moveCollisionCercle(Entite* other, Vector2D& v);
+	
 	bool contact(Entite* other);
+
 
 	virtual void mort();
 

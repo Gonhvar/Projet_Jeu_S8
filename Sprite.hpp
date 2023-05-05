@@ -27,7 +27,7 @@ typedef struct States_t{ // sert à décrire les états qu'un Sprite peut avoir,
 class Sprite {
 protected :
 
-    float _coord[3] = { 0, 0, 0 }; // Coordonnées en haut à gauche x, y, theta
+    float _coord[3] = { 0, 0, 0 }; // Coordonnées au centre du rectangle x, y, theta
     float _largeur = 1; // Largeur voulue de la texture associée au sprite
     float _hauteur = 1; // Hauteur voulue de la texture associée au sprite
     bool onScreen = 0;
@@ -63,6 +63,8 @@ public:
     float* getCoord();
     float getX();
     float getY();
+    float getSpriteX();
+    float getSpriteY();
 
     void setCoord(float x, float y, float theta = 0.);
     void setCoord(float* coord);

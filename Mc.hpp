@@ -10,7 +10,7 @@ class Attacks;
 const States etatsDesMc = { // Eviter de le modifier
 	"Robot",
 	1,
-	{2, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 };
 
 

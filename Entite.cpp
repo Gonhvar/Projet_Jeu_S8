@@ -5,16 +5,15 @@ std::vector<Entite*> Entite::allEntities;
 Entite::Entite(const Entite& other) {}
 Entite::Entite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE], Killable* parent) : Sprite(sName, nbE, nbFPE) {
 	possesseur = parent;
-	std::cout << "passage ???" << std::endl;
 	//Entite::allEntities.push_back(this);
 }
 
 
 void Entite::autoSetHitBox() {
-	hitBox[0][0] = _coord[0];
-	hitBox[0][1] = _coord[1];
-	hitBox[1][0] = _coord[0] + _largeur;
-	hitBox[1][1] = _coord[1] + _hauteur;
+	hitBox[0][0] = _coord[0] - _largeur/2;
+	hitBox[0][1] = _coord[1] - _hauteur/2;
+	hitBox[1][0] = _coord[0] + _largeur/2;
+	hitBox[1][1] = _coord[1] + _hauteur/2;
 }
 
 
@@ -38,26 +37,41 @@ void Entite::changePV(int change) {
 	}
 }
 
-void Entite::translate(float dx, float dy) {
-	_coord[0] += dx/FPS;
-	_coord[1] += dy/FPS;
+void Entite::translate(Vector2D& v) {
+	// Décale l'Entite de dx, dy en faisant fi de toute considération
+	_coord[0] += v.x;
+	_coord[1] += v.y;
 	
 	for (uint8_t i = 0; i < HITBOX_PTS; i++) {
-		//On déplace les points qui compose le rectangle de la hitbox
-		hitBox[i][0] += dx/FPS;
-		hitBox[i][1] += dy/FPS;
+		//On déplace les points qui composent le rectangle de la hitbox
+		hitBox[i][0] += v.x;
+		hitBox[i][1] += v.y;
 	}
 	
 	//printf("hitbox1 : %f et %f\n", hitBox[0][0], hitBox[0][1]);
 }
 
-void Entite::move(float moveX, float moveY) { // Fait se déplacer selon un vecteur à l'allure vitesse
-	// C'est probablement là que je mettrai la détection de contacts.
-	double norme = sqrt(moveX*moveX + moveY*moveY) + 0.000001;
-    moveX /= norme;
-    moveY /= norme;
-	//std::cout << "move X :" << moveX << " move Y :" << moveY << std::endl;
-	translate(moveX * vitesse,  moveY * vitesse);
+Vector2D& Entite::move(Vector2D& v) {
+	// Normalise le vecteur à la vitesse this->vitesse
+	v.normeToV(vitesse/FPS);
+	return v;
+}
+
+Vector2D& Entite::moveCollisionCercle(Entite* other, Vector2D& v) {
+	// On lui passe l'Entite avec laquelle on prévérifie la collision puis on modifie en conséquence le déplacement voulu
+	float distance = sqrt((other->_coord[0]-_coord[0])*(other->_coord[0]-_coord[0]) + (other->_coord[1]-_coord[1])*(other->_coord[1]-_coord[1]));
+	float normeVPost;
+	if (distance < v.norme + rayon + other->rayon) {
+		normeVPost = distance - rayon - other->rayon;
+		if (v.norme) {
+			v.normeToV(normeVPost);
+		} else {
+			v.redef(other->_coord[0] - _coord[0], other->_coord[1] - _coord[1]);
+			// Pas fini :((((
+		}
+	}
+	
+	return v;
 }
 
 bool Entite::contact(Entite* other) {
@@ -65,7 +79,6 @@ bool Entite::contact(Entite* other) {
 		hitBox[1][0] > other->hitBox[0][0] &&
 		hitBox[0][1] < other->hitBox[1][1] &&
 		hitBox[1][1] > other->hitBox[0][1]) {
-			std::cout << "contact" << std::endl;
 			return true;
 		}
 	return false;
