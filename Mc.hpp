@@ -20,6 +20,7 @@ protected :
 	float dashValue = 0;
 	bool dashOn = false;
 	uint32_t startDashTime;
+	uint32_t cdDashTime;
 	uint32_t actualDashTime;
 	Attacks* attack;
 
@@ -31,7 +32,6 @@ public :
 	void update();
 
 	void get_keypress();
-
 	void doKeyDown(SDL_KeyboardEvent *event);
 	void doKeyUp(SDL_KeyboardEvent *event);
 };

@@ -25,12 +25,13 @@ void Venera::pushBackEnemies(Enemies* en){
 
 void Venera::initialisation() {
 	mc = new Mc();
-	enemies.push_back(new BasicSkeleton(100, 100));
-	entities.push_back(new SpawnPoint(50, 50, this));
+	//enemies.push_back(new BasicSkeleton(100, 100));
+	spawnPoints.push_back(new SpawnPoint(50, 50, this));
 }
 
 void Venera::update() {
-	for (Entite* sp : entities) {
+
+	for (SpawnPoint* sp : spawnPoints) {
 		sp->update(); // Appel le update de Entite pas de SpawnPoint
 						// Il vaut mieux avoir une liste de spawnPoint
 						// OU update() devient un attribut de type pointeur de fonction
@@ -77,9 +78,9 @@ int main(){
 		//On attends le temps requis pour avoir un nombre de FPS
 		while(SDL_GetTicks() - FrameStartTimeMs < FrameNormalTimeMs);
 
+		//Calcul des FPS
 		FrameTimeMS = FrameEndTimeMs - FrameStartTimeMs;
 		FrameTimeMS = 1000 / (float) FrameTimeMS;
-		
 		moyenne += FrameTimeMS;
 		if (!compteur--) {
 			moyenne /= echantillon;

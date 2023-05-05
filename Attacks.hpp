@@ -1,6 +1,7 @@
 #ifndef ATTACKS_HPP
 #define ATTACKS_HPP
 
+
 #pragma once
 #include "Mc.hpp"
 
@@ -11,6 +12,8 @@ protected:
 	int state;
 	Mc* joueur;
 	std::string combo;
+	float playerCoord[2];
+	int attackDamage;
 
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
@@ -19,8 +22,10 @@ public:
 	~Attacks();
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
+	void updatePlayerCoord();
+	void updateHitBox(float attackRangeX, float attackRangeY);
 	void updateAttack(int attack);
-	void update();
+	void update(int directionX, int directionY);
 
 };
 

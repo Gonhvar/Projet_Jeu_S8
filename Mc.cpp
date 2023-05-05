@@ -23,6 +23,8 @@ Mc::Mc() {
     states = &(etatsDesMc);
     maxDelay = 20; // Change de frame tous les 20 ticks
 
+    cdDashTime = SDL_GetTicks();
+
     std::cout << "Création de Mc : " << states->spriteName << std::endl;
 
     autoSetHitBox();
@@ -41,8 +43,12 @@ void Mc::update() {
         if(actualDashTime > 1000/dashValue){
             dashOn = false;
             vitesse /= dashValue;
+            cdDashTime = SDL_GetTicks();
         }
     }
+
+    //faire test de direction ici;
+    attack->update(dx, dy);
     Vector2D v(dx, dy);
     translate(move(v));
 }
@@ -81,35 +87,36 @@ void Mc::doKeyDown(SDL_KeyboardEvent *event)
         if (event->keysym.scancode == SDL_SCANCODE_SPACE){
             //std::cout << "dash" << std::endl;
             //std::cout << "direction dx " << dx << " dy : "<< dy  << std::endl;
-            if(!dashOn){
+            if( (SDL_GetTicks() - cdDashTime) > 200){
                 vitesse *= dashValue;
                 startDashTime = SDL_GetTicks();
+                dashOn = true;
+            }else{
+                std::cout << "Cooldown en cours" << std::endl;
             }
-            
-            dashOn = true;
         }
         
         //On est actuellement en ZQSD
 		if (event->keysym.scancode == SDL_SCANCODE_W)
 		{
             //printf("Z\n");
-            dy = -vitesse;
+            dy = -1;
 		}
         else if (event->keysym.scancode == SDL_SCANCODE_S)
 		{
             //printf("S\n"); 
-            dy = vitesse;
+            dy = 1;
 		}
 
 		if (event->keysym.scancode == SDL_SCANCODE_A)
 		{
             //printf("Q\n"); 
-            dx = -vitesse;
+            dx = -1;
 		}
         else if (event->keysym.scancode == SDL_SCANCODE_D)
 		{
             //printf("D\n"); 
-            dx = vitesse;
+            dx = 1;
 		}
 
         if (event->keysym.scancode == SDL_SCANCODE_J)

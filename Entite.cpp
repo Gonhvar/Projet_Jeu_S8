@@ -31,9 +31,9 @@ void Entite::setPV(int health) {
 
 void Entite::changePV(int change) {
 	PV += change;
-
 	if(PV<=0){
 		//Tuer l'Entite
+		mort();
 	}
 }
 
@@ -59,15 +59,20 @@ Vector2D& Entite::move(Vector2D& v) {
 
 Vector2D& Entite::moveCollisionCercle(Entite* other, Vector2D& v) {
 	// On lui passe l'Entite avec laquelle on prévérifie la collision puis on modifie en conséquence le déplacement voulu
+	//Distance entre les deux entite
 	float distance = sqrt((other->_coord[0]-_coord[0])*(other->_coord[0]-_coord[0]) + (other->_coord[1]-_coord[1])*(other->_coord[1]-_coord[1]));
 	float normeVPost;
+
 	if (distance < v.norme + rayon + other->rayon) {
 		normeVPost = distance - rayon - other->rayon;
 		if (v.norme) {
 			v.normeToV(normeVPost);
-		} else {
+		} 
+		else {
 			v.redef(other->_coord[0] - _coord[0], other->_coord[1] - _coord[1]);
 			// Pas fini :((((
+			// ^^^ Yes, ça serait bien que le joueur soit repoussé ici 
+			//(et peut etre le mob mais certains seront à distance donc étrange)
 		}
 	}
 	

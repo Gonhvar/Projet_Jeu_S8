@@ -48,7 +48,6 @@ public :
 	
 	bool contact(Entite* other);
 
-
 	virtual void mort();
 
 	float getDx();
