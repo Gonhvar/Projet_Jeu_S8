@@ -45,6 +45,7 @@ public :
 	void translate(Vector2D& v);
 	Vector2D& move(Vector2D& v);
 	Vector2D& moveCollisionCercle(Entite* other, Vector2D& v);
+	Vector2D& moveCollisionRectangle(Entite* other, Vector2D& v);
 	
 	bool contact(Entite* other);
 
