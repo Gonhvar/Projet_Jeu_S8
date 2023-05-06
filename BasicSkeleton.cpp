@@ -28,7 +28,7 @@ void BasicSkeleton::deplacementBehaviour(){
     Vector2D v(joueur->getX() - _coord[0], joueur->getY() - _coord[1]);
 
     //Test si déplacement*vitesse touche le joueur avant de le réaliser
-    translate(moveCollisionCercle(static_cast<Entite*>(joueur), move(v)));
+    translate(moveCollisionRectangle(static_cast<Entite*>(joueur), move(v)));
 }
 
 void BasicSkeleton::attackBehaviour(){
