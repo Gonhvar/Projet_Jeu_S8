@@ -74,7 +74,7 @@ void Affichage::visit(Sprite* s, const States* states) {
 		}
 		s->setTexture(newTexture);
 		imageChargees[states->spriteName] = newTexture;
-
+		
 		//On stock le pointeur vers le joueur
 		if(s->getName() == "Robot"){
 			player = dynamic_cast<Mc*>(s);

@@ -28,9 +28,9 @@ public :
     /* CONSTRUCTEURS ET DESTRUCTEURS */
 	Mc();
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+	Attacks* getAttack();
 
 	void update();
-
 	void get_keypress();
 	void doKeyDown(SDL_KeyboardEvent *event);
 	void doKeyUp(SDL_KeyboardEvent *event);

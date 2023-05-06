@@ -7,13 +7,22 @@
 
 class Mc;
 
+const States etatAttacks = {
+	"noTexture",
+	1,
+	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+};
+
 class Attacks : public Entite {
 protected:
 	int state;
-	Mc* joueur;
-	std::string combo;
-	float playerCoord[2];
+	int range;
 	int attackDamage;
+	uint32_t cdAttack;
+	std::string combo;
+
+	float playerCoord[2];
+	Mc* joueur;
 
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */

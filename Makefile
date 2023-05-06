@@ -14,15 +14,15 @@ Entite.o : Entite.cpp Entite.hpp Sprite.hpp Vector2D.hpp
 
 Killable.o : Killable.cpp Killable.hpp Entite.hpp
 	g++ -Wall Killable.cpp -c
-
-Mc.o : Mc.cpp Mc.hpp Killable.hpp Attacks.hpp
-	g++ -Wall Mc.cpp -c
 	
 Drop.o : Drop.cpp Drop.hpp Killable.hpp 
 	g++ -Wall Drop.cpp -c
 
 Enemies.o : Enemies.cpp Enemies.hpp Drop.hpp 
 	g++ -Wall Enemies.cpp -c
+
+Mc.o : Mc.cpp Mc.hpp Killable.hpp Attacks.hpp
+	g++ -Wall Mc.cpp -c
 
 Attacks.o : Attacks.cpp Attacks.hpp Mc.hpp
 	g++ -Wall Attacks.cpp -c

@@ -4,6 +4,7 @@
 #pragma once
 #include "Enemies.hpp"
 
+
 const States etatsDesBasicSkeleton = {
 	"BasicSkeleton",
 	1,
@@ -21,6 +22,7 @@ public:
 
 	void deplacementBehaviour();
 	void attackBehaviour();
+	void takingDamage();
 };
 
 #endif
