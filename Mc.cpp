@@ -2,8 +2,6 @@
 
 //Constructeur spécial pour le MC (renseigne Sprite::joueur)
 Mc::Mc() {
-    //std::cout << "as " << std::endl;
-    //name = "robot";
     //On donne en référence le joueur pour l'utiliser plus tard
     Sprite::joueur = this;
     
@@ -17,6 +15,9 @@ Mc::Mc() {
     _largeur = 48;
     rayon = 24;
 
+    _coord[0] = 200;
+    _coord[1] = 200;
+
     this->setCoord(10,20,0);
     onScreen = true;
     
@@ -25,11 +26,11 @@ Mc::Mc() {
 
     cdDashTime = SDL_GetTicks();
 
-    std::cout << "Création de Mc : " << states->spriteName << std::endl;
 
     autoSetHitBox();
     addSprite();
     attack = new Attacks(this);
+    //std::cout << "Création de Mc : " << states->spriteName << std::endl;
 }
 
 void Mc::update() {
@@ -176,4 +177,9 @@ void Mc::doKeyUp(SDL_KeyboardEvent *event)
             //std::cout << "release dash" << std::endl;
         }
     }
+
+}
+
+Attacks* Mc::getAttack(){
+    return attack;
 }

@@ -25,6 +25,7 @@ void Venera::pushBackEnemies(Enemies* en){
 
 
 void Venera::initialisation() {
+	
 	mc = new Mc();
 	//enemies.push_back(new BasicSkeleton(100, 100));
 	spawnPoints.push_back(new SpawnPoint(50, 50, this));
@@ -75,7 +76,17 @@ void Venera::update() {
 	}
 
 	for (Enemies* enemy : enemies) {
-		enemy->contact(mc);
+
+		if(enemy->contact(mc)){
+			std::cout << "L'ennemi touche le mc" << std::endl;
+			enemy->attackBehaviour();
+		}
+		if(mc->getAttack()->getOnScreen()){
+			if(enemy->contact(mc->getAttack())){
+				std::cout << "L'attaque touche l'ennemi" << std::endl;
+				enemy->takingDamage();
+			}
+		}
 		enemy->update();
 	}
 

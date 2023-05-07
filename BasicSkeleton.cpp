@@ -20,6 +20,9 @@ BasicSkeleton::BasicSkeleton(float _x, float _y) {
 }
 
 void BasicSkeleton::deplacementBehaviour(){
+    //Test si le skeleton prend des dégats
+    takingDamage();
+
     //Faire le test des hitbox maitenant
     //Calcul du déplacement à réaliser
     Vector2D v(joueur->getX() - _coord[0], joueur->getY() - _coord[1]);
@@ -32,4 +35,8 @@ void BasicSkeleton::deplacementBehaviour(){
 
 void BasicSkeleton::attackBehaviour(){
 
+}
+
+void BasicSkeleton::takingDamage(){
+     
 }

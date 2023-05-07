@@ -16,6 +16,7 @@ public:
 
 	virtual void deplacementBehaviour() = 0;
 	virtual void attackBehaviour() = 0;
+	virtual void takingDamage() = 0;
 
 };
 
