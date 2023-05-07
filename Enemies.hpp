@@ -1,7 +1,6 @@
 #ifndef ENEMIES_HPP
 #define ENEMIES_HPP
 
-#pragma once
 #include "Drop.hpp"
 
 class Enemies : public Drop {

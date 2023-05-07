@@ -56,8 +56,10 @@ void Affichage::visit(Sprite* s, const States* states) {
 	else { // Sinon on la charge et on la stocke dans imageChargees
 		SDL_Texture* textureChargee;
 		TexturePack* newTexture = new TexturePack(states->nbEtats);
+		std::cout << "Chargement de " << states->spriteName << std::endl;
 		for (int etat=0; etat<states->nbEtats; etat++) {
 			(*newTexture)[etat].resize(states->nbFrameParEtat[etat]);
+			std::cout << "taille de l'état " << etat << " : " << (int)states->nbFrameParEtat[etat] << std::endl;
 			for (int frame=0; frame<states->nbFrameParEtat[etat]; frame++) {
 				std::string pathComplet = PATH_TO_TEXTURE_FOLDER + states->spriteName + "/" + std::to_string(etat) + "/" + std::to_string(frame) + imageFormat;
 				std::cout << "Loading : " << pathComplet << std::endl;

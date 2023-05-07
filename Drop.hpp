@@ -1,7 +1,6 @@
 #ifndef DROP_HPP
 #define DROP_HPP
 
-#pragma once
 #include "Killable.hpp"
 #include <vector>
 

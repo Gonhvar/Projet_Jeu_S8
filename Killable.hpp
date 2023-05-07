@@ -1,7 +1,6 @@
 #ifndef KILLABLE_HPP
 #define KILLABLE_HPP
 
-#pragma once
 #include "Entite.hpp"
 
 class Killable : public Entite {
@@ -18,13 +17,14 @@ protected :
 
 public :
     /* CONSTRUCTEURS ET DESTRUCTEURS */
-    Killable() = default;
+    Killable();
     Killable(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]);
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
     void update();
     
     void translate(Vector2D& v);
+    void moveAllCollision(std::vector<Entite*>& entities, Vector2D& v);
 
 
 	virtual void mort();

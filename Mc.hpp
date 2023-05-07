@@ -1,7 +1,6 @@
 #ifndef MC_HPP
 #define MC_HPP
 
-#pragma once
 #include "Killable.hpp"
 #include "Attacks.hpp"
 

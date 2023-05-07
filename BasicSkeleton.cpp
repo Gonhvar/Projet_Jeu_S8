@@ -2,14 +2,14 @@
 
 BasicSkeleton::BasicSkeleton(float _x, float _y) {
     PV = 10;
-    vitesse = 30.0;
+    vitesse = 60.0;
     _hauteur = 64;
     _largeur = 48;
     
     rayon = 24;
 
     this->setCoord(_x,_y,0);
-    this->setOnScreen(true);
+    onScreen = true;
 
     states = &(etatsDesBasicSkeleton);
 
@@ -25,7 +25,9 @@ void BasicSkeleton::deplacementBehaviour(){
     Vector2D v(joueur->getX() - _coord[0], joueur->getY() - _coord[1]);
 
     //Test si déplacement*vitesse touche le joueur avant de le réaliser
-    translate(moveCollisionRectangle(static_cast<Entite*>(joueur), move(v)));
+    moveAllCollision(Sprite::map->getEntities(), move(v));
+    translate(v);
+    //translate(move(v));
 }
 
 void BasicSkeleton::attackBehaviour(){

@@ -4,6 +4,7 @@
 
 Affichage* Sprite::afficheur;
 Sprite* Sprite::joueur;
+Map* Sprite::map;
 
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 Sprite::Sprite(const Sprite& other) {
@@ -13,6 +14,7 @@ Sprite::Sprite(const Sprite& other) {
 
 
 Sprite::Sprite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]) {
+	std::cout << "création d'un Sprite" << std::endl;
 	States* newStates = new States(); // newStates est un pointeur temporaire
 	newStates->spriteName = sName; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
 	newStates->nbEtats = nbE;
@@ -21,6 +23,7 @@ Sprite::Sprite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]) {
 	}
 	states = newStates;
 	addSprite();
+	std::cout << "Sprite texture : " << texture << std::endl;
 }
 
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */

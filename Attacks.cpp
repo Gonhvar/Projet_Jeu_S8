@@ -5,7 +5,7 @@ Attacks::Attacks(){
 }
 
 Attacks::Attacks(Mc* j) : state(0), joueur(j){
-    
+    std::cout << "Création de Attacks" << std::endl;
 }
 
 Attacks::~Attacks(){

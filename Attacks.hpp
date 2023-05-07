@@ -2,7 +2,6 @@
 #define ATTACKS_HPP
 
 
-#pragma once
 #include "Mc.hpp"
 
 class Mc;

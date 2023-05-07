@@ -1,11 +1,15 @@
 #include "Entite.hpp"
 
-std::vector<Entite*> Entite::allEntities;
+Entite::Entite() {
+	Sprite::map->addEntite(this);
+}
 
-Entite::Entite(const Entite& other) {}
+Entite::Entite(const Entite& other) {
+}
+
 Entite::Entite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE], Killable* parent) : Sprite(sName, nbE, nbFPE) {
 	possesseur = parent;
-	//Entite::allEntities.push_back(this);
+	Sprite::map->addEntite(this);
 }
 
 
@@ -65,18 +69,8 @@ Vector2D& Entite::moveCollisionCercle(Entite* other, Vector2D& v) {
 
 	if (distance < v.norme + rayon + other->rayon) {
 		normeVPost = distance - rayon - other->rayon;
-		if (v.norme) {
-			v.normeToV(normeVPost);
-		} 
-		else {
-			v.redef(other->_coord[0] - _coord[0], other->_coord[1] - _coord[1]);
-			// Pas fini :((((
-			// ^^^ Yes, ça serait bien que le joueur soit repoussé ici 
-			//(et peut etre le mob mais certains seront à distance donc étrange)
-
-			// Le mob est repoussé en dehors. Le problème est qu'il y a un problème
-			// dans le calcul si l'Entite se déplace d'un vecteur nul.
-		}
+		v.redef(other->_coord[0] - _coord[0], other->_coord[1] - _coord[1]);
+		v.normeToV(normeVPost);
 	}
 	
 	return v;
@@ -85,13 +79,20 @@ Vector2D& Entite::moveCollisionCercle(Entite* other, Vector2D& v) {
 Vector2D& Entite::moveCollisionRectangle(Entite* other, Vector2D& v) {
 	// Ce code est moche mais je voulais d'abord vérifier qu'il marche avant de l'optimiser
 	// Ptn ce que c'est moche X(
+	// Apparamment, il n'y a pas vraiment mieux en terme d'optimisation
+	
+	if (possesseur == other->possesseur) {
+		return v; // je doit mettre ça là parce qu'on ne peut pas accéder à other->possesseur 
+				// depuis Killable dans la fonction Killable::moveAllCollision
+	}
+	
 	bool contact[4];
 	contact[0] = hitBox[0][0] < other->hitBox[1][0]; // On est à gauche
 	contact[1] = hitBox[1][0] > other->hitBox[0][0]; // On est à droite
 	contact[2] = hitBox[0][1] < other->hitBox[1][1]; // On est au-dessus
 	contact[3] = hitBox[1][1] > other->hitBox[0][1]; // On est en-dessous
 	uint8_t nbContact = contact[0] + contact[1] + contact[2] + contact[3];
-	if (nbContact == 3) { // Empêche de rentrer dans other
+	if (nbContact == 3) { // Empêche this de rentrer dans other
 		if (!contact[0]) { // On est à droite
 			v.x = std::max(v.x, other->hitBox[1][0] - hitBox[0][0]);
 		}
@@ -101,7 +102,7 @@ Vector2D& Entite::moveCollisionRectangle(Entite* other, Vector2D& v) {
 		else if (!contact[2]) { // On est en-dessous
 			v.y = std::max(v.y, other->hitBox[1][1] - hitBox[0][1]);
 		}
-		else if (!contact[3]) { // On est au-dessus
+		else { // On est au-dessus
 			v.y = std::min(v.y, other->hitBox[0][1] - hitBox[1][1]);
 		}
 	} else if (nbContact == 4) { // Repousse this en dehors de other
@@ -144,13 +145,10 @@ Vector2D& Entite::moveCollisionRectangle(Entite* other, Vector2D& v) {
 }
 
 bool Entite::contact(Entite* other) {
-	if (hitBox[0][0] < other->hitBox[1][0] &&
+	return (hitBox[0][0] < other->hitBox[1][0] &&
 		hitBox[1][0] > other->hitBox[0][0] &&
 		hitBox[0][1] < other->hitBox[1][1] &&
-		hitBox[1][1] > other->hitBox[0][1]) {
-			return true;
-		}
-	return false;
+		hitBox[1][1] > other->hitBox[0][1]);
 }
 
 

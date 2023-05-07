@@ -1,7 +1,6 @@
 #ifndef BASICSKELETON_HPP
 #define BASICSKELETON_HPP
 
-#pragma once
 #include "Enemies.hpp"
 
 const States etatsDesBasicSkeleton = {

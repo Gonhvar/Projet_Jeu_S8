@@ -1,15 +1,8 @@
-#pragma once
-#include <iostream>
-#include <string>
-#include <vector>
-#include <math.h>
-
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-
-
 #ifndef SPRITE_HPP
 #define SPRITE_HPP
+
+#include "Inc.hpp"
+#include "Map.hpp"
 
 class Affichage;
 
@@ -47,6 +40,8 @@ public:
     static Affichage* afficheur;
     //Beaucoup de choses existent en relation avec le joueur, mettre un static peut donc être une bonne idée
     static Sprite* joueur;
+    // On suppose pour l'instant qu'il n'y a qu'une seule map à la fois.
+    static Map* map;
 
 
     /* CONSTRUCTEURS ET DESTRUCTEURS */

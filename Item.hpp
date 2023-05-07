@@ -1,7 +1,6 @@
 #ifndef ITEM_HPP
 #define ITEM_HPP
 
-#pragma once
 #include <iostream>
 #include <vector>
 

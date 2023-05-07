@@ -1,10 +1,8 @@
 #ifndef VECTOR2D_HPP
 #define VECTOR2D_HPP
 
-#include <iostream>
-#include <math.h>
+#include "Inc.hpp"
 
-#pragma once
 
 
 class Vector2D {

@@ -10,6 +10,7 @@ SpawnPoint::SpawnPoint(float x, float y, Venera* main) : _main(main) {
     FrameStartTimeMs = SDL_GetTicks();
 
     states = &(etatsDesSpawnPoint);
+    std::cout << "Création de SpawnPoint : " << states->spriteName << std::endl;
 }
 
 void SpawnPoint::spawn(int select, float timing){
@@ -40,7 +41,7 @@ void SpawnPoint::spawnWave(int selectWave){
                 case 0 : 
                     //std::cout << "Phase 0" << std::endl;
                     //Le chiffre détermine le nombre d'enemies;
-                    if(i<1){
+                    if(i<10){
                         spawn(0, 1000.0);
                         
                     }

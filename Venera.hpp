@@ -1,12 +1,5 @@
 #ifndef VENERA_HPP
 #define VENERA_HPP
-#include <stdio.h>
-#include <stdint.h>
-#include <iostream>
-
-
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 
 #include "affichage.hpp"
 #include "Mc.hpp"

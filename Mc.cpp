@@ -10,7 +10,7 @@ Mc::Mc() {
     PV = 20;
     PVMax = PV;
 
-    vitesse = 75.0;
+    vitesse = 150.0;
     dashValue = 4.0;
 
     _hauteur = 64;
@@ -18,7 +18,7 @@ Mc::Mc() {
     rayon = 24;
 
     this->setCoord(10,20,0);
-    this->setOnScreen(true);
+    onScreen = true;
     
     states = &(etatsDesMc);
     maxDelay = 20; // Change de frame tous les 20 ticks
@@ -50,7 +50,8 @@ void Mc::update() {
     //faire test de direction ici;
     attack->update(dx, dy);
     Vector2D v(dx, dy);
-    translate(move(v));
+    moveAllCollision(Sprite::map->getEntities(), move(v));
+    translate(v);
 }
 
 void Mc::get_keypress(){

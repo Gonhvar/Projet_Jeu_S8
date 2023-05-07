@@ -1,7 +1,6 @@
 #ifndef ENTITE_HPP
 #define ENTITE_HPP
 
-#pragma once
 #include "Sprite.hpp"
 #include "Vector2D.hpp"
 
@@ -29,7 +28,7 @@ protected :
 
 public :
 	/* CONSTRUCTEURS ET DESTRUCTEURS */
-	Entite() = default;
+	Entite();
 	Entite(const Entite& other);
 	//Entite(std::string& spriteName, Affichage& aff);
 	Entite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE], Killable* parent = nullptr); // Si on indique pas de parent, ce sera nullptr par défaut
@@ -53,8 +52,6 @@ public :
 
 	float getDx();
 	float getDy();
-
-	static std::vector<Entite*> allEntities;
 };
 
 #endif

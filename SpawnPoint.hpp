@@ -1,7 +1,6 @@
 #ifndef SPAWNPOINT_HPP
 #define SPAWNPOINT_HPP
 
-#pragma once
 #include "Venera.hpp"
 
 class Venera;

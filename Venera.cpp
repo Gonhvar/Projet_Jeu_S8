@@ -14,6 +14,7 @@ Venera::Venera() {
 	else {
 		afficheur = new Affichage(app->renderer);
 		Sprite::afficheur = afficheur;
+		Sprite::map = new Map();
 	}
 	initialisation();
 }
@@ -27,9 +28,43 @@ void Venera::initialisation() {
 	mc = new Mc();
 	//enemies.push_back(new BasicSkeleton(100, 100));
 	spawnPoints.push_back(new SpawnPoint(50, 50, this));
+	
+
+	// ça c'est juste un exemple de bordure de map pour voir si ça marche un peu
+	uint8_t liste[MAX_FPE] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	std::cout << "création de la bordure" << std::endl;
+	Entite* bord0 = new Entite("Bord0", 1, liste);
+	bord0->setLargeur(600);
+	bord0->setHauteur(50);
+	bord0->setCoord(300, -25, 0);
+	bord0->setOnScreen(true);
+	bord0->autoSetHitBox();
+
+	Entite* bord1 = new Entite("Bord1", 1, liste);
+	bord1->setLargeur(50);
+	bord1->setHauteur(600);
+	bord1->setCoord(625, 300, 0);
+	bord1->setOnScreen(true);
+	bord1->autoSetHitBox();
+
+	Entite* bord2 = new Entite("Bord2", 1, liste);
+	bord2->setLargeur(600);
+	bord2->setHauteur(50);
+	bord2->setCoord(300, 625, 0);
+	bord2->setOnScreen(true);
+	bord2->autoSetHitBox();
+
+	Entite* bord3 = new Entite("Bord3", 1, liste);
+	bord3->setLargeur(50);
+	bord3->setHauteur(600);
+	bord3->setCoord(-25, 300, 0);
+	bord3->setOnScreen(true);
+	bord3->autoSetHitBox();
 }
 
 void Venera::update() {
+	// On récupére la touche pressé par le joueur
+	mc->update();
 
 	for (SpawnPoint* sp : spawnPoints) {
 		sp->update(); // Appel le update de Entite pas de SpawnPoint
@@ -47,16 +82,13 @@ void Venera::update() {
 	for (Drop* droper : drop) {
 		droper->update();
 	}
-
-	// On récupére la touche pressé par le joueur
-	mc->update();
 	afficheur->update();
 }
 
 int main(){
 	std::cout << "main start" << std::endl;
 	Venera venera;
-	//venera.initialisation();
+
 	Uint32 FrameStartTimeMs;
 	Uint32 FrameEndTimeMs;
 	Uint32 FrameNormalTimeMs = 1000/FPS;

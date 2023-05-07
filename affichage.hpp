@@ -1,20 +1,13 @@
 #ifndef AFFICHAGE_HPP
 #define AFFICHAGE_HPP
-/*
-#include <stdio.h>
-#include <stdint.h>
-*/
-#include <vector>
-#include <map>
 
 
 #include "Sprite.hpp"
 #include "Enemies.hpp"
 #include "Mc.hpp"
 
-#include <stdlib.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
+
+
 
 
 #define PATH_TO_TEXTURE_FOLDER "Textures/" // Chemin relatif vers le dossier où se trouvent les textures.
