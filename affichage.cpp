@@ -1,14 +1,13 @@
 #include "affichage.hpp"
 
 /* CONSTRUCTEURS ET DESTRUCTEURS */
-Affichage::Affichage(){};
 
-Affichage::Affichage(SDL_Renderer* rend) : renderer(rend) {
+Affichage::Affichage(SDL_Renderer* rend, Stockeur* st) : renderer(rend) {
 	camPos[0] = 0;
 	camPos[1] = 0;
 	zoom = 1;
 
-	// Sprite::afficheur = this;
+	sprites = st->getSpriteVector();
 
 	noTexture = IMG_LoadTexture(renderer, NO_TEXTURE_FOUND);
 	if (!noTexture) { // L'image n'a pas pu être chargée. On prend la texture par défaut.
@@ -83,7 +82,7 @@ void Affichage::visit(Sprite* s, const States* states) {
 		}
 	}
 
-	sprites.push_back(s);
+	// sprites.push_back(s);
 };
 
 void Affichage::enleveSprite(const Sprite& s) {
@@ -128,7 +127,7 @@ void Affichage::affiche_all() const{
 	
 	SDL_Rect dest;
 	// On affiche la texture du sprite avec 
-	for(Sprite* s : sprites){
+	for(Sprite* s : *sprites){
 		if(s->getOnScreen()){
 			// position relative du Sprite par rapport à la caméra
 			dest.x = (s->getSpriteX() - camPos[0]) * zoom;

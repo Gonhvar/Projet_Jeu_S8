@@ -4,7 +4,7 @@ prog: Sprite.o affichage.o Vector2D.o Entite.o Killable.o Mc.o Venera.o Drop.o E
 Stockeur.o : Stockeur.cpp Stockeur.hpp Inc.hpp
 	g++ -Wall Stockeur.cpp -c
 
-Sprite.o : Sprite.cpp Sprite.hpp affichage.hpp
+Sprite.o : Sprite.cpp Sprite.hpp affichage.hpp Map.hpp Stockeur.hpp
 	g++ -Wall Sprite.cpp -c
 
 Vector2D.o : Vector2D.cpp Vector2D.hpp

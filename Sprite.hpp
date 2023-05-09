@@ -3,6 +3,7 @@
 
 #include "Inc.hpp"
 #include "Map.hpp"
+#include "Stockeur.hpp"
 
 class Affichage;
 
@@ -19,6 +20,8 @@ typedef struct States_t{ // sert à décrire les états qu'un Sprite peut avoir,
 
 class Sprite {
 protected :
+    
+    
 
     float _coord[3] = { 0, 0, 0 }; // Coordonnées au centre du rectangle x, y, theta
     float _largeur = 1; // Largeur voulue de la texture associée au sprite
@@ -43,9 +46,11 @@ public:
     // On suppose pour l'instant qu'il n'y a qu'une seule map à la fois.
     static Map* map;
 
+    static Stockeur* stockeur;
+
 
     /* CONSTRUCTEURS ET DESTRUCTEURS */
-    Sprite() = default;
+    Sprite();
     Sprite(const Sprite& other);
     //Sprite(std::string& spriteName, Affichage& aff);
     Sprite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]);

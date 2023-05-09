@@ -12,7 +12,9 @@ Venera::Venera() {
 		std::cout << "Erreur lors de la creation d'un renderer : " << SDL_GetError() << std::endl;;
 	}
 	else {
-		afficheur = new Affichage(app->renderer);
+		stockeur = new Stockeur();
+		Sprite::stockeur = stockeur;
+		afficheur = new Affichage(app->renderer, stockeur);
 		Sprite::afficheur = afficheur;
 		Sprite::map = new Map();
 	}
@@ -27,8 +29,8 @@ void Venera::pushBackEnemies(Enemies* en){
 void Venera::initialisation() {
 	
 	mc = new Mc();
-	enemies.push_back(new BasicSkeleton(100, 100));
-	//spawnPoints.push_back(new SpawnPoint(50, 50, this));
+	//enemies.push_back(new BasicSkeleton(100, 100));
+	spawnPoints.push_back(new SpawnPoint(50, 50, this));
 	
 
 	// ça c'est juste un exemple de bordure de map pour voir si ça marche un peu
@@ -89,10 +91,6 @@ void Venera::update() {
 			}
 		}
 		enemy->update();
-	}
-
-	for (Drop* droper : drop) {
-		droper->update();
 	}
 	afficheur->update();
 }

@@ -16,6 +16,8 @@ typedef struct {
 class Venera {
 private :
 	Mc* mc;
+	Stockeur* stockeur;
+
 	std::vector<Enemies*> enemies;
 	std::vector<Drop*> drop; // On fait la distinction entre les Enemies et les Drop car les Enemies prennent des décisions.
 							// ça évite de faire des cast.

@@ -9,13 +9,12 @@
 
 
 
-
 #define PATH_TO_TEXTURE_FOLDER "Textures/" // Chemin relatif vers le dossier où se trouvent les textures.
 #define NO_TEXTURE_FOUND "Textures/noTexture.png"
 
 class Affichage {
 protected :
-    std::vector<Sprite*> sprites;   // Liste des Sprite connus
+    std::vector<Sprite*>* sprites;   // Liste des Sprite connus
                                 // Il serait bien qu'un Sprite* n'apparaîsse qu'une seule fois dans sprites
                                 // Il faudrait remplacer les Sprite* par des smart pointers ou faire gaffe lors de la suppression d'un Sprite
     std::map<std::string, TexturePack*> imageChargees; // Dictionnaire stockant les texture chargées avec comme clée le nom de sprite associé
@@ -37,7 +36,7 @@ protected :
     
 public :
     /* CONSTRUCTEURS ET DESTRUCTEURS */
-    Affichage(SDL_Renderer *rend);
+    Affichage(SDL_Renderer* rend, Stockeur* st);
     Affichage();
     ~Affichage();
     /* FIN CONSTRUCTEURS ET DESTRUCTEURS */

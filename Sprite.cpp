@@ -5,8 +5,13 @@
 Affichage* Sprite::afficheur;
 Sprite* Sprite::joueur;
 Map* Sprite::map;
+Stockeur* Sprite::stockeur;
 
 /* CONSTRUCTEURS ET DESTRUCTEURS */
+Sprite::Sprite() {
+	stockeur->addSprites(this);
+}
+
 Sprite::Sprite(const Sprite& other) {
 	*this = other;
 }
@@ -23,6 +28,9 @@ Sprite::Sprite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]) {
 	}
 	states = newStates;
 	addSprite();
+	
+	stockeur->addSprites(this);
+
 	std::cout << "Sprite texture : " << texture << std::endl;
 }
 
