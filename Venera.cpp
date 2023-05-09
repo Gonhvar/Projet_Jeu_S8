@@ -27,8 +27,8 @@ void Venera::pushBackEnemies(Enemies* en){
 void Venera::initialisation() {
 	
 	mc = new Mc();
-	//enemies.push_back(new BasicSkeleton(100, 100));
-	spawnPoints.push_back(new SpawnPoint(50, 50, this));
+	enemies.push_back(new BasicSkeleton(100, 100));
+	//spawnPoints.push_back(new SpawnPoint(50, 50, this));
 	
 
 	// ça c'est juste un exemple de bordure de map pour voir si ça marche un peu
@@ -78,13 +78,14 @@ void Venera::update() {
 	for (Enemies* enemy : enemies) {
 
 		if(enemy->contact(mc)){
-			std::cout << "L'ennemi touche le mc" << std::endl;
+			//std::cout << "L'ennemi touche le mc" << std::endl;
 			enemy->attackBehaviour();
 		}
+		
 		if(mc->getAttack()->getOnScreen()){
 			if(enemy->contact(mc->getAttack())){
-				std::cout << "L'attaque touche l'ennemi" << std::endl;
-				enemy->takingDamage();
+				//std::cout << "L'attaque touche l'ennemi" << std::endl;
+				enemy->takingDamage(mc->getAttack());
 			}
 		}
 		enemy->update();

@@ -2,7 +2,9 @@
 
 BasicSkeleton::BasicSkeleton(float _x, float _y) {
     PV = 10;
-    vitesse = 60.0;
+    attackDamage = 5;
+
+    vitesse = BASICSKELETONSPEED;
     _hauteur = 64;
     _largeur = 48;
     
@@ -20,23 +22,41 @@ BasicSkeleton::BasicSkeleton(float _x, float _y) {
 }
 
 void BasicSkeleton::deplacementBehaviour(){
-    //Test si le skeleton prend des dégats
-    takingDamage();
 
-    //Faire le test des hitbox maitenant
-    //Calcul du déplacement à réaliser
-    Vector2D v(joueur->getX() - _coord[0], joueur->getY() - _coord[1]);
+    if(!currentlyTakingDmg){
+        //Faire le test des hitbox maitenant
+        //Calcul du déplacement à réaliser
+        Vector2D v(joueur->getX() - _coord[0], joueur->getY() - _coord[1]);
 
-    //Test si déplacement*vitesse touche le joueur avant de le réaliser
-    moveAllCollision(Sprite::map->getEntities(), move(v));
-    translate(v);
-    //translate(move(v));
+        //Test si déplacement*vitesse touche le joueur avant de le réaliser
+        moveAllCollision(Sprite::map->getEntities(), move(v));
+        translate(v);
+    }
+    else{
+        Vector2D v(_coord[0] - joueur->getX(), _coord[1] - joueur->getY());
+        //std::cout << "invicibility : " << SDL_GetTicks() - invicibilityTimeStart << std::endl;
+        move(v);
+        translate(v);
+        
+        if(SDL_GetTicks() - invicibilityTimeStart > 150){
+            //std::cout << "invicibility ends" << std::endl;
+            currentlyTakingDmg = false;
+            vitesse = BASICSKELETONSPEED;
+        }
+    }
+    
 }
 
 void BasicSkeleton::attackBehaviour(){
 
 }
 
-void BasicSkeleton::takingDamage(){
-     
+void BasicSkeleton::takingDamage(Entite* other){
+    if(!currentlyTakingDmg){
+        //std::cout << "il se prend des dmg" << std::endl;
+        changePV(other->getAttackDmg());
+        currentlyTakingDmg = true;
+        vitesse *= knockback;
+        invicibilityTimeStart = SDL_GetTicks();
+    }
 }

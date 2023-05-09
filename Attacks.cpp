@@ -8,11 +8,12 @@ Attacks::Attacks(Mc* j) : state(0), joueur(j){
     
     _hauteur = 64;
     _largeur = 48;
-    this->setCoord(10,20,0);
-    this->setOnScreen(true);
+
+    setCoord(0,0,0);
+    setOnScreen(false);
+
     states = &etatAttacks;
     addSprite();
-
 }
 
 Attacks::~Attacks(){
@@ -86,7 +87,7 @@ void Attacks::updateHitBox(float attackRangeX, float attackRangeY){
 
 void Attacks::updateAttack(int attack){
 
-    if(state ==0){
+    if(state == 0){
         switch(attack){
             case 0 :
                 //Aucune attaque
@@ -94,7 +95,7 @@ void Attacks::updateAttack(int attack){
 
             case 1 :
                 //light attaque
-                std::cout << "Light" << std::endl;
+                //std::cout << "Light" << std::endl;
                 combo += "l";
                 state = 1;
                 cdAttack = SDL_GetTicks();
@@ -102,9 +103,10 @@ void Attacks::updateAttack(int attack){
 
             case 2 :
                 //heavy attaque
-                std::cout << "Heavy" << std::endl;
+                //std::cout << "Heavy" << std::endl;
                 combo += "h";
                 state = 2;
+                cdAttack = SDL_GetTicks();
                 break;
 
             default : 
@@ -115,3 +117,4 @@ void Attacks::updateAttack(int attack){
         std::cout << "Cooldown d'attaque en cours" << std::endl;
     }
 }
+

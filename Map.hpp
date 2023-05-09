@@ -19,6 +19,7 @@ public :
     SpriteMap* getTiles();
     std::vector<Entite*>& getEntities();
     void addEntite(Entite* e);
+    void toRemove(Entite* toRemove);
 };
 
 #endif

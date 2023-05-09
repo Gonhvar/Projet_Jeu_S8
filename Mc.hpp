@@ -1,5 +1,6 @@
 #ifndef MC_HPP
 #define MC_HPP
+#define BASICSPEED 150.0
 
 #include "Killable.hpp"
 #include "Attacks.hpp"

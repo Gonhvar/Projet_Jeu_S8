@@ -14,6 +14,8 @@ class Killable : public Entite {
 
 protected :
     std::vector<Entite*> entite;
+    uint32_t invicibilityTimeStart;
+	bool currentlyTakingDmg = false;
 
 public :
     /* CONSTRUCTEURS ET DESTRUCTEURS */

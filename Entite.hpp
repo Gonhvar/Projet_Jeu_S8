@@ -13,6 +13,7 @@ class Entite : public Sprite {
 protected :
 	int PV = 1;
 	int PVMax = 1;
+	int attackDamage = 0;
 	
 	float hitBox[HITBOX_PTS][2] = {
 		{0,0},
@@ -32,6 +33,7 @@ public :
 	Entite(const Entite& other);
 	//Entite(std::string& spriteName, Affichage& aff);
 	Entite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE], Killable* parent = nullptr); // Si on indique pas de parent, ce sera nullptr par défaut
+	~Entite();
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 	void autoSetHitBox();
@@ -48,10 +50,11 @@ public :
 	
 	bool contact(Entite* other);
 
-	virtual void mort();
+	void mort();
 
 	float getDx();
 	float getDy();
+	int getAttackDmg();
 };
 
 #endif

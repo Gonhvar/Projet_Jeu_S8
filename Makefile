@@ -1,7 +1,8 @@
-prog: Sprite.o affichage.o Vector2D.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o Attacks.o Map.o
-	g++ -o prog Sprite.o affichage.o Vector2D.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o Attacks.o Map.o -lSDL2 -lSDL2_image -lSDL2_ttf
+prog: Sprite.o affichage.o Vector2D.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o Attacks.o Map.o Stockeur.o 
+	g++ -o prog Sprite.o affichage.o Vector2D.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o Attacks.o Map.o Stockeur.o -lSDL2 -lSDL2_image -lSDL2_ttf
 
-
+Stockeur.o : Stockeur.cpp Stockeur.hpp Inc.hpp
+	g++ -Wall Stockeur.cpp -c
 
 Sprite.o : Sprite.cpp Sprite.hpp affichage.hpp
 	g++ -Wall Sprite.cpp -c
@@ -44,6 +45,8 @@ Venera.o : Venera.cpp Venera.hpp affichage.hpp Killable.hpp Mc.hpp BasicSkeleton
 
 Map.o : Map.cpp Map.hpp Venera.hpp
 	g++ -Wall Map.cpp -c
+
+
 
 clean:
 	rm -f *.o

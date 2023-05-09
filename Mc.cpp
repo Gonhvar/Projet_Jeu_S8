@@ -8,7 +8,7 @@ Mc::Mc() {
     PV = 20;
     PVMax = PV;
 
-    vitesse = 150.0;
+    vitesse = BASICSPEED;
     dashValue = 4.0;
 
     _hauteur = 64;
@@ -43,7 +43,7 @@ void Mc::update() {
         //std::cout << actualDashTime << std::endl;
         if(actualDashTime > 1000/dashValue){
             dashOn = false;
-            vitesse /= dashValue;
+            vitesse = BASICSPEED;
             cdDashTime = SDL_GetTicks();
         }
     }
@@ -74,7 +74,6 @@ void Mc::get_keypress(){
     }
     
     //printf("dx : %f | dy : %f \n", dx, dy);
-    
 }
 
 void Mc::doKeyDown(SDL_KeyboardEvent *event)

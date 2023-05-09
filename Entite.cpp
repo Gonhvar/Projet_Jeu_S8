@@ -5,6 +5,7 @@ Entite::Entite() {
 }
 
 Entite::Entite(const Entite& other) {
+
 }
 
 Entite::Entite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE], Killable* parent) : Sprite(sName, nbE, nbFPE) {
@@ -12,6 +13,10 @@ Entite::Entite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE], Killable*
 	Sprite::map->addEntite(this);
 }
 
+Entite::~Entite(){
+	Sprite::map->toRemove(this);
+	//delete
+}
 
 void Entite::autoSetHitBox() {
 	hitBox[0][0] = _coord[0] - _largeur/2;
@@ -34,7 +39,8 @@ void Entite::setPV(int health) {
 }
 
 void Entite::changePV(int change) {
-	PV += change;
+	PV -= change;
+	//std::cout << "PV :" << PV << " Change :" << change << std::endl; 
 	if(PV<=0){
 		//Tuer l'Entite
 		mort();
@@ -151,9 +157,10 @@ bool Entite::contact(Entite* other) {
 		hitBox[1][1] > other->hitBox[0][1]);
 }
 
-
 void Entite::mort() {
 	std::cout << "Entite.mort() de " << this << std::endl;
+	//Create Drop
+	delete(this);
 }
 
 float Entite::getDx(){
@@ -162,4 +169,8 @@ float Entite::getDx(){
 
 float Entite::getDy(){
 		return dy;
+}
+
+int Entite::getAttackDmg(){
+    return attackDamage;
 }

@@ -16,7 +16,6 @@ class Attacks : public Entite {
 protected:
 	int state;
 	int range;
-	int attackDamage;
 	uint32_t cdAttack;
 	std::string combo;
 

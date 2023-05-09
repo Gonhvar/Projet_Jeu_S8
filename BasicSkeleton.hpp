@@ -1,6 +1,8 @@
 #ifndef BASICSKELETON_HPP
 #define BASICSKELETON_HPP
 
+#define BASICSKELETONSPEED 60.0
+
 #include "Enemies.hpp"
 
 
@@ -12,6 +14,7 @@ const States etatsDesBasicSkeleton = {
 
 class BasicSkeleton : public virtual Enemies {
 protected:
+	float knockback = 3.0;
 
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
@@ -21,7 +24,7 @@ public:
 
 	void deplacementBehaviour();
 	void attackBehaviour();
-	void takingDamage();
+	void takingDamage(Entite* other);
 };
 
 #endif
