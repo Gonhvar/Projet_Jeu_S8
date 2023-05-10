@@ -81,8 +81,6 @@ void Affichage::visit(Sprite* s, const States* states) {
 			player = dynamic_cast<Mc*>(s);
 		}
 	}
-
-	// sprites.push_back(s);
 };
 
 void Affichage::enleveSprite(const Sprite& s) {

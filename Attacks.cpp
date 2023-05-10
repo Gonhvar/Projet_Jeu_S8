@@ -4,7 +4,7 @@ Attacks::Attacks(){
 
 }
 
-Attacks::Attacks(Mc* j) : state(0), joueur(j){
+Attacks::Attacks(Mc* j) : joueur(j){
     
     _hauteur = 64;
     _largeur = 48;

@@ -34,7 +34,6 @@ Mc::Mc() {
 }
 
 void Mc::update() {
-    Sprite::update();
     if(!dashOn){
         get_keypress();
     }else{
@@ -51,7 +50,9 @@ void Mc::update() {
     //faire test de direction ici;
     attack->update(dx, dy);
     Vector2D v(dx, dy);
-    moveAllCollision(Sprite::map->getEntities(), move(v));
+    etat = v.norme != 0;
+    move(v);
+    // moveAllCollision(v);
     translate(v);
 }
 
