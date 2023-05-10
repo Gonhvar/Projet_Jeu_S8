@@ -25,6 +25,8 @@ void Joueur2::update(){
     //Mettre un effet de ressorts autour de ce point
     _coord[0]= (joueur->getX()+20);
     _coord[1]= (joueur->getY()-20);
+
+
     
 }
 
