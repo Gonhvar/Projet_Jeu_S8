@@ -8,7 +8,7 @@ protected:
 
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
-	Enemies() = default;
+	Enemies();
 	Enemies(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]);
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 

@@ -42,6 +42,7 @@ void Venera::initialisation() {
 	bord0->setCoord(300, -25, 0);
 	bord0->setOnScreen(true);
 	bord0->autoSetHitBox();
+	stockeur->addRectEntite(bord0);
 
 	Entite* bord1 = new Entite("Bord1", 1, liste);
 	bord1->setLargeur(50);
@@ -49,6 +50,7 @@ void Venera::initialisation() {
 	bord1->setCoord(625, 300, 0);
 	bord1->setOnScreen(true);
 	bord1->autoSetHitBox();
+	stockeur->addRectEntite(bord1);
 
 	Entite* bord2 = new Entite("Bord2", 1, liste);
 	bord2->setLargeur(600);
@@ -56,6 +58,7 @@ void Venera::initialisation() {
 	bord2->setCoord(300, 625, 0);
 	bord2->setOnScreen(true);
 	bord2->autoSetHitBox();
+	stockeur->addRectEntite(bord2);
 
 	Entite* bord3 = new Entite("Bord3", 1, liste);
 	bord3->setLargeur(50);
@@ -63,6 +66,7 @@ void Venera::initialisation() {
 	bord3->setCoord(-25, 300, 0);
 	bord3->setOnScreen(true);
 	bord3->autoSetHitBox();
+	stockeur->addRectEntite(bord3);
 }
 
 void Venera::update() {
@@ -70,30 +74,22 @@ void Venera::update() {
 	// update des enemies pour qu'ils prennent des décisions (dont celles de se déplacer)
 	// update des Entite pour les déplacer
 	// update des Sprites pour les faire changer d'apparence
-	// afficheur->update();
-
+	afficheur->update();
 	mc->update(); // récupére la touche pressée par le joueur
 
 	for (Enemies* enemy : *(stockeur->getEnemiesVector())) {
-		if(enemy->contact(mc)){
-			//std::cout << "L'ennemi touche le mc" << std::endl;
-			enemy->attackBehaviour();
-		}
+		// if(enemy->contact(mc)){
+		// 	//std::cout << "L'ennemi touche le mc" << std::endl;
+		// 	enemy->attackBehaviour();
+		// }
 		
-		if(mc->getAttack()->getOnScreen()){
-			if(enemy->contact(mc->getAttack())){
-				//std::cout << "L'attaque touche l'ennemi" << std::endl;
-				enemy->takingDamage(mc->getAttack());
-			}
-		}
+		// if(mc->getAttack()->getOnScreen()){
+		// 	if(enemy->contact(mc->getAttack())){
+		// 		//std::cout << "L'attaque touche l'ennemi" << std::endl;
+		// 		enemy->takingDamage(mc->getAttack());
+		// 	}
+		// }
 		enemy->update();
-	}
-
-	for (Entite* entite : *(stockeur->getRectEntiteVector())) {
-		entite->autoTranslate(); // comme translate mais avec dx et dy étant ceux de l'Entite
-	}
-	for (Entite* entite : *(stockeur->getCircEntiteVector())) {
-		entite->autoTranslate(); // comme translate mais avec dx et dy étant ceux de l'Entite
 	}
 
 	for (Sprite* s : *(stockeur->getSpriteVector())) {
@@ -109,6 +105,7 @@ void Venera::update() {
 
 	}
 
+	
 	afficheur->update();
 }
 
@@ -143,7 +140,7 @@ int main(){
 		moyenne += FrameTimeMS;
 		if (!compteur--) {
 			moyenne /= echantillon;
-			//std::cout << "FPS : " << moyenne << std::endl;
+			std::cout << "FPS : " << moyenne << std::endl;
 			moyenne = 0;
 			compteur = echantillon;
 		}

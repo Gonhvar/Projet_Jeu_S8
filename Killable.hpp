@@ -26,7 +26,7 @@ public :
     void update();
     
     void translate(Vector2D& v);
-    void moveAllCollision(std::vector<Entite*>& entities, Vector2D& v);
+    void moveAllCollision(Vector2D& v);
 
 
 	virtual void mort();

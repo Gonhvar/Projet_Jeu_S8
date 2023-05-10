@@ -7,7 +7,7 @@
 class Mc;
 
 const States etatAttacks = {
-	"noTexture",
+	"attaque",
 	1,
 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 };

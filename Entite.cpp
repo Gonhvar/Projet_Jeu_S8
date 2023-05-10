@@ -77,6 +77,12 @@ Vector2D& Entite::move(Vector2D& v) {
 
 Vector2D& Entite::moveCollisionCercle(Entite* other, Vector2D& v) {
 	// On lui passe l'Entite avec laquelle on prévérifie la collision puis on modifie en conséquence le déplacement voulu
+	
+	if (possesseur == other->possesseur) {
+		return v; // je doit mettre ça là parce qu'on ne peut pas accéder à other->possesseur 
+				// depuis Killable dans la fonction Killable::moveAllCollision
+	}
+	
 	//Distance entre les deux entite
 	float distance = sqrt((other->_coord[0]-_coord[0])*(other->_coord[0]-_coord[0]) + (other->_coord[1]-_coord[1])*(other->_coord[1]-_coord[1]));
 	float normeVPost;
