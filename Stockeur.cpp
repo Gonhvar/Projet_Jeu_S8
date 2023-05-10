@@ -22,6 +22,10 @@ void Stockeur::addMc(Mc* j){
     mc = j;
 }
 
+void Stockeur::addJoueur2(Joueur2* j){
+    j2 = j;
+}
+
 
 void Stockeur::removeSprites(Sprite* sp){
     auto it = std::find(sprites.begin(), sprites.end(), sp);

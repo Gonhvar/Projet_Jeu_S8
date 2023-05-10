@@ -11,6 +11,7 @@ class Affichage;
 typedef std::vector<std::vector<SDL_Texture*>> TexturePack;
 
 #define MAX_FPE 10
+
 typedef struct States_t{ // sert à décrire les états qu'un Sprite peut avoir, ainsi que son nom (in-game type)
     std::string spriteName;
     uint8_t nbEtats = 0;
@@ -21,8 +22,6 @@ typedef struct States_t{ // sert à décrire les états qu'un Sprite peut avoir,
 class Sprite {
 protected :
     
-    
-
     float _coord[3] = { 0, 0, 0 }; // Coordonnées au centre du rectangle x, y, theta
     float _largeur = 1; // Largeur voulue de la texture associée au sprite
     float _hauteur = 1; // Hauteur voulue de la texture associée au sprite
@@ -43,6 +42,7 @@ public:
     static Affichage* afficheur;
     //Beaucoup de choses existent en relation avec le joueur, mettre un static peut donc être une bonne idée
     static Sprite* joueur;
+    static Sprite* joueur2;
     // On suppose pour l'instant qu'il n'y a qu'une seule map à la fois.
     static Map* map;
 

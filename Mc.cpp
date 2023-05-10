@@ -69,6 +69,11 @@ void Mc::get_keypress(){
             case SDL_KEYDOWN :
                 doKeyDown(&event.key);
 
+            case SDL_MOUSEBUTTONDOWN:
+                //do whatever you want to do after a mouse button was pressed,
+                mousePress(event.button);
+                break;
+
             default : break;
         }
     }
@@ -177,6 +182,13 @@ void Mc::doKeyUp(SDL_KeyboardEvent *event)
         }
     }
 
+}
+
+void Mc::mousePress(SDL_MouseButtonEvent& b){
+    if(b.button == SDL_BUTTON_LEFT){
+        //handle a left-click
+        std::cout << "Bang !" << std::endl;
+    }
 }
 
 Attacks* Mc::getAttack(){

@@ -7,6 +7,7 @@ class Sprite;
 class Entite;
 class Enemies;
 class Mc;
+class Joueur2;
 
 class Stockeur {
 protected:
@@ -16,6 +17,7 @@ protected:
     std::vector<Enemies*> enemies;
 
     Mc* mc;
+    Joueur2* j2;
 
 public:
 
@@ -26,6 +28,7 @@ public:
     void addRectEntite(Entite* en);
     void addEnemies(Enemies* en);
     void addMc(Mc* j);
+    void addJoueur2(Joueur2* j);
     
     void removeSprites(Sprite* sp);
     void removeCircEntite(Entite* en);

@@ -5,6 +5,7 @@
 #include "Mc.hpp"
 #include "BasicSkeleton.hpp"
 #include "SpawnPoint.hpp"
+#include "Joueur2.hpp"
 
 class SpawnPoint;
 
@@ -17,6 +18,7 @@ class Venera {
 private :
 	Stockeur* stockeur;
 	Mc* mc;
+	Joueur2* j2;
 	Affichage* afficheur;
 
 	//std::vector<Enemies*> enemies;

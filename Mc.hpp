@@ -34,6 +34,7 @@ public :
 	void get_keypress();
 	void doKeyDown(SDL_KeyboardEvent *event);
 	void doKeyUp(SDL_KeyboardEvent *event);
+	void mousePress(SDL_MouseButtonEvent& b);
 };
 
 #endif

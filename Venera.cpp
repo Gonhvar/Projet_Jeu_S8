@@ -17,8 +17,12 @@ Venera::Venera() {
 		afficheur = new Affichage(app->renderer, stockeur);
 		Sprite::afficheur = afficheur;
 		Sprite::map = new Map();
+
 		mc = new Mc();
+		j2 = new Joueur2();
 		stockeur->addMc(mc);
+		stockeur->addJoueur2(j2);
+
 		initialisation();
 	}
 }
@@ -73,6 +77,7 @@ void Venera::update() {
 	// afficheur->update();
 
 	mc->update(); // récupére la touche pressée par le joueur
+	j2->update();
 
 	for (Enemies* enemy : *(stockeur->getEnemiesVector())) {
 		if(enemy->contact(mc)){
