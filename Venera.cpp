@@ -17,18 +17,18 @@ Venera::Venera() {
 		afficheur = new Affichage(app->renderer, stockeur);
 		Sprite::afficheur = afficheur;
 		Sprite::map = new Map();
+		mc = new Mc();
+		stockeur->addMc(mc);
+		initialisation();
 	}
-	initialisation();
 }
 
-void Venera::pushBackEnemies(Enemies* en){
-		enemies.push_back(en);
+void Venera::pushBackEnemies(Enemies* en){ // METHODE A DETRUIRE POUR LA STOCKEUR_UPDATE
+		// enemies.push_back(en);
 }
 
 
 void Venera::initialisation() {
-	
-	mc = new Mc();
 	//enemies.push_back(new BasicSkeleton(100, 100));
 	spawnPoints.push_back(new SpawnPoint(50, 50, this));
 	
@@ -66,19 +66,15 @@ void Venera::initialisation() {
 }
 
 void Venera::update() {
-	// On récupére la touche pressé par le joueur
-	mc->update();
+	// Ce que cette fonction doit faire :
+	// update des enemies pour qu'ils prennent des décisions (dont celles de se déplacer)
+	// update des Entite pour les déplacer
+	// update des Sprites pour les faire changer d'apparence
+	// afficheur->update();
 
-	for (SpawnPoint* sp : spawnPoints) {
-		sp->update(); // Appel le update de Entite pas de SpawnPoint
-						// Il vaut mieux avoir une liste de spawnPoint
-						// OU update() devient un attribut de type pointeur de fonction
-						// On peut alors donner à chaque Entite une fonction update ou il se static_cast correctement dedans;
+	mc->update(); // récupére la touche pressée par le joueur
 
-	}
-
-	for (Enemies* enemy : enemies) {
-
+	for (Enemies* enemy : *(stockeur->getEnemiesVector())) {
 		if(enemy->contact(mc)){
 			//std::cout << "L'ennemi touche le mc" << std::endl;
 			enemy->attackBehaviour();
@@ -92,6 +88,27 @@ void Venera::update() {
 		}
 		enemy->update();
 	}
+
+	for (Entite* entite : *(stockeur->getRectEntiteVector())) {
+		entite->autoTranslate(); // comme translate mais avec dx et dy étant ceux de l'Entite
+	}
+	for (Entite* entite : *(stockeur->getCircEntiteVector())) {
+		entite->autoTranslate(); // comme translate mais avec dx et dy étant ceux de l'Entite
+	}
+
+	for (Sprite* s : *(stockeur->getSpriteVector())) {
+		s->update();
+	}
+
+
+	for (SpawnPoint* sp : spawnPoints) {
+		sp->update(); // Appel le update de Entite pas de SpawnPoint
+						// Il vaut mieux avoir une liste de spawnPoint
+						// OU update() devient un attribut de type pointeur de fonction
+						// On peut alors donner à chaque Entite une fonction update ou il se static_cast correctement dedans;
+
+	}
+
 	afficheur->update();
 }
 

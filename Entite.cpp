@@ -1,7 +1,6 @@
 #include "Entite.hpp"
 
 Entite::Entite() {
-	Sprite::map->addEntite(this);
 }
 
 Entite::Entite(const Entite& other) {
@@ -10,7 +9,6 @@ Entite::Entite(const Entite& other) {
 
 Entite::Entite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE], Killable* parent) : Sprite(sName, nbE, nbFPE) {
 	possesseur = parent;
-	Sprite::map->addEntite(this);
 }
 
 Entite::~Entite(){
@@ -57,8 +55,18 @@ void Entite::translate(Vector2D& v) {
 		hitBox[i][0] += v.x;
 		hitBox[i][1] += v.y;
 	}
+}
+
+void Entite::autoTranslate() {
+	// Décale l'Entite de dx, dy en faisant fi de toute considération
+	_coord[0] += dx;
+	_coord[1] += dy;
 	
-	//printf("hitbox1 : %f et %f\n", hitBox[0][0], hitBox[0][1]);
+	for (uint8_t i = 0; i < HITBOX_PTS; i++) {
+		//On déplace les points qui composent le rectangle de la hitbox
+		hitBox[i][0] += dx;
+		hitBox[i][1] += dy;
+	}
 }
 
 Vector2D& Entite::move(Vector2D& v) {

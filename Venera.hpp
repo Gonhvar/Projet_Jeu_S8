@@ -15,19 +15,17 @@ typedef struct {
 
 class Venera {
 private :
-	Mc* mc;
 	Stockeur* stockeur;
+	Mc* mc;
+	Affichage* afficheur;
 
-	std::vector<Enemies*> enemies;
-	std::vector<Drop*> drop; // On fait la distinction entre les Enemies et les Drop car les Enemies prennent des décisions.
-							// ça évite de faire des cast.
+	//std::vector<Enemies*> enemies;
 	//Map map;
 	std::vector<SpawnPoint*> spawnPoints;
 
 
 public : // J'ai mis ça public parce que sinon on ne pouvait pas y accéder dans le main. On réglera ça plus tard.
 	App* app;
-	Affichage* afficheur;
 	
 public :
 	Venera();

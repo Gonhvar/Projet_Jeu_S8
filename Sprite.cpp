@@ -9,7 +9,7 @@ Stockeur* Sprite::stockeur;
 
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 Sprite::Sprite() {
-	stockeur->addSprites(this);
+	Sprite::stockeur->addSprites(this);
 }
 
 Sprite::Sprite(const Sprite& other) {

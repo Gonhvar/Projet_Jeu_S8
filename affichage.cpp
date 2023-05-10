@@ -11,7 +11,7 @@ Affichage::Affichage(SDL_Renderer* rend, Stockeur* st) : renderer(rend) {
 
 	noTexture = IMG_LoadTexture(renderer, NO_TEXTURE_FOUND);
 	if (!noTexture) { // L'image n'a pas pu être chargée. On prend la texture par défaut.
-		std::cout << "Erreur de chargement de noTexture : ça sans pas bon là" << std::endl;
+		std::cout << "Erreur de chargement de noTexture : ça sent pas bon là" << std::endl;
 	}
 
 	if ( TTF_Init() < 0 ) {

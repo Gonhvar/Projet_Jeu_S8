@@ -18,6 +18,7 @@ BasicSkeleton::BasicSkeleton(float _x, float _y) {
     std::cout << "Création de BasicSkeleton : " << states->spriteName << std::endl;
 
     autoSetHitBox();
+    
     addSprite();
 }
 

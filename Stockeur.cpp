@@ -6,8 +6,12 @@ void Stockeur::addSprites(Sprite* sp){
     sprites.push_back(sp);
 }
 
-void Stockeur::addEntite(Entite* en){
-    entities.push_back(en);
+void Stockeur::addCircEntite(Entite* en){
+    circEntities.push_back(en);
+}
+
+void Stockeur::addRectEntite(Entite* en){
+    rectEntities.push_back(en);
 }
 
 void Stockeur::addEnemies(Enemies* en){
@@ -27,10 +31,17 @@ void Stockeur::removeSprites(Sprite* sp){
 
 }
 
-void Stockeur::removeEntite(Entite* en){
-    auto it = std::find(entities.begin(), entities.end(), en);
-    if (it != entities.end()) {
-        entities.erase(it); 
+void Stockeur::removeCircEntite(Entite* en){
+    auto it = std::find(circEntities.begin(), circEntities.end(), en);
+    if (it != circEntities.end()) {
+        circEntities.erase(it); 
+    }
+}
+
+void Stockeur::removeRectEntite(Entite* en){
+    auto it = std::find(rectEntities.begin(), rectEntities.end(), en);
+    if (it != rectEntities.end()) {
+        rectEntities.erase(it); 
     }
 }
 
@@ -41,12 +52,20 @@ void Stockeur::removeEnemies(Enemies* en){
     }
 }
 
+Mc* Stockeur::getMc() {
+    return mc;
+}
+
 std::vector<Sprite*>* Stockeur::getSpriteVector(){
     return &sprites;
 }
 
-std::vector<Entite*>* Stockeur::getEntiteVector(){
-    return &entities;
+std::vector<Entite*>* Stockeur::getCircEntiteVector(){
+    return &circEntities;
+}
+
+std::vector<Entite*>* Stockeur::getRectEntiteVector(){
+    return &rectEntities;
 }
 
 std::vector<Enemies*>* Stockeur::getEnemiesVector(){
