@@ -13,7 +13,7 @@ Vector2D.o : Vector2D.cpp Vector2D.hpp
 Entite.o : Entite.cpp Entite.hpp Sprite.hpp Vector2D.hpp
 	g++ -Wall Entite.cpp -c
 
-Joueur2.o : Joueur2.cpp Joueur2.hpp Entite.hpp
+Joueur2.o : Joueur2.cpp Joueur2.hpp Sprite.hpp
 	g++ -Wall Joueur2.cpp -c
 
 Killable.o : Killable.cpp Killable.hpp Entite.hpp

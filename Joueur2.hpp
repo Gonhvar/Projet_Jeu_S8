@@ -1,7 +1,9 @@
 #ifndef JOUEUR2_HPP
 #define JOUEUR2_HPP
 
-#include "Entite.hpp"
+#include "Sprite.hpp"
+
+#define DECALAGE_J2 20
 
 const States etatsDeJoueur2 = {
 	"noTexture",
@@ -9,11 +11,13 @@ const States etatsDeJoueur2 = {
 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 };
 
-class Joueur2 : public Entite{
+class Joueur2 : public Sprite{
 protected:
 	int mouseX;
 	int mouseY;
-	float k = -1.0;
+	float k = 0.025;
+	float frottement = 0.2;
+	float vitesseActuelle[2] = {0, 0};
 	
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
@@ -21,6 +25,8 @@ public:
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 	void update();
+
+	void deplacementDynamique();
 	
 };
 

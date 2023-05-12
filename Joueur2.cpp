@@ -23,10 +23,15 @@ void Joueur2::update(){
     SDL_GetMouseState(&mouseX, &mouseY);
 
     //Mettre un effet de ressorts autour de ce point
-    _coord[0]= (joueur->getX()+20);
-    _coord[1]= (joueur->getY()-20);
-
+    deplacementDynamique();
 
     
 }
 
+void Joueur2::deplacementDynamique() {
+    vitesseActuelle[0] += k*((joueur->getX()+DECALAGE_J2) - _coord[0]) - frottement*vitesseActuelle[0];
+    vitesseActuelle[1] += k*((joueur->getY()-DECALAGE_J2) - _coord[1]) - frottement*vitesseActuelle[1];
+
+    _coord[0] += vitesseActuelle[0];
+    _coord[1] += vitesseActuelle[1];
+}
