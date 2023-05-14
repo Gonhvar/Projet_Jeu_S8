@@ -78,7 +78,6 @@ void Venera::update() {
 	// update des enemies pour qu'ils prennent des décisions (dont celles de se déplacer)
 	// update des Entite pour les déplacer
 	// update des Sprites pour les faire changer d'apparence
-	afficheur->update();
 	mc->update(); // récupére la touche pressée par le joueur
 	j2->update();
 
@@ -109,8 +108,6 @@ void Venera::update() {
 						// On peut alors donner à chaque Entite une fonction update ou il se static_cast correctement dedans;
 
 	}
-
-	
 	afficheur->update();
 }
 

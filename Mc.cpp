@@ -34,6 +34,7 @@ Mc::Mc() {
 }
 
 void Mc::update() {
+
     if(!dashOn){
         get_keypress();
     }else{
@@ -49,6 +50,7 @@ void Mc::update() {
 
     //faire test de direction ici;
     attack->update(dx, dy);
+
     Vector2D v(dx, dy);
     etat = v.norme != 0;
     move(v);
@@ -189,6 +191,8 @@ void Mc::mousePress(SDL_MouseButtonEvent& b){
     if(b.button == SDL_BUTTON_LEFT){
         //handle a left-click
         std::cout << "Bang !" << std::endl;
+        SDL_GetMouseState(&mouseX, &mouseY);
+        stockeur->getJ2()->newTir(0, mouseX, mouseY);
     }
 }
 

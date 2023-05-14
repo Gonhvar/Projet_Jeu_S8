@@ -4,6 +4,7 @@
 
 #include "Killable.hpp"
 #include "Attacks.hpp"
+#include "Joueur2.hpp"
 
 class Attacks;
 
@@ -16,6 +17,8 @@ const States etatsDesMc = { // Eviter de le modifier
 
 class Mc : public Killable {
 protected :
+	int mouseX;
+	int mouseY;
 	//Multiplicateur de vitesse
 	float dashValue = 0;
 	bool dashOn = false;
