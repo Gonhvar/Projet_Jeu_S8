@@ -1,5 +1,5 @@
-prog: Sprite.o affichage.o Vector2D.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o Attacks.o Map.o Stockeur.o Joueur2.o 
-	g++ -o prog Sprite.o affichage.o Vector2D.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o Attacks.o Map.o Stockeur.o Joueur2.o -lSDL2 -lSDL2_image -lSDL2_ttf
+prog: Sprite.o affichage.o Vector2D.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o Attacks.o Map.o Stockeur.o Joueur2.o Bullets.o 
+	g++ -o prog Sprite.o affichage.o Vector2D.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o Attacks.o Map.o Stockeur.o Joueur2.o Bullets.o -lSDL2 -lSDL2_image -lSDL2_ttf
 
 Stockeur.o : Stockeur.cpp Stockeur.hpp Inc.hpp
 	g++ -Wall Stockeur.cpp -c
@@ -13,7 +13,10 @@ Vector2D.o : Vector2D.cpp Vector2D.hpp
 Entite.o : Entite.cpp Entite.hpp Sprite.hpp Vector2D.hpp
 	g++ -Wall Entite.cpp -c
 
-Joueur2.o : Joueur2.cpp Joueur2.hpp Sprite.hpp
+Bullets.o : Bullets.cpp Bullets.hpp Entite.hpp
+	g++ -Wall Bullets.cpp -c 
+
+Joueur2.o : Joueur2.cpp Joueur2.hpp Sprite.hpp Bullets.hpp
 	g++ -Wall Joueur2.cpp -c
 
 Killable.o : Killable.cpp Killable.hpp Entite.hpp
@@ -25,7 +28,7 @@ Drop.o : Drop.cpp Drop.hpp Killable.hpp
 Enemies.o : Enemies.cpp Enemies.hpp Drop.hpp 
 	g++ -Wall Enemies.cpp -c
 
-Mc.o : Mc.cpp Mc.hpp Killable.hpp Attacks.hpp
+Mc.o : Mc.cpp Mc.hpp Killable.hpp Attacks.hpp Joueur2.hpp
 	g++ -Wall Mc.cpp -c
 
 Attacks.o : Attacks.cpp Attacks.hpp Mc.hpp

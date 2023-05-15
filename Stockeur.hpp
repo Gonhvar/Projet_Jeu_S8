@@ -36,6 +36,7 @@ public:
     void removeEnemies(Enemies* en);
 
     Mc* getMc();
+    Joueur2* getJ2();
     std::vector<Sprite*>* getSpriteVector();
     std::vector<Entite*>* getCircEntiteVector();
     std::vector<Entite*>* getRectEntiteVector();

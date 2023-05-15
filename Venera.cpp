@@ -108,8 +108,6 @@ void Venera::update() {
 						// On peut alors donner à chaque Entite une fonction update ou il se static_cast correctement dedans;
 
 	}
-
-	
 	afficheur->update();
 }
 

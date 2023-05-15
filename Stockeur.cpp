@@ -3,31 +3,31 @@
 Stockeur::Stockeur(){}
 
 void Stockeur::addSprites(Sprite* sp){
-    std::cout << "added Sprite : " << std::endl;
+    //std::cout << "added Sprite : " << std::endl;
     sprites.push_back(sp);
-    std::cout << "taille de sprites : " << sprites.size() << std::endl;
+    //std::cout << "taille de sprites : " << sprites.size() << std::endl;
 }
 
 void Stockeur::addCircEntite(Entite* en){
-    std::cout << "added CircEntite" << std::endl;
+    //std::cout << "added CircEntite" << std::endl;
     circEntities.push_back(en);
-    std::cout << "taille de circEntities : " << circEntities.size() << std::endl;
+    //std::cout << "taille de circEntities : " << circEntities.size() << std::endl;
 }
 
 void Stockeur::addRectEntite(Entite* en){
-    std::cout << "added RectEntite" << std::endl;
+    //std::cout << "added RectEntite" << std::endl;
     rectEntities.push_back(en);
-    std::cout << "taille de rectEntities : " << rectEntities.size() << std::endl;
+    //std::cout << "taille de rectEntities : " << rectEntities.size() << std::endl;
 }
 
 void Stockeur::addEnemies(Enemies* en){
-    std::cout << "added Enemies" << std::endl;
+    //std::cout << "added Enemies" << std::endl;
     enemies.push_back(en);
-    std::cout << "taille de enemies : " << enemies.size() << std::endl;
+    //std::cout << "taille de enemies : " << enemies.size() << std::endl;
 }
 
 void Stockeur::addMc(Mc* j){
-    std::cout << "added Mc" << std::endl;
+    //std::cout << "added Mc" << std::endl;
     mc = j;
 }
 
@@ -67,6 +67,10 @@ void Stockeur::removeEnemies(Enemies* en){
 
 Mc* Stockeur::getMc() {
     return mc;
+}
+
+Joueur2* Stockeur::getJ2(){
+    return j2;
 }
 
 std::vector<Sprite*>* Stockeur::getSpriteVector(){
