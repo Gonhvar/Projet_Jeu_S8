@@ -9,6 +9,7 @@ BasicSkeleton::BasicSkeleton(float _x, float _y) {
     _largeur = 48;
     
     rayon = 24;
+    masse = 10;
 
     this->setCoord(_x,_y,0);
     onScreen = true;

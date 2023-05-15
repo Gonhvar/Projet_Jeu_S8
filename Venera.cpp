@@ -78,7 +78,6 @@ void Venera::update() {
 	// update des enemies pour qu'ils prennent des décisions (dont celles de se déplacer)
 	// update des Entite pour les déplacer
 	// update des Sprites pour les faire changer d'apparence
-	afficheur->update();
 	mc->update(); // récupére la touche pressée par le joueur
 	j2->update();
 
@@ -145,7 +144,7 @@ int main(){
 		moyenne += FrameTimeMS;
 		if (!compteur--) {
 			moyenne /= echantillon;
-			std::cout << "FPS : " << moyenne << std::endl;
+			//std::cout << "FPS : " << moyenne << std::endl;
 			moyenne = 0;
 			compteur = echantillon;
 		}

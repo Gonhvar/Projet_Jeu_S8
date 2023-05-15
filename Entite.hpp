@@ -20,6 +20,7 @@ protected :
 		{0,0}
 	};
 	float rayon = 0;
+	float masse = 1;
 
 	float vitesse = 1;
 	float dx = 0;
@@ -44,9 +45,9 @@ public :
 	void changePV(int change);
 
 	void translate(Vector2D& v);
-	void autoTranslate();
 	Vector2D& move(Vector2D& v);
 	Vector2D& moveCollisionCercle(Entite* other, Vector2D& v);
+	void moveCollisionCercle2(Entite* other, Vector2D& v); // Version améliorée qui remplacera la premoère dysfonctionnelle.
 	Vector2D& moveCollisionRectangle(Entite* other, Vector2D& v);
 	
 	bool contact(Entite* other);

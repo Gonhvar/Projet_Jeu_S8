@@ -46,7 +46,7 @@ void Entite::changePV(int change) {
 }
 
 void Entite::translate(Vector2D& v) {
-	// Décale l'Entite de dx, dy en faisant fi de toute considération
+	// Décale l'Entite de v en faisant fi de toute considération
 	_coord[0] += v.x;
 	_coord[1] += v.y;
 	
@@ -54,18 +54,6 @@ void Entite::translate(Vector2D& v) {
 		//On déplace les points qui composent le rectangle de la hitbox
 		hitBox[i][0] += v.x;
 		hitBox[i][1] += v.y;
-	}
-}
-
-void Entite::autoTranslate() {
-	// Décale l'Entite de dx, dy en faisant fi de toute considération
-	_coord[0] += dx;
-	_coord[1] += dy;
-	
-	for (uint8_t i = 0; i < HITBOX_PTS; i++) {
-		//On déplace les points qui composent le rectangle de la hitbox
-		hitBox[i][0] += dx;
-		hitBox[i][1] += dy;
 	}
 }
 
@@ -94,6 +82,104 @@ Vector2D& Entite::moveCollisionCercle(Entite* other, Vector2D& v) {
 	}
 	
 	return v;
+}
+
+void Entite::moveCollisionCercle2(Entite* other, Vector2D& v) {
+	if (possesseur != other->possesseur) {
+
+		float distX = other->_coord[0] - _coord[0];
+		float distY = other->_coord[1] - _coord[1];
+
+		float A = v.norme * v.norme;
+		float B = -2* (v.x*(distX) + v.y*(distY));
+		float C = distX*distX + distY*distY - (rayon + other->rayon)*(rayon + other->rayon);
+
+		// SI C EST NUL ON A UNE INTERSECTION ALPHA = 0 : CA VEUT DIRE QUE LES DEUX ENTITE SONT EN CONTACT
+
+
+		float delta = B*B - 4*A*C;
+		if (delta > 0) { // Il y aura intersection 
+						// (s'il n'y en a qu'une alors on frolle et ça n'aura pas d'impact donc on ignore ce cas) 
+			float alpha1 = (-B + sqrt(delta))/(2*A);
+			float alpha2 = (-B - sqrt(delta))/(2*A);
+
+			if (alpha1 > alpha2) {
+				float temp = alpha1;
+				alpha1 = alpha2;
+				alpha2 = temp;
+			}
+
+			/*
+			// les cas 1, 3 et 6 n'impliquent aucune modification de v 
+			if (alpha1 < 0) { // cas 1, 2 ou3
+				if (alpha2 < 1) { // cas 1 ou 2
+					if (0 < alpha2) {// cas 2
+						// intersection = true;
+						alpha1 = alpha2;
+						std::cout << "cas 2" << std::endl;
+					}
+				}
+			}
+			else { // cas 4, 5 ou 6
+				if (alpha1 < 1) { // 4 ou 5
+					intersection = true;
+				}
+			}
+
+			// On se déplace de alpha1 (si alpha2 est mieux on fait alpha1 = alpha2)
+			if (intersection) {
+				alpha1 -= 0.0001;
+				alpha1 = alpha1 < 0.0001 ? 0 : alpha1;
+
+				Vector2D v2(_coord[0] + v.x*alpha1 - other->_coord[0], 
+							_coord[1] + v.y*alpha1 - other->_coord[1]);
+				v2.normeToV(1);
+				v2 *= v.x*v2.x + v.y*v2.y; // On multiplie par le produit scalaire avec la vitess
+										  // i.e à quel point on frappe other
+
+				// this est repoussé selon la normale à l'intersection proportionnelement à la masse de l'autre
+				v.x -= v2.x * (other->masse / (masse + other->masse));
+				v.y -= v2.y * (other->masse / (masse + other->masse));
+
+				// pareil pour l'autre
+				v2.x = v2.x * (masse / (masse + other->masse));
+				v2.y = v2.y * (masse / (masse + other->masse));
+				other->translate(v2);
+			}
+			*/
+
+			if (alpha1 < 0) {
+				if (alpha2 > 0) { // On est dans l'Entite
+					Vector2D v2(_coord[0] - other->_coord[0], _coord[1] - other->_coord[1]);
+					v2.normeToV(rayon + other->rayon - v2.norme + 0.0001);
+					Vector2D v3(v2.x, v2.y);
+					v2 *= (other->masse / (masse + other->masse));
+					v3 *= -(masse / (masse + other->masse));
+					v += v2;
+					other->translate(v3);
+				}
+			}
+			else if (alpha1 < 1){
+				alpha1 -= 0.0001;
+				alpha1 = alpha1 < 0.0001 ? 0 : alpha1;
+
+				Vector2D v2(_coord[0] + v.x*alpha1 - other->_coord[0], 
+							_coord[1] + v.y*alpha1 - other->_coord[1]);
+				v2.normeToV(1);
+				v2 *= v.x*v2.x + v.y*v2.y; // On multiplie par le produit scalaire avec la vitess
+										  // i.e à quel point on frappe other
+
+				// this est repoussé selon la normale à l'intersection proportionnelement à la masse de l'autre
+				v.x -= v2.x * (other->masse / (masse + other->masse));
+				v.y -= v2.y * (other->masse / (masse + other->masse));
+
+				// pareil pour l'autre
+				v2.x = v2.x * (masse / (masse + other->masse));
+				v2.y = v2.y * (masse / (masse + other->masse));
+				other->translate(v2);
+			}
+		}
+	}
 }
 
 Vector2D& Entite::moveCollisionRectangle(Entite* other, Vector2D& v) {
@@ -147,16 +233,16 @@ Vector2D& Entite::moveCollisionRectangle(Entite* other, Vector2D& v) {
 
 		switch (indiceMin) {
 			case 0 :
-				v.x = other->hitBox[1][0] - hitBox[0][0];
+				v.x += other->hitBox[1][0] - hitBox[0][0];
 				break;
 			case 1 :
-				v.x = other->hitBox[0][0] - hitBox[1][0];
+				v.x += other->hitBox[0][0] - hitBox[1][0];
 				break;
 			case 2 :
-				v.y = other->hitBox[1][1] - hitBox[0][1];
+				v.y += other->hitBox[1][1] - hitBox[0][1];
 				break;
 			case 3 :
-				v.y = other->hitBox[0][1] - hitBox[1][1];
+				v.y += other->hitBox[0][1] - hitBox[1][1];
 				break;
 		}
 		v.redef(v.x, v.y);

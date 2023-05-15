@@ -23,11 +23,11 @@ void Killable::moveAllCollision(Vector2D& v) {
     for (uint16_t i=0; i<list1.size(); i++) { // max 65000 Entite :O
         // std::cout << "collision circ entre : " << this << "(" << states->spriteName << ")" << " et " << list1[i] << std::endl;
         
+        if (v.norme == 0) { // Peut accélérer la boucle si les Entite ont beaucoup tendance à se bloquer
+            break;
+        }
         // On pourrait ajouter un test pour vérifier que l'Entite est à porté.
-        Entite::moveCollisionCercle(list1[i], v);
-        // if (v.norme == 0) { // Peut accélérer la boucle si les Entite ont beaucoup tendance à se bloquer
-        //     break;
-        // }
+        Entite::moveCollisionCercle2(list1[i], v);
     }
 
     // Collision avec les rectangles :

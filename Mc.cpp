@@ -14,6 +14,7 @@ Mc::Mc() {
     _hauteur = 64;
     _largeur = 48;
     rayon = 24;
+    masse = 40;
 
     _coord[0] = 200;
     _coord[1] = 200;
@@ -34,6 +35,7 @@ Mc::Mc() {
 }
 
 void Mc::update() {
+    // std::cout << _coord[0] << ", " << _coord[1] << std::endl; 
     if(!dashOn){
         get_keypress();
     }else{
@@ -50,9 +52,8 @@ void Mc::update() {
     //faire test de direction ici;
     attack->update(dx, dy);
     Vector2D v(dx, dy);
-    etat = v.norme != 0;
     move(v);
-    // moveAllCollision(v);
+    moveAllCollision(v);
     translate(v);
 }
 
