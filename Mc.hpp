@@ -27,6 +27,13 @@ protected :
 	uint32_t actualDashTime;
 	Attacks* attack;
 
+	int pushForceH = 0;
+	int pushForceB = 0;
+	int pushForceG = 0;
+	int pushForceD = 0;
+	float frottements = 0.3;
+	Vector2D speed;
+
 public :
     /* CONSTRUCTEURS ET DESTRUCTEURS */
 	Mc();
@@ -35,8 +42,8 @@ public :
 
 	void update();
 	void get_keypress();
-	void doKeyDown(SDL_KeyboardEvent *event);
-	void doKeyUp(SDL_KeyboardEvent *event);
+	void doKeyDown(SDL_KeyboardEvent& event);
+	void doKeyUp(SDL_KeyboardEvent& event);
 	void mousePress(SDL_MouseButtonEvent& b);
 };
 

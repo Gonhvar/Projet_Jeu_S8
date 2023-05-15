@@ -27,6 +27,7 @@ Mc::Mc() {
 
     cdDashTime = SDL_GetTicks();
 
+    speed.redef(0,0);
 
     autoSetHitBox();
     addSprite();
@@ -52,10 +53,13 @@ void Mc::update() {
     //faire test de direction ici;
     attack->update(dx, dy);
 
-    Vector2D v(dx, dy);
-    move(v);
-    moveAllCollision(v);
-    translate(v);
+    Vector2D v2(pushForceD - pushForceG, pushForceB - pushForceH);
+    move(v2);
+
+    speed.x += v2.x - frottements*speed.x;
+    speed.y += v2.y - frottements*speed.y;
+    moveAllCollision(speed);
+    translate(speed);
 }
 
 void Mc::get_keypress(){
@@ -66,11 +70,11 @@ void Mc::get_keypress(){
         switch(event.type){
 
             case SDL_KEYUP :
-                doKeyUp(&event.key);
+                doKeyUp(event.key);
                 break;
 
             case SDL_KEYDOWN :
-                doKeyDown(&event.key);
+                doKeyDown(event.key);
 
             case SDL_MOUSEBUTTONDOWN:
                 //do whatever you want to do after a mouse button was pressed,
@@ -84,11 +88,45 @@ void Mc::get_keypress(){
     //printf("dx : %f | dy : %f \n", dx, dy);
 }
 
-void Mc::doKeyDown(SDL_KeyboardEvent *event)
+void Mc::doKeyDown(SDL_KeyboardEvent &event)
 {   
     //Pour un seul press de button
-	if (event->repeat == 0)
-	{  
+	// if (event->repeat == 0)
+	// { 
+        switch(event.keysym.sym) {
+            case SDLK_ESCAPE :
+                exit(0);
+            
+            case SDLK_SPACE :
+                std::cout << "dash" << std::endl;
+                //std::cout << "direction dx " << dx << " dy : "<< dy  << std::endl;
+                if( (SDL_GetTicks() - cdDashTime) > 200){
+                    vitesse *= dashValue;
+                    startDashTime = SDL_GetTicks();
+                    dashOn = true;
+                }else{
+                    std::cout << "Cooldown en cours" << std::endl;
+                }
+                break;
+
+            case SDLK_z :
+                std::cout << "z presse" << std::endl;
+                pushForceH = 1;
+                break;
+            case SDLK_s :
+                std::cout << "s presse" << std::endl;
+                pushForceB = 1;
+                break;
+            case SDLK_q :
+                std::cout << "q presse" << std::endl;
+                pushForceG = 1;
+                break;
+            case SDLK_d :
+                std::cout << "d presse" << std::endl;
+                pushForceD = 1;
+                break;
+        }
+        /*
         if(event->keysym.scancode == SDL_SCANCODE_ESCAPE){
             exit(0);
         }
@@ -137,16 +175,53 @@ void Mc::doKeyDown(SDL_KeyboardEvent *event)
             //heavy
             attack->updateAttack(2);
         }
+        */
 
-	}
-    //Lorsque la touche est appuyé longtemps 
-    else{
+	// }
+    // //Lorsque la touche est appuyé longtemps 
+    // else{
 
-    }
+    // }
 }
 
-void Mc::doKeyUp(SDL_KeyboardEvent *event)
+void Mc::doKeyUp(SDL_KeyboardEvent &event)
 {
+    switch(event.keysym.sym) {
+        case SDLK_ESCAPE :
+            exit(0);
+        
+        case SDLK_BACKSPACE :
+            //std::cout << "dash" << std::endl;
+            //std::cout << "direction dx " << dx << " dy : "<< dy  << std::endl;
+            if( (SDL_GetTicks() - cdDashTime) > 200){
+                vitesse *= dashValue;
+                startDashTime = SDL_GetTicks();
+                dashOn = true;
+            }else{
+                std::cout << "Cooldown en cours" << std::endl;
+            }
+            
+            break;
+
+        case SDLK_z :
+            std::cout << "z leve" << std::endl;
+            pushForceH = 0;
+            break;
+        case SDLK_s :
+            std::cout << "s leve" << std::endl;
+            pushForceB = 0;
+            break;
+        case SDLK_q :
+            std::cout << "q leve" << std::endl;
+            pushForceG = 0;
+            break;
+        case SDLK_d :
+            std::cout << "d leve" << std::endl;
+            pushForceD = 0;
+            break;
+        }
+    }
+    /*
     if (event->repeat == 0)
         {  
         //On est actuellement en ZQSD
@@ -184,8 +259,9 @@ void Mc::doKeyUp(SDL_KeyboardEvent *event)
             //std::cout << "release dash" << std::endl;
         }
     }
+    */
 
-}
+// }
 
 void Mc::mousePress(SDL_MouseButtonEvent& b){
     if(b.button == SDL_BUTTON_LEFT){
