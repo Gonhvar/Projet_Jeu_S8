@@ -11,6 +11,12 @@ void Vector2D::redef(float X, float Y) {
     norme = sqrt(X*X + Y*Y);
 }
 
+void Vector2D::plus(float X, float Y) {
+    x += X;
+    y += Y;
+    norme = sqrt(x*x + y*y);
+}
+
 Vector2D& Vector2D::operator+=(const Vector2D& o) {
     // Ajoute le vecteur de droite au vecteur de gauche
     x += o.x;

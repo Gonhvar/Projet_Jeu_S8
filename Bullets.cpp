@@ -9,7 +9,7 @@ Bullets::Bullets(int state, float directX, float directY) {
     //Mettre l'hitbox
     dx = directX;
     dy = directY;
-    vitesse = BASICBULLETSPEED;
+    depForce = BASICBULLETSPEED;
     _hauteur = 16;
     _largeur = 16;
 

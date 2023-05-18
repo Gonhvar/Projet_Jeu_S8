@@ -58,8 +58,8 @@ void Entite::translate(Vector2D& v) {
 }
 
 Vector2D& Entite::move(Vector2D& v) {
-	// Normalise le vecteur à la vitesse this->vitesse
-	v.normeToV(vitesse/FPS);
+	// Normalise le vecteur à this->depForce
+	v.normeToV(depForce);
 	return v;
 }
 
@@ -103,50 +103,11 @@ void Entite::moveCollisionCercle2(Entite* other, Vector2D& v) {
 			float alpha1 = (-B + sqrt(delta))/(2*A);
 			float alpha2 = (-B - sqrt(delta))/(2*A);
 
-			if (alpha1 > alpha2) {
+			if (alpha1 > alpha2) { // On tri alpha1 et alpha2 pour raccourcir les tests suivants
 				float temp = alpha1;
 				alpha1 = alpha2;
 				alpha2 = temp;
 			}
-
-			/*
-			// les cas 1, 3 et 6 n'impliquent aucune modification de v 
-			if (alpha1 < 0) { // cas 1, 2 ou3
-				if (alpha2 < 1) { // cas 1 ou 2
-					if (0 < alpha2) {// cas 2
-						// intersection = true;
-						alpha1 = alpha2;
-						std::cout << "cas 2" << std::endl;
-					}
-				}
-			}
-			else { // cas 4, 5 ou 6
-				if (alpha1 < 1) { // 4 ou 5
-					intersection = true;
-				}
-			}
-
-			// On se déplace de alpha1 (si alpha2 est mieux on fait alpha1 = alpha2)
-			if (intersection) {
-				alpha1 -= 0.0001;
-				alpha1 = alpha1 < 0.0001 ? 0 : alpha1;
-
-				Vector2D v2(_coord[0] + v.x*alpha1 - other->_coord[0], 
-							_coord[1] + v.y*alpha1 - other->_coord[1]);
-				v2.normeToV(1);
-				v2 *= v.x*v2.x + v.y*v2.y; // On multiplie par le produit scalaire avec la vitess
-										  // i.e à quel point on frappe other
-
-				// this est repoussé selon la normale à l'intersection proportionnelement à la masse de l'autre
-				v.x -= v2.x * (other->masse / (masse + other->masse));
-				v.y -= v2.y * (other->masse / (masse + other->masse));
-
-				// pareil pour l'autre
-				v2.x = v2.x * (masse / (masse + other->masse));
-				v2.y = v2.y * (masse / (masse + other->masse));
-				other->translate(v2);
-			}
-			*/
 
 			if (alpha1 < 0) {
 				if (alpha2 > 0) { // On est dans l'Entite
@@ -155,11 +116,12 @@ void Entite::moveCollisionCercle2(Entite* other, Vector2D& v) {
 					Vector2D v3(v2.x, v2.y);
 					v2 *= (other->masse / (masse + other->masse));
 					v3 *= -(masse / (masse + other->masse));
+					
 					v += v2;
-					other->translate(v3);
+					other->speed += v3;
 				}
 			}
-			else if (alpha1 < 1){
+			else if (alpha1 < 1){ // on va cogner l'Entite
 				alpha1 -= 0.0001;
 				alpha1 = alpha1 < 0.0001 ? 0 : alpha1;
 
@@ -170,13 +132,17 @@ void Entite::moveCollisionCercle2(Entite* other, Vector2D& v) {
 										  // i.e à quel point on frappe other
 
 				// this est repoussé selon la normale à l'intersection proportionnelement à la masse de l'autre
-				v.x -= v2.x * (other->masse / (masse + other->masse));
-				v.y -= v2.y * (other->masse / (masse + other->masse));
+				// v.x -= v2.x * (other->masse / (masse + other->masse));
+				// v.y -= v2.y * (other->masse / (masse + other->masse));
+				v.plus(
+					-v2.x * (other->masse / (masse + other->masse)),
+					-v2.y * (other->masse / (masse + other->masse))
+				);
 
 				// pareil pour l'autre
 				v2.x = v2.x * (masse / (masse + other->masse));
 				v2.y = v2.y * (masse / (masse + other->masse));
-				other->translate(v2);
+				other->speed += v2;
 			}
 		}
 	}
@@ -184,7 +150,7 @@ void Entite::moveCollisionCercle2(Entite* other, Vector2D& v) {
 
 Vector2D& Entite::moveCollisionRectangle(Entite* other, Vector2D& v) {
 	// Ce code est moche mais je voulais d'abord vérifier qu'il marche avant de l'optimiser
-	// Ptn ce que c'est moche X(
+
 	// Apparamment, il n'y a pas vraiment mieux en terme d'optimisation
 	
 	if (possesseur == other->possesseur) {
@@ -248,6 +214,33 @@ Vector2D& Entite::moveCollisionRectangle(Entite* other, Vector2D& v) {
 		v.redef(v.x, v.y);
 	}
 	return v;
+}
+
+
+void Entite::updateSpeedWithCollisions() {
+	// Pour toutes les autres Entite, appel moveCollisionCercle2 et moveCollisionRectangle
+
+	// Collision avec les cercles :
+    std::vector<Entite*>& list1 = *(stockeur->getCircEntiteVector());
+    for (uint16_t i=0; i<list1.size(); i++) { // max 65000 Entite :O
+        // On pourrait ajouter un test pour vérifier que l'Entite est à porté.
+        Entite::moveCollisionCercle2(list1[i], speed);
+    }
+
+    // Collision avec les rectangles :
+    std::vector<Entite*>& list2 = *(stockeur->getRectEntiteVector());
+    for (uint16_t i=0; i<list2.size(); i++) { // max 65000 Entite :O
+        // On pourrait ajouter un test pour vérifier que l'Entite est à porté.
+        Entite::moveCollisionRectangle(list2[i], speed);
+    }
+}
+
+void Entite::accelerateWithForce(float fx, float fy) {
+	// Ajoute l'intégrale de l'accélération durant cette frame à speed
+	speed.plus(
+		(fx - frottements*speed.x)/(masse*FPS),
+		(fy - frottements*speed.y)/(masse*FPS)
+	);
 }
 
 bool Entite::contact(Entite* other) {

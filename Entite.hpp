@@ -20,11 +20,16 @@ protected :
 		{0,0}
 	};
 	float rayon = 0;
-	float masse = 1;
 
-	float vitesse = 1;
+	float depForce = 1; // > 0
 	float dx = 0;
     float dy = 0;
+
+	float masse = 1; // Augmente l'inertie et l'impact sur les autres Entite
+					// n'impact pas la vitesse finale de l'Entite
+	float frottements = 350; // Diminue le temps de transition et la vitesse max
+							// garder frottements < masse*FPS
+	Vector2D speed;
 
 	Killable* possesseur; // Si l'Entite fait partie d'un Killable alors c'est lui
 
@@ -44,11 +49,13 @@ public :
 	void setPV(int health);
 	void changePV(int change);
 
-	void translate(Vector2D& v);
-	Vector2D& move(Vector2D& v);
-	Vector2D& moveCollisionCercle(Entite* other, Vector2D& v);
-	void moveCollisionCercle2(Entite* other, Vector2D& v); // Version améliorée qui remplacera la premoère dysfonctionnelle.
-	Vector2D& moveCollisionRectangle(Entite* other, Vector2D& v);
+	void translate(Vector2D& v); // Déplace l'Entite de v
+	Vector2D& move(Vector2D& v); // Normalise la force de pousse de l'Entite à depForce
+	Vector2D& moveCollisionCercle(Entite* other, Vector2D& v); // Deprecated
+	void moveCollisionCercle2(Entite* other, Vector2D& v); // Modifie la vitesse de this et de l'Entite en fonction de la collision circulaire
+	Vector2D& moveCollisionRectangle(Entite* other, Vector2D& v); // Modifie la vitesse de this en fonction de la collision rectangulaire
+	void updateSpeedWithCollisions(); // Pour toutes les autres Entite, appel moveCollisionCercle2 et moveCollisionRectangle
+	void accelerateWithForce(float fx=0, float fy=0); // Ajoute l'intégrale de l'accélération durant cette frame à speed
 	
 	bool contact(Entite* other);
 

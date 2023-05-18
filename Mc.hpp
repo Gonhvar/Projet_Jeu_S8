@@ -1,6 +1,6 @@
 #ifndef MC_HPP
 #define MC_HPP
-#define BASICSPEED 150.0
+#define BASICSPEED 3000.0
 
 #include "Killable.hpp"
 #include "Attacks.hpp"
@@ -11,7 +11,7 @@ class Attacks;
 const States etatsDesMc = { // Eviter de le modifier
 	"Robot",
 	1,
-	{2, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 };
 
 
@@ -19,7 +19,7 @@ class Mc : public Killable {
 protected :
 	int mouseX;
 	int mouseY;
-	//Multiplicateur de vitesse
+	//Multiplicateur de depForce
 	float dashValue = 0;
 	bool dashOn = false;
 	uint32_t startDashTime;
@@ -31,8 +31,6 @@ protected :
 	int pushForceB = 0;
 	int pushForceG = 0;
 	int pushForceD = 0;
-	float frottements = 0.3;
-	Vector2D speed;
 
 public :
     /* CONSTRUCTEURS ET DESTRUCTEURS */

@@ -13,7 +13,7 @@ class Killable : public Entite {
     // Si on veut qu'un Killable contienne plus d'Entite on les rajoute dans le tableau entite.
 
 protected :
-    std::vector<Entite*> entite;
+    std::vector<Entite*> entite; // Maximum 255 entite
     uint32_t invicibilityTimeStart;
 	bool currentlyTakingDmg = false;
 
@@ -26,7 +26,7 @@ public :
     void update();
     
     void translate(Vector2D& v);
-    void moveAllCollision(Vector2D& v);
+    void updateSpeedWithCollisions(); // Redéfinition de cette fonction pour toutes les hitbox du killable
 
 
 	virtual void mort();
