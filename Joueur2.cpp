@@ -1,5 +1,6 @@
 #include "Joueur2.hpp"
 
+/* CONSTRUCTEURS ET DESTRUCTEURS */
 Joueur2::Joueur2(){
 
     Sprite::joueur2 = this;
@@ -11,10 +12,28 @@ Joueur2::Joueur2(){
 
     setOnScreen(true);
 
-    states = &(etatsDeJoueur2);
-    addSprite();
+    //states = &(etatsDeJoueur2);
+		States* newStates = new States(); // newStates est un pointeur temporaire
+		newStates->spriteName = "Joueur2"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
+		newStates->nbEtats = 1;
+		newStates->nbFrameParEtat[0] = 1;
+		for (int i=1; i<newStates->nbEtats; i++) {
+			newStates->nbFrameParEtat[i] = 0;
+		}
+		states = newStates;    
+		addSprite();
+		Sprite::stockeur->addSprites(this);
     //std::cout << "Creation" << std::endl;
 }
+
+Joueur2::~Joueur2() {
+    for (unsigned int i=0; i<bullets.size(); i++) {
+        delete(bullets[i]);
+    }
+    bullets.clear();
+    Sprite::joueur2 = nullptr;
+}
+/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 
 void Joueur2::update(){

@@ -14,17 +14,14 @@
 
 class Affichage {
 protected :
-    std::vector<Sprite*>* sprites;   // Liste des Sprite connus
-                                // Il serait bien qu'un Sprite* n'apparaîsse qu'une seule fois dans sprites
-                                // Il faudrait remplacer les Sprite* par des smart pointers ou faire gaffe lors de la suppression d'un Sprite
+    std::vector<Sprite*>* sprites; // copie de la liste des Sprite du Stockeur
     std::map<std::string, TexturePack*> imageChargees; // Dictionnaire stockant les texture chargées avec comme clée le nom de sprite associé
     std::map<std::string, TexturePack*>::iterator imIterator; // Permet simplement de ne pas avoir à allouer de la mémoire à chaque fois que l'on veut itérer sur imageChargees
 
     SDL_Renderer* renderer;
 
     std::string imageFormat = ".png";
-    static const std::map<std::string, std::string> nomFichiers; // J'aimerai que ce soit initialisé lors du make. Exemple de ce que je veux dire par là :
-
+    
     Mc* player;
 
     float camPos[2]; // Position de la caméra
@@ -43,6 +40,7 @@ public :
 
     void setZoom(float z);
     void setCamPos(float x, float y);
+		void setPlayer(Mc* thePlayer);
 
     void enleveSprite(const Sprite& s);
 

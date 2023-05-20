@@ -31,6 +31,17 @@ Affichage::Affichage(SDL_Renderer* rend, Stockeur* st) : renderer(rend) {
 Affichage::~Affichage(){
 	TTF_CloseFont(font);
 	TTF_Quit();
+	for (auto& entry : imageChargees) {
+        TexturePack* texturePack = entry.second;
+        for (auto& row : *texturePack) {
+            for (SDL_Texture* texture : row) {
+                SDL_DestroyTexture(texture);
+            }
+            row.clear();
+        }
+        delete texturePack;
+    }
+    imageChargees.clear();
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
@@ -43,6 +54,10 @@ void Affichage::setCamPos(float x, float y) {
 	camPos[1] = y;
 }
 
+void Affichage::setPlayer(Mc* thePlayer) {
+	player = thePlayer;
+}
+
 void Affichage::visit(Sprite* s, const States* states) {
 	// Ajoute s dans sprites et va chercher ses textures
 
@@ -50,7 +65,7 @@ void Affichage::visit(Sprite* s, const States* states) {
 	imIterator = imageChargees.find(states->spriteName);
 	if (imIterator != imageChargees.end()) { // Déjà chargée
 		s->setTexture(imIterator->second);
-		//std::cout << "Image de " << states->spriteName << " déjà chargée :)" << std::endl;
+		std::cout << "Image de " << states->spriteName << " déjà chargée :)" << std::endl;
 	}
 	else { // Sinon on la charge et on la stocke dans imageChargees
 		SDL_Texture* textureChargee;
@@ -75,11 +90,6 @@ void Affichage::visit(Sprite* s, const States* states) {
 		}
 		s->setTexture(newTexture);
 		imageChargees[states->spriteName] = newTexture;
-		
-		//On stock le pointeur vers le joueur
-		if(s->getName() == "Robot"){
-			player = dynamic_cast<Mc*>(s);
-		}
 	}
 };
 
@@ -88,6 +98,7 @@ void Affichage::enleveSprite(const Sprite& s) {
 }
 
 void Affichage::update(){
+	//if (!player->dashOn) SDL_RenderClear(renderer);
 	SDL_RenderClear(renderer);
 	afficheHealth();
 	affiche_all();

@@ -6,11 +6,13 @@
 
 class Mc;
 
+/*
 const States etatAttacks = {
 	"attaque",
 	1,
 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 };
+*/
 
 class Attacks : public Entite {
 protected:

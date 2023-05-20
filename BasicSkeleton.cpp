@@ -15,7 +15,15 @@ BasicSkeleton::BasicSkeleton(float _x, float _y) {
     this->setCoord(_x,_y,0);
     onScreen = true;
 
-    states = &(etatsDesBasicSkeleton);
+    //states = &(etatsDesBasicSkeleton);
+		States* newStates = new States(); // newStates est un pointeur temporaire
+		newStates->spriteName = "BasicSkeleton"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
+		newStates->nbEtats = 1;
+		newStates->nbFrameParEtat[0] = 1;
+		for (int i=1; i<newStates->nbEtats; i++) {
+			newStates->nbFrameParEtat[i] = 0;
+		}
+		states = newStates;
 
     std::cout << "Création de BasicSkeleton : " << states->spriteName << std::endl;
 

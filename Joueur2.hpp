@@ -7,13 +7,15 @@
 
 #define DECALAGE_J2 20
 
+/*
 const States etatsDeJoueur2 = {
 	"noTexture",
 	1,
 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 };
+*/
 
-class Joueur2 : public Sprite{
+class Joueur2 : public Sprite {
 protected:
 	int mouseX;
 	int mouseY;
@@ -26,6 +28,7 @@ protected:
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
 	Joueur2();
+	~Joueur2();
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 	void update();

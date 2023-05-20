@@ -2,7 +2,7 @@
 #define DROP_HPP
 
 #include "Killable.hpp"
-#include <vector>
+#include "Inc.hpp"
 
 class Drop : public Killable {
 protected:

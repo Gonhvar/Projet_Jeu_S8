@@ -1,5 +1,7 @@
 #include "Mc.hpp"
 
+/* CONSTRUCTEURS ET DESTRUCTEURS */
+
 //Constructeur spécial pour le MC (renseigne Sprite::joueur)
 Mc::Mc() {
     //On donne en référence le joueur pour l'utiliser plus tard
@@ -23,7 +25,15 @@ Mc::Mc() {
     this->setCoord(10,20,0);
     onScreen = true;
     
-    states = &(etatsDesMc);
+    //states = &(etatsDesMc);
+		States* newStates = new States(); // newStates est un pointeur temporaire
+		newStates->spriteName = "Robot"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
+		newStates->nbEtats = 1;
+		newStates->nbFrameParEtat[0] = 1;
+		for (int i=1; i<newStates->nbEtats; i++) {
+			newStates->nbFrameParEtat[i] = 0;
+		}
+		states = newStates;
     maxDelay = 20; // Change de frame tous les 20 ticks
 
     cdDashTime = SDL_GetTicks();
@@ -35,6 +45,12 @@ Mc::Mc() {
     attack = new Attacks(this);
     //std::cout << "Création de Mc : " << states->spriteName << std::endl;
 }
+
+Mc::~Mc() {
+    delete attack;
+    Sprite::joueur = nullptr;
+}
+/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 void Mc::update() {
 

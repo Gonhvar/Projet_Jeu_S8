@@ -21,6 +21,7 @@ public :
     /* CONSTRUCTEURS ET DESTRUCTEURS */
     Killable();
     Killable(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]);
+    ~Killable();
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
     void update();

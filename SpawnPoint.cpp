@@ -2,15 +2,23 @@
 
 SpawnPoint::SpawnPoint(){};
 
-SpawnPoint::SpawnPoint(float x, float y, Venera* main) : _main(main) {
+SpawnPoint::SpawnPoint(float x, float y, Venera* main) {
     _coord[0] = x;
     _coord[1] = y;
     i = 0;
     phase = 0;
     FrameStartTimeMs = SDL_GetTicks();
 
-    states = &(etatsDesSpawnPoint);
-    std::cout << "Création de SpawnPoint : " << states->spriteName << std::endl;
+    //states = &(etatsDesSpawnPoint);
+		States* newStates = new States(); // newStates est un pointeur temporaire
+		newStates->spriteName = "SpawnPoint"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
+		newStates->nbEtats = 1;
+		newStates->nbFrameParEtat[0] = 1;
+		for (int i=1; i<newStates->nbEtats; i++) {
+			newStates->nbFrameParEtat[i] = 0;
+		}
+		states = newStates;    
+		std::cout << "Création de SpawnPoint : " << states->spriteName << std::endl;
 }
 
 void SpawnPoint::spawn(int select, float timing){
@@ -20,7 +28,10 @@ void SpawnPoint::spawn(int select, float timing){
         case 0 :
             //BasicSkeleton
             if(SDL_GetTicks()-FrameStartTimeMs > timing){
-               _main->pushBackEnemies(new BasicSkeleton(_coord[0], _coord[1]));
+               new BasicSkeleton(_coord[0], _coord[1]); // push automatiquement l'Enemy dans les listes :
+								// sprites
+								// circEntities
+								// enemies
                FrameStartTimeMs = SDL_GetTicks();
                i++;
             }
@@ -42,7 +53,7 @@ void SpawnPoint::spawnWave(int selectWave){
                     //std::cout << "Phase 0" << std::endl;
                     //Le chiffre détermine le nombre d'enemies;
                     if(i<2){
-                        spawn(0, 100.0);
+                        spawn(0, 1000.0);
                         
                     }
                     else{

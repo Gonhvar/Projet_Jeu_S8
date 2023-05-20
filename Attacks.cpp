@@ -12,8 +12,16 @@ Attacks::Attacks(Mc* j) : joueur(j){
     setCoord(0,0,0);
     setOnScreen(false);
 
-    states = &etatAttacks;
-    addSprite();
+    //states = &etatAttacks;
+		States* newStates = new States(); // newStates est un pointeur temporaire
+		newStates->spriteName = "Attacks"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
+		newStates->nbEtats = 1;
+		newStates->nbFrameParEtat[0] = 1;
+		for (int i=1; i<newStates->nbEtats; i++) {
+			newStates->nbFrameParEtat[i] = 0;
+		}
+		states = newStates;
+		addSprite();
 }
 
 Attacks::~Attacks(){

@@ -1,13 +1,22 @@
 #include "Killable.hpp"
 
+/* CONSTRUCTEURS ET DESTRUCTEURS */
 Killable::Killable() {
     possesseur = this;
-    Sprite::stockeur->addCircEntite(this);
+    hitBoxType(1, 0); // Pour l'instant, on part du principe qu'un Killable a une hitBox ronde
 }
 
 Killable::Killable(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]) : Entite(sName, nbE, nbFPE, this) {
     possesseur = this;
 }
+
+Killable::~Killable() {
+    for (uint8_t i=0; i<entite.size(); i++) {
+        delete(entite[i]);
+    }
+    entite.clear();
+}
+/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 void Killable::translate(Vector2D& v) {
     Entite::translate(v); // Le Killable se déplace lui-même.

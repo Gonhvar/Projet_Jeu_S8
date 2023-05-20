@@ -1,20 +1,23 @@
 #include "Entite.hpp"
 
 Entite::Entite() {
-}
-
-Entite::Entite(const Entite& other) {
-
+	speed.redef(0,0);
 }
 
 Entite::Entite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE], Killable* parent) : Sprite(sName, nbE, nbFPE) {
+	speed.redef(0,0);
 	possesseur = parent;
 }
 
 Entite::~Entite(){
-	Sprite::map->toRemove(this);
-	//delete
+	if (isCirc) {
+		Sprite::stockeur->removeCircEntite(this);
+	}
+	if (isRect) {
+		Sprite::stockeur->removeRectEntite(this);
+	}
 }
+
 
 void Entite::autoSetHitBox() {
 	hitBox[0][0] = _coord[0] - _largeur/2;
@@ -23,6 +26,17 @@ void Entite::autoSetHitBox() {
 	hitBox[1][1] = _coord[1] + _hauteur/2;
 }
 
+void Entite::hitBoxType(bool circ, bool rect) {
+	// Met dans les listes mais n'enlève pas
+	if (circ) {
+		Sprite::stockeur->addCircEntite(this);
+		isCirc = true;
+	}
+	if (rect) {
+		Sprite::stockeur->addRectEntite(this);
+		isRect = true;
+	}
+}
 
 int Entite::getPV() {
 	return PV;
@@ -128,7 +142,7 @@ void Entite::moveCollisionCercle2(Entite* other, Vector2D& v) {
 				Vector2D v2(_coord[0] + v.x*alpha1 - other->_coord[0], 
 							_coord[1] + v.y*alpha1 - other->_coord[1]);
 				v2.normeToV(1);
-				v2 *= v.x*v2.x + v.y*v2.y; // On multiplie par le produit scalaire avec la vitess
+				v2 *= (v.x - other->speed.x)*v2.x + (v.y- other->speed.y)*v2.y; // On multiplie par le produit scalaire avec la vitesse relative
 										  // i.e à quel point on frappe other
 
 				// this est repoussé selon la normale à l'intersection proportionnelement à la masse de l'autre

@@ -22,13 +22,10 @@ Venera::Venera() {
 		j2 = new Joueur2();
 		stockeur->addMc(mc);
 		stockeur->addJoueur2(j2);
+		afficheur->setPlayer(mc);
 
 		initialisation();
 	}
-}
-
-void Venera::pushBackEnemies(Enemies* en){ // METHODE A DETRUIRE POUR LA STOCKEUR_UPDATE
-		// enemies.push_back(en);
 }
 
 
@@ -48,6 +45,7 @@ void Venera::initialisation() {
 	bord0->autoSetHitBox();
 	stockeur->addRectEntite(bord0);
 
+	/*
 	Entite* bord1 = new Entite("Bord1", 1, liste);
 	bord1->setLargeur(50);
 	bord1->setHauteur(600);
@@ -55,6 +53,7 @@ void Venera::initialisation() {
 	bord1->setOnScreen(true);
 	bord1->autoSetHitBox();
 	stockeur->addRectEntite(bord1);
+*/
 
 	Entite* bord2 = new Entite("Bord2", 1, liste);
 	bord2->setLargeur(600);
@@ -102,12 +101,9 @@ void Venera::update() {
 
 
 	for (SpawnPoint* sp : spawnPoints) {
-		sp->update(); // Appel le update de Entite pas de SpawnPoint
-						// Il vaut mieux avoir une liste de spawnPoint
-						// OU update() devient un attribut de type pointeur de fonction
-						// On peut alors donner à chaque Entite une fonction update ou il se static_cast correctement dedans;
-
+		sp->update();
 	}
+
 	afficheur->update();
 }
 
@@ -142,7 +138,7 @@ int main(){
 		moyenne += FrameTimeMS;
 		if (!compteur--) {
 			moyenne /= echantillon;
-			// std::cout << "FPS : " << moyenne << std::endl;
+			std::cout << "FPS : " << moyenne << std::endl;
 			moyenne = 0;
 			compteur = echantillon;
 		}

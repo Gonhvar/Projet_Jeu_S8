@@ -21,7 +21,6 @@ private :
 	Joueur2* j2;
 	Affichage* afficheur;
 
-	//std::vector<Enemies*> enemies;
 	//Map map;
 	std::vector<SpawnPoint*> spawnPoints;
 

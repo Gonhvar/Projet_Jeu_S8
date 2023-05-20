@@ -8,7 +8,7 @@
 class Affichage;
 
 
-typedef std::vector<std::vector<SDL_Texture*>> TexturePack;
+typedef std::vector<std::vector<SDL_Texture*> > TexturePack;
 
 #define MAX_FPE 10
 
@@ -28,16 +28,17 @@ protected :
     bool onScreen = 0;
 
     const States* states = nullptr; // Ne pas modifier ce qu'il y a à l'adresse merci !
+																		// Pour l'instant chaque Sprite (ou descendant) a son propre state
     uint8_t maxDelay = 0; // Temps entre chaque texture
     uint8_t delay = 0; // Temps entre chaque texture
     TexturePack* texture = nullptr; // Liste des Texture en fonction de l'état et de la frame.
+																		// Ce n'est pas le Sprite qui stocke le TexturePack
 
     int etat = 0; // état dans lequel est le Sprite;
     int frame = 0; // 0 est l'état par défaut
 
 
 public:
-    std::string name;
     //L'afficheur est le même pour tous les sprites, la seule fois ou on le met est dans le constructeur du MC
     static Affichage* afficheur;
     //Beaucoup de choses existent en relation avec le joueur, mettre un static peut donc être une bonne idée
@@ -51,11 +52,9 @@ public:
 
     /* CONSTRUCTEURS ET DESTRUCTEURS */
     Sprite();
-    Sprite(const Sprite& other);
-    //Sprite(std::string& spriteName, Affichage& aff);
     Sprite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]);
 
-    virtual ~Sprite() {};
+    ~Sprite();
     /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
     
     void update();

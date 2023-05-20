@@ -5,11 +5,13 @@
 
 class Venera;
 
+/*
 const States etatsDesSpawnPoint = {
 	"SpawnPoint",
 	1,
 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 };
+*/
 
 class SpawnPoint : public Entite {
 

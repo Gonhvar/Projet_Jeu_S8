@@ -23,7 +23,7 @@ protected :
 
 	float depForce = 1; // > 0
 	float dx = 0;
-    float dy = 0;
+	float dy = 0;
 
 	float masse = 1; // Augmente l'inertie et l'impact sur les autres Entite
 					// n'impact pas la vitesse finale de l'Entite
@@ -32,17 +32,18 @@ protected :
 	Vector2D speed;
 
 	Killable* possesseur; // Si l'Entite fait partie d'un Killable alors c'est lui
+	bool isRect = false; // permet de savoir si l'Entite est dans la rectList ou
+	bool isCirc = false; // la circList du stockeur
 
 public :
 	/* CONSTRUCTEURS ET DESTRUCTEURS */
 	Entite();
-	Entite(const Entite& other);
-	//Entite(std::string& spriteName, Affichage& aff);
 	Entite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE], Killable* parent = nullptr); // Si on indique pas de parent, ce sera nullptr par défaut
 	~Entite();
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 	void autoSetHitBox();
+	void hitBoxType(bool rect, bool circ); // Met dans les listes mais n'enlève pas
 
 	int getPV();
 	int getPVMax();

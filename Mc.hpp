@@ -8,11 +8,13 @@
 
 class Attacks;
 
-const States etatsDesMc = { // Eviter de le modifier
+/*
+States etatsDesMc = ( // Eviter de le modifier
 	"Robot",
 	1,
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-};
+	({1, 0, 0, 0, 0, 0, 0, 0, 0, 0})
+);
+*/
 
 
 class Mc : public Killable {
@@ -21,8 +23,8 @@ protected :
 	int mouseY;
 	//Multiplicateur de depForce
 	float dashValue = 0;
-	bool dashOn = false;
 	uint32_t startDashTime;
+	bool dashOn = false;
 	uint32_t cdDashTime;
 	uint32_t actualDashTime;
 	Attacks* attack;
@@ -35,6 +37,7 @@ protected :
 public :
     /* CONSTRUCTEURS ET DESTRUCTEURS */
 	Mc();
+	~Mc();
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 	Attacks* getAttack();
 
