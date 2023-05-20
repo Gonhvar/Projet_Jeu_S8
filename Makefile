@@ -1,5 +1,5 @@
-prog: Sprite.o affichage.o Vector2D.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o Attacks.o Map.o Stockeur.o Joueur2.o Bullets.o 
-	g++ -std=c++11 -o prog Sprite.o affichage.o Vector2D.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o Attacks.o Map.o Stockeur.o Joueur2.o Bullets.o -lSDL2 -lSDL2_image -lSDL2_ttf
+prog: Sprite.o affichage.o Vector2D.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o Attacks.o Map.o Stockeur.o Joueur2.o Bullets.o Input.o 
+	g++ -std=c++11 -o prog Sprite.o affichage.o Vector2D.o Entite.o Killable.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o Attacks.o Map.o Stockeur.o Joueur2.o Bullets.o Input.o -lSDL2 -lSDL2_image -lSDL2_ttf
 
 Stockeur.o : Stockeur.cpp Stockeur.hpp Inc.hpp
 	g++ -std=c++11 -Wall Stockeur.cpp -c
@@ -31,6 +31,9 @@ Enemies.o : Enemies.cpp Enemies.hpp Drop.hpp
 Mc.o : Mc.cpp Mc.hpp Killable.hpp Attacks.hpp Joueur2.hpp
 	g++ -std=c++11 -Wall Mc.cpp -c
 
+Input.o : Input.cpp Input.hpp Sprite.hpp Mc.hpp
+	g++ -std=c++11 -Wall Input.cpp -c
+
 Attacks.o : Attacks.cpp Attacks.hpp Mc.hpp
 	g++ -std=c++11 -Wall Attacks.cpp -c
 
@@ -46,7 +49,7 @@ affichage.o : affichage.cpp affichage.hpp Sprite.hpp Mc.hpp
 camera.o : Camera.cpp Camera.hpp 
 	g++ -std=c++11 -Wall Camera.cpp -c
 
-Venera.o : Venera.cpp Venera.hpp affichage.hpp Killable.hpp Mc.hpp BasicSkeleton.hpp SpawnPoint.hpp Joueur2.cpp
+Venera.o : Venera.cpp Venera.hpp affichage.hpp Killable.hpp Mc.hpp BasicSkeleton.hpp SpawnPoint.hpp Joueur2.hpp Input.hpp
 	g++ -std=c++11 -Wall Venera.cpp -c
 
 Map.o : Map.cpp Map.hpp Venera.hpp

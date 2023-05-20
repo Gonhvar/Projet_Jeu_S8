@@ -281,3 +281,7 @@ float Entite::getDy(){
 int Entite::getAttackDmg(){
     return attackDamage;
 }
+
+float& Entite::getDepForce(){
+	return depForce;
+}

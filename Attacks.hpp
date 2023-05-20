@@ -34,7 +34,7 @@ public:
 	void updatePlayerCoord();
 	void updateHitBox(float attackRangeX, float attackRangeY);
 	void updateAttack(int attack);
-	void update(int directionX, int directionY);
+	void update(int pushForceH, int pushForceB, int pushForceG, int pushForceD);
 
 };
 

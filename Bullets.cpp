@@ -29,7 +29,7 @@ Bullets::Bullets(int state, float directX, float directY) {
 
 	autoSetHitBox();
 	addSprite();
-	std::cout << "YEAHHHHH" << std::endl;
+	//std::cout << "YEAHHHHH" << std::endl;
 }
 
 void Bullets::update(){

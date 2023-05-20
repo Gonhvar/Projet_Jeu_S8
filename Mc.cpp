@@ -34,9 +34,8 @@ Mc::Mc() {
 			newStates->nbFrameParEtat[i] = 0;
 		}
 		states = newStates;
+        
     maxDelay = 20; // Change de frame tous les 20 ticks
-
-    cdDashTime = SDL_GetTicks();
 
     speed.redef(0,0);
 
@@ -54,21 +53,20 @@ Mc::~Mc() {
 
 void Mc::update() {
 
-    if(!dashOn){
-        get_keypress();
-    }else{
+    if(dashOn){
         //Regarde si le temps de dash est fini (bloque les autres mouvement)
         actualDashTime = SDL_GetTicks() - startDashTime;
         //std::cout << actualDashTime << std::endl;
         if(actualDashTime > 1000/dashValue){
             dashOn = false;
             depForce = BASICSPEED;
-            cdDashTime = SDL_GetTicks();
+
+            //Faire un CD entre plusieurs dash ici
         }
     }
 
     //faire test de direction ici;
-    attack->update(dx, dy);
+    attack->update(pushForceH, pushForceB, pushForceG, pushForceD);
 
     //Calcul de la force que le MC veut rajouter
     Vector2D v(pushForceD - pushForceG, pushForceB - pushForceH);
@@ -83,105 +81,37 @@ void Mc::update() {
     translate(speed);
 }
 
-void Mc::get_keypress(){
-    SDL_Event event;
 
-    while(SDL_PollEvent(&event))
-    {   
-        switch(event.type){
-
-            case SDL_KEYUP :
-                doKeyUp(event.key);
-                break;
-
-            case SDL_KEYDOWN :
-                doKeyDown(event.key);
-
-            case SDL_MOUSEBUTTONDOWN:
-                //do whatever you want to do after a mouse button was pressed,
-                mousePress(event.button);
-                break;
-
-            default : break;
-        }
-    }
-    
-    //printf("dx : %f | dy : %f \n", dx, dy);
+void Mc::setPushForceH(int n){
+    pushForceH = n;
 }
 
-void Mc::doKeyDown(SDL_KeyboardEvent &event)
-{   
-    // Pour un seul press de button
-	if (event.repeat == 0)
-	{ 
-        switch(event.keysym.sym) {
-            case SDLK_ESCAPE :
-                exit(0);
-            
-            case SDLK_SPACE :
-                if( (SDL_GetTicks() - cdDashTime) > 200){
-                    depForce *= dashValue;
-                    startDashTime = SDL_GetTicks();
-                    dashOn = true;
-                }else{
-                    std::cout << "Cooldown en cours" << std::endl;
-                }
-                break;
-
-            case SDLK_z :
-                pushForceH = 1;
-                break;
-            case SDLK_s :
-                pushForceB = 1;
-                break;
-            case SDLK_q :
-                pushForceG = 1;
-                break;
-            case SDLK_d :
-                pushForceD = 1;
-                break;
-        }
-    }
+void Mc::setPushForceB(int n){
+    pushForceB = n;
 }
 
-void Mc::doKeyUp(SDL_KeyboardEvent &event) {
-    switch(event.keysym.sym) {
-        case SDLK_ESCAPE :
-            exit(0);
-        
-        case SDLK_SPACE :
-            if( (SDL_GetTicks() - cdDashTime) > 200){
-                depForce *= dashValue;
-                startDashTime = SDL_GetTicks();
-                dashOn = true;
-            }else{
-                std::cout << "Cooldown en cours" << std::endl;
-            }
-            
-            break;
-
-        case SDLK_z :
-            pushForceH = 0;
-            break;
-        case SDLK_s :
-            pushForceB = 0;
-            break;
-        case SDLK_q :
-            pushForceG = 0;
-            break;
-        case SDLK_d :
-            pushForceD = 0;
-            break;
-        }
+void Mc::setPushForceG(int n){
+    pushForceG = n;
 }
 
-void Mc::mousePress(SDL_MouseButtonEvent& b){
-    if(b.button == SDL_BUTTON_LEFT){
-        //handle a left-click
-        std::cout << "Bang !" << std::endl;
-        SDL_GetMouseState(&mouseX, &mouseY);
-        stockeur->getJ2()->newTir(0, mouseX, mouseY);
-    }
+void Mc::setPushForceD(int n){
+    pushForceD = n;
+}
+
+void Mc::setDashOn(bool n){
+    dashOn = n;
+}
+
+void Mc::setStartDashTime(uint32_t time){
+    startDashTime = time;
+}
+
+float& Mc::getDashValue(){
+    return dashValue;
+}
+
+bool Mc::getDashOn(){
+    return dashOn;
 }
 
 Attacks* Mc::getAttack(){

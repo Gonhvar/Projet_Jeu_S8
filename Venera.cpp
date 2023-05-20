@@ -23,6 +23,8 @@ Venera::Venera() {
 		stockeur->addMc(mc);
 		stockeur->addJoueur2(j2);
 		afficheur->setPlayer(mc);
+		
+		input = new Input();
 
 		initialisation();
 	}
@@ -77,7 +79,9 @@ void Venera::update() {
 	// update des enemies pour qu'ils prennent des décisions (dont celles de se déplacer)
 	// update des Entite pour les déplacer
 	// update des Sprites pour les faire changer d'apparence
-	mc->update(); // récupére la touche pressée par le joueur
+	// récupére la touche pressée par le joueur
+	input->update();
+	mc->update(); 
 	j2->update();
 
 	for (Enemies* enemy : *(stockeur->getEnemiesVector())) {

@@ -6,6 +6,7 @@
 #include "BasicSkeleton.hpp"
 #include "SpawnPoint.hpp"
 #include "Joueur2.hpp"
+#include "Input.hpp"
 
 class SpawnPoint;
 
@@ -19,6 +20,9 @@ private :
 	Stockeur* stockeur;
 	Mc* mc;
 	Joueur2* j2;
+	
+	Input* input;
+
 	Affichage* afficheur;
 
 	//Map map;

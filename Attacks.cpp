@@ -28,11 +28,28 @@ Attacks::~Attacks(){
 
 }
 
-void Attacks::update(int directionX, int directionY){
-    
+void Attacks::update(int pushForceH, int pushForceB, int pushForceG, int pushForceD){
     //Direction par défaut, on pourait peut être garder en mémoire la direction précédente pour la mettre ici ?
-    if(directionX == 0 && directionY == 0){
-        directionX = 1;
+    int directionX = 0;
+    int directionY = 0;
+
+    if(pushForceH == 1){
+        directionY =-1;
+    }
+    else if(pushForceB == 1){
+        directionY =1;
+    }
+
+    if(pushForceG == 1){
+        directionX =-1;
+    }
+    else if(pushForceD == 1){
+        directionX =1;
+    }
+
+    //Par défaut
+    if(directionX==0 && directionY == 0){
+        directionX=1;
     }
 
     //Exemple qu'on pourait imaginer
@@ -55,7 +72,7 @@ void Attacks::update(int directionX, int directionY){
             //std::cout << "directionX :" << directionX << " directionY :" << directionY << std::endl;
             this->setOnScreen(true);
             attackDamage = 5;
-            range = 50;
+            range = 60;
             
             //Met à jour l'attaque
             updateHitBox(range*directionX, range*directionY);
@@ -67,10 +84,36 @@ void Attacks::update(int directionX, int directionY){
             break;
         
         case 2 : 
+            //std::cout << "Attaque lourde" << std::endl;
+
+            this->setOnScreen(true);
+            attackDamage = 10;
+            range = 30;
+            
+            //Met à jour l'attaque
+            updateHitBox(range*directionX, range*directionY);
+
+            //Cooldown de l'attaque
+            if(SDL_GetTicks() - cdAttack > 300 ){
+                state = 0;
+            }
             break;
             
         case 5 :
-            
+            std::cout << "Combo llh!" << std::endl;
+
+            this->setOnScreen(true);
+            attackDamage = 30;
+            range = 60;
+
+            //Met à jour l'attaque
+            updateHitBox(range*directionX, range*directionY);
+
+            //Cooldown de l'attaque
+            if(SDL_GetTicks() - cdAttack > 100 ){
+                state = 0;
+                combo = "";
+            }
             break;
         
         default :

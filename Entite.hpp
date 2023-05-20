@@ -65,6 +65,8 @@ public :
 	float getDx();
 	float getDy();
 	int getAttackDmg();
+
+	float& getDepForce();
 };
 
 #endif
