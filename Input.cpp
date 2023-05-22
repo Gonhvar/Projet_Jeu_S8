@@ -17,6 +17,10 @@ Input::Input(){
 		for (int i=1; i<newStates->nbEtats; i++) {
 			newStates->nbFrameParEtat[i] = 0;
 		}
+
+        stateRect.w = 32;
+        stateRect.h = 32;
+
 		states = newStates;
 		
 	onScreen = true;
@@ -29,13 +33,7 @@ void Input::update(){
 	_coord[0] = mouseX;
 	_coord[1] = mouseY;
 
-	if( !(_mc->getDashOn()) ){
-		get_keypress();
-	}
-	else{
-        //std::cout << "Cooldown en cours" << std::endl;
-	}
-
+    get_keypress();
 }
 
 void Input::get_keypress(){
@@ -74,9 +72,11 @@ void Input::doKeyDown(SDL_KeyboardEvent &event)
                 exit(0);
             
             case SDLK_SPACE :
-				_mc->getDepForce() *= dashValue;
-				_mc->setStartDashTime(SDL_GetTicks());
-				_mc->setDashOn(true);
+                if( !(_mc->getDashOn()) ){
+                    _mc->getDepForce() *= dashValue;
+                    _mc->setStartDashTime(SDL_GetTicks());
+                    _mc->setDashOn(true);
+	            }
                 break;
 
             case SDLK_z :

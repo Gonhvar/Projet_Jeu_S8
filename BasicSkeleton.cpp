@@ -18,12 +18,23 @@ BasicSkeleton::BasicSkeleton(float _x, float _y) {
     //states = &(etatsDesBasicSkeleton);
 		States* newStates = new States(); // newStates est un pointeur temporaire
 		newStates->spriteName = "BasicSkeleton"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
-		newStates->nbEtats = 1;
-		newStates->nbFrameParEtat[0] = 1;
-		for (int i=1; i<newStates->nbEtats; i++) {
-			newStates->nbFrameParEtat[i] = 0;
-		}
+		newStates->nbEtats = 4;
+		newStates->nbFrameParEtat[0] = 2;
+		newStates->nbFrameParEtat[1] = 2;
+		newStates->nbFrameParEtat[2] = 2;
+		newStates->nbFrameParEtat[3] = 2;
+		newStates->nbFrameParEtat[4] = 0;
+		newStates->nbFrameParEtat[5] = 0;
+		newStates->nbFrameParEtat[6] = 0;
+		newStates->nbFrameParEtat[7] = 0;
+		newStates->nbFrameParEtat[8] = 0;
+		newStates->nbFrameParEtat[9] = 0;
+
 		states = newStates;
+    maxDelay = 7; // Change de frame tous les 20 ticks
+
+    stateRect.w = 32;
+    stateRect.h = 32;
 
     std::cout << "Création de BasicSkeleton : " << states->spriteName << std::endl;
 

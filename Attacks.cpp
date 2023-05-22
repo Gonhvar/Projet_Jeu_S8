@@ -20,6 +20,10 @@ Attacks::Attacks(Mc* j) : joueur(j){
 		for (int i=1; i<newStates->nbEtats; i++) {
 			newStates->nbFrameParEtat[i] = 0;
 		}
+
+        stateRect.w = 32;
+        stateRect.h = 32;
+
 		states = newStates;
 		addSprite();
 }

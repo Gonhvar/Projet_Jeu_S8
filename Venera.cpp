@@ -142,7 +142,7 @@ int main(){
 		moyenne += FrameTimeMS;
 		if (!compteur--) {
 			moyenne /= echantillon;
-			std::cout << "FPS : " << moyenne << std::endl;
+			// std::cout << "FPS : " << moyenne << std::endl;
 			moyenne = 0;
 			compteur = echantillon;
 		}

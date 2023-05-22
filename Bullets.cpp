@@ -27,6 +27,9 @@ Bullets::Bullets(int state, float directX, float directY) {
 	_coord[0] = joueur2->getX();
 	_coord[1] = joueur2->getY();
 
+	stateRect.w = 32;
+    stateRect.h = 32;
+
 	autoSetHitBox();
 	addSprite();
 	//std::cout << "YEAHHHHH" << std::endl;

@@ -93,23 +93,19 @@ void Sprite::setOnScreen(bool toBe){
 }
 
 void Sprite::addSprite(){
-	afficheur->visit(this, states);
+	afficheur->visit(this, states->spriteName);
 }
 
-TexturePack* Sprite::getTexture() {
+SDL_Texture* Sprite::getTexture() {
 	return texture;
 }
 
-void Sprite::setTexture(TexturePack* t) {
-	if (texture != nullptr) {
-		std::cout << "gros risque de fuite de mémoire à Sprite::setTexture" << std::endl;
-		// Techniquement ce n'est peut-être pas une fuite de mémoire étant donné que ce n'est pas le Sprite qui stocke directement ses textures
-	}
+void Sprite::setTexture(SDL_Texture* t) {
 	texture = t;
 }
 
-SDL_Texture* Sprite::getRightTexture() {
-	return (*texture)[etat][frame];
+const SDL_Rect* Sprite::getRightRectangle() {
+	return &stateRect;
 }
 
 const States* Sprite::getStates() {
@@ -117,10 +113,13 @@ const States* Sprite::getStates() {
 }
 
 void Sprite::setEtat(uint8_t toBe) {
-	if (toBe >= states->nbEtats) {
-		std::cout << "Dans Sprite::setEtat : on demande à passer dans l'état " << (int)toBe << ",  mais il n'y en a que " << (int) states->nbEtats << std::endl;
-	} else {
+	if (toBe < states->nbEtats) {
 		etat = toBe;
+		frame = 0;
+		delay = maxDelay;
+		stateRect.y = stateRect.h * etat;
+	} else {
+		std::cout << "Dans Sprite::setEtat : on demande à passer dans l'état " << (int)toBe << ",  mais il n'y en a que " << (int) states->nbEtats << std::endl;
 	}
 }
 
@@ -128,8 +127,13 @@ void Sprite::update() {
 	if (!delay) {
 		frame = (frame+1)%states->nbFrameParEtat[etat];
 		delay = maxDelay;
+		stateRect.x = stateRect.w * frame;
 	}
 	else delay--;
+}
+
+bool Sprite::getFlip() {
+	return flip;
 }
 
 const std::string Sprite::getName(){

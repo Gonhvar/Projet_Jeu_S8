@@ -53,7 +53,7 @@ void SpawnPoint::spawnWave(int selectWave){
                     //std::cout << "Phase 0" << std::endl;
                     //Le chiffre détermine le nombre d'enemies;
                     if(i<2){
-                        spawn(0, 1000.0);
+                        spawn(0, 100.0);
                         
                     }
                     else{

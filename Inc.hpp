@@ -19,4 +19,4 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
-#define nullptr NULL
+// #define nullptr NULL

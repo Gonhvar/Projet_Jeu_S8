@@ -32,14 +32,7 @@ Affichage::~Affichage(){
 	TTF_CloseFont(font);
 	TTF_Quit();
 	for (auto& entry : imageChargees) {
-        TexturePack* texturePack = entry.second;
-        for (auto& row : *texturePack) {
-            for (SDL_Texture* texture : row) {
-                SDL_DestroyTexture(texture);
-            }
-            row.clear();
-        }
-        delete texturePack;
+		SDL_DestroyTexture(entry.second);
     }
     imageChargees.clear();
 }
@@ -58,38 +51,28 @@ void Affichage::setPlayer(Mc* thePlayer) {
 	player = thePlayer;
 }
 
-void Affichage::visit(Sprite* s, const States* states) {
+void Affichage::visit(Sprite* s, const std::string spriteName) {
 	// Ajoute s dans sprites et va chercher ses textures
 
 	// On vérifie si l'image n'a pas déjà été chargée
-	imIterator = imageChargees.find(states->spriteName);
+	imIterator = imageChargees.find(spriteName);
 	if (imIterator != imageChargees.end()) { // Déjà chargée
 		s->setTexture(imIterator->second);
-		std::cout << "Image de " << states->spriteName << " déjà chargée :)" << std::endl;
+		std::cout << "Image de " << spriteName << " déjà chargée :)" << std::endl;
 	}
 	else { // Sinon on la charge et on la stocke dans imageChargees
-		SDL_Texture* textureChargee;
-		TexturePack* newTexture = new TexturePack(states->nbEtats);
-		std::cout << "Chargement de " << states->spriteName << std::endl;
-		for (int etat=0; etat<states->nbEtats; etat++) {
-			(*newTexture)[etat].resize(states->nbFrameParEtat[etat]);
-			std::cout << "taille de l'état " << etat << " : " << (int)states->nbFrameParEtat[etat] << std::endl;
-			for (int frame=0; frame<states->nbFrameParEtat[etat]; frame++) {
-				std::string pathComplet = PATH_TO_TEXTURE_FOLDER + states->spriteName + "/" + std::to_string(etat) + "/" + std::to_string(frame) + imageFormat;
-				std::cout << "Loading : " << pathComplet << std::endl;
+		std::string pathComplet = PATH_TO_TEXTURE_FOLDER + spriteName + "/" + spriteName + "_Sheet" + imageFormat;
+		std::cout << "Chargement de " << spriteName << " à " << pathComplet << std::endl;
+		const char* filename = pathComplet.c_str();
 				
-				const char* filename = pathComplet.c_str();
+		SDL_Texture* textureChargee = IMG_LoadTexture(renderer, filename);
 				
-				textureChargee = IMG_LoadTexture(renderer, filename);
-				if (!textureChargee) { // L'image n'a pas pu être chargée. On prend la texture par défaut.
-					std::cout << "Erreur de chargement de " << states->spriteName << " ---> a ete cherche a : " << pathComplet << std::endl;
-					textureChargee = noTexture;
-				}
-				(*newTexture)[etat][frame] = textureChargee;
-			}
+		if (!textureChargee) { // L'image n'a pas pu être chargée. On prend la texture par défaut.
+			std::cout << "Erreur de chargement de " << spriteName << " ---> a ete cherche a : " << pathComplet << std::endl;
+			textureChargee = noTexture;
 		}
-		s->setTexture(newTexture);
-		imageChargees[states->spriteName] = newTexture;
+		s->setTexture(textureChargee);
+		imageChargees[spriteName] = textureChargee;
 	}
 };
 
@@ -146,10 +129,8 @@ void Affichage::affiche_all() const{
 			dest.h = s->getHauteur() * zoom;
 
 			//SDL_QueryTexture(s.textures[0], NULL, NULL, &dest.w, &dest.h);
-			SDL_RenderCopy(renderer, s->getRightTexture(), NULL, &dest);
-		}
-		else{
-			//Enlever de la liste 
+			//SDL_RenderCopy(renderer, s->getRightTexture(), NULL, &dest);
+			SDL_RenderCopyEx(renderer, s->getTexture(), s->getRightRectangle(), &dest, 0, NULL, s->getFlip() ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 		}
 	}
 	SDL_RenderPresent(renderer); // Met à jour l'écran avec le backbuffer du renderer

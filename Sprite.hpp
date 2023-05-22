@@ -28,14 +28,16 @@ protected :
     bool onScreen = 0;
 
     const States* states = nullptr; // Ne pas modifier ce qu'il y a à l'adresse merci !
-																		// Pour l'instant chaque Sprite (ou descendant) a son propre state
+                                    // Pour l'instant chaque Sprite (ou descendant) a son propre state
+    SDL_Rect stateRect = {0, 0, 0, 0};
+    
+    SDL_Texture* texture = nullptr; // Sprite sheet
+
     uint8_t maxDelay = 0; // Temps entre chaque texture
     uint8_t delay = 0; // Temps entre chaque texture
-    TexturePack* texture = nullptr; // Liste des Texture en fonction de l'état et de la frame.
-																		// Ce n'est pas le Sprite qui stocke le TexturePack
-
     int etat = 0; // état dans lequel est le Sprite;
     int frame = 0; // 0 est l'état par défaut
+    bool flip = false;
 
 
 public:
@@ -77,12 +79,13 @@ public:
     void setOnScreen(bool toBe);
 
     void addSprite();
-    TexturePack* getTexture();
-    void setTexture(TexturePack* t);
-    SDL_Texture* getRightTexture(); // Sert à renvoyer la texture que ce Sprite veut afficher
+    SDL_Texture* getTexture();
+    void setTexture(SDL_Texture* t);
+    const SDL_Rect* getRightRectangle(); // Sert à renvoyer la texture que ce Sprite veut afficher
     
     const States* getStates();
     void setEtat(uint8_t toBe);
+    bool getFlip();
     const std::string getName();
 };
 

@@ -21,8 +21,12 @@ Joueur2::Joueur2(){
 			newStates->nbFrameParEtat[i] = 0;
 		}
 		states = newStates;    
-		addSprite();
-		Sprite::stockeur->addSprites(this);
+        stateRect.w = 32;
+        stateRect.h = 32;
+	
+    	addSprite();
+		
+        Sprite::stockeur->addSprites(this);
     //std::cout << "Creation" << std::endl;
 }
 

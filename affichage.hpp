@@ -15,8 +15,8 @@
 class Affichage {
 protected :
     std::vector<Sprite*>* sprites; // copie de la liste des Sprite du Stockeur
-    std::map<std::string, TexturePack*> imageChargees; // Dictionnaire stockant les texture chargées avec comme clée le nom de sprite associé
-    std::map<std::string, TexturePack*>::iterator imIterator; // Permet simplement de ne pas avoir à allouer de la mémoire à chaque fois que l'on veut itérer sur imageChargees
+    std::map<std::string, SDL_Texture*> imageChargees; // Dictionnaire stockant les texture chargées avec comme clée le nom de sprite associé
+    std::map<std::string, SDL_Texture*>::iterator imIterator; // Permet simplement de ne pas avoir à allouer de la mémoire à chaque fois que l'on veut itérer sur imageChargees
 
     SDL_Renderer* renderer;
 
@@ -44,7 +44,7 @@ public :
 
     void enleveSprite(const Sprite& s);
 
-    void visit(Sprite* s, const States* states);
+    void visit(Sprite* s, const std::string spriteName);
 
     void update();
 
