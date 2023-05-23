@@ -29,7 +29,7 @@ protected :
 
     const States* states = nullptr; // Ne pas modifier ce qu'il y a à l'adresse merci !
                                     // Pour l'instant chaque Sprite (ou descendant) a son propre state
-    SDL_Rect stateRect = {0, 0, 0, 0};
+    SDL_Rect stateRect = {0, 0, 32, 32};
     
     SDL_Texture* texture = nullptr; // Sprite sheet
 

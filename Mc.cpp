@@ -1,5 +1,14 @@
 #include "Mc.hpp"
 
+uint8_t tabState[3][3][2] = { // Représente l'état et le flip en fonction de la direction dans laquelle on pousse
+	{{3,1}, {5,0}, {3,0}},
+	{{3,1}, {0,0}, {3,0}},
+	{{3,1}, {4,0}, {3,0}}
+};
+
+uint8_t stateTranslator[6] = {2, 1, 4, 0, 3, 4}; // On utilise ce tableau pour "remettre dans l'ordre" les sprite de la sprite sheet
+
+
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 
 //Constructeur spécial pour le MC (renseigne Sprite::joueur)
@@ -81,10 +90,33 @@ void Mc::update() {
     //Décision de l'état
     if (dashOn) {
         std::cout << "dash" << std::endl;
-        setEtat(5);}
+        setEtat(5);
+    }
     else {
-        if (etat == 5) setEtat(0);
-        
+        // Cette façon de faire est rapide mais ne marche que si les pushForce restent binaires
+        // A priori, il ne devrait pas y avoir de raison de sortir les pushForce d'un spectr binaire
+        // Calcul de l'état actuel à partir du déplacement
+        int X = pushForceD - pushForceG;
+        int Y = pushForceB - pushForceH;
+        int newEtat;
+        if (!X && !Y) { // On ne pousse pas
+            newEtat = etat%3;
+            newEtat = stateTranslator[newEtat];
+            maxDelay = 14; // Donne un air plus détendu à l'arrêt
+            // std::cout << "X :" << X << ", Y :" << Y << std::endl;
+            // std::cout << "etat :" << newEtat << ", flip :" << flip << std::endl;
+        }
+        else {
+            newEtat = tabState[Y+1][X+1][0];
+            flip = tabState[Y+1][X+1][1];
+            newEtat = stateTranslator[newEtat];
+            maxDelay = 7;
+            // std::cout << "X :" << X << ", Y :" << Y << std::endl;
+            // std::cout << "etat :" << newEtat << ", flip :" << flip << std::endl;
+        }
+        if (newEtat != etat) {
+            setEtat(newEtat);
+        }
     }
 
 
