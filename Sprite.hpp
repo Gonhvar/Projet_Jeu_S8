@@ -56,7 +56,7 @@ public:
     Sprite();
     Sprite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]);
 
-    ~Sprite();
+    virtual ~Sprite();
     /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
     
     void update();

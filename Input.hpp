@@ -16,6 +16,8 @@ protected:
 public:
 	/* CONSTRUCTEURS ET DESTRUCTEURS */
 	Input();
+
+	virtual ~Input() override {};
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 	void update();
 

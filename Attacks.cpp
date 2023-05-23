@@ -28,9 +28,6 @@ Attacks::Attacks(Mc* j) : joueur(j){
 		addSprite();
 }
 
-Attacks::~Attacks(){
-
-}
 
 void Attacks::update(int pushForceH, int pushForceB, int pushForceG, int pushForceD){
     //Direction par défaut, on pourait peut être garder en mémoire la direction précédente pour la mettre ici ?

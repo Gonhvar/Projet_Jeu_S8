@@ -78,3 +78,7 @@ void BasicSkeleton::takingDamage(Entite* other){
         invicibilityTimeStart = SDL_GetTicks();
     }
 }
+
+void BasicSkeleton::reactionContact(Entite* other) {
+    other->changePV(1);
+}

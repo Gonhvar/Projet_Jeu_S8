@@ -133,6 +133,8 @@ void Entite::moveCollisionCercle2(Entite* other, Vector2D& v) {
 					
 					v += v2;
 					other->speed += v3;
+
+					reactionContact(other);
 				}
 			}
 			else if (alpha1 < 1){ // on va cogner l'Entite
@@ -157,6 +159,8 @@ void Entite::moveCollisionCercle2(Entite* other, Vector2D& v) {
 				v2.x = v2.x * (masse / (masse + other->masse));
 				v2.y = v2.y * (masse / (masse + other->masse));
 				other->speed += v2;
+
+				reactionContact(other);
 			}
 		}
 	}
@@ -249,19 +253,16 @@ void Entite::updateSpeedWithCollisions() {
     }
 }
 
-void Entite::accelerateWithForce(float fx, float fy) {
-	// Ajoute l'intégrale de l'accélération durant cette frame à speed
-	speed.plus(
-		(fx - frottements*speed.x)/(masse*FPS),
-		(fy - frottements*speed.y)/(masse*FPS)
-	);
-}
-
 bool Entite::contact(Entite* other) {
 	return (hitBox[0][0] < other->hitBox[1][0] &&
 		hitBox[1][0] > other->hitBox[0][0] &&
 		hitBox[0][1] < other->hitBox[1][1] &&
 		hitBox[1][1] > other->hitBox[0][1]);
+}
+
+void Entite::reactionContact(Entite* other) {
+	// Fonction appellée quand this entre en contact avec other
+	std::cout << "Contact Entite : " << this << "(" << faction << ")" << " ->" << other << "(" << other->faction << ")"<< std::endl;
 }
 
 void Entite::mort() {
@@ -280,6 +281,22 @@ float Entite::getDy(){
 
 int Entite::getAttackDmg(){
     return attackDamage;
+}
+
+void Entite::addForce(float fx, float fy) {
+	// Ajoute l'intégrale de l'accélération avec durant cette frame à speed
+	speed.plus(
+		fx/(masse*FPS),
+		fy/(masse*FPS)
+	);
+}
+
+void Entite::accelerateWithForce(float fx, float fy) {
+	// Ajoute l'intégrale de l'accélération les frottements durant cette frame à speed
+	speed.plus(
+		(fx - frottements*speed.x)/(masse*FPS),
+		(fy - frottements*speed.y)/(masse*FPS)
+	);
 }
 
 float& Entite::getDepForce(){

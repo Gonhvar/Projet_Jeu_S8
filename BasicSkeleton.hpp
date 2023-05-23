@@ -20,12 +20,15 @@ protected:
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
 	BasicSkeleton(float _x, float _y);
+	virtual ~BasicSkeleton() override {};
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 
 	void deplacementBehaviour();
 	void attackBehaviour();
 	void takingDamage(Entite* other);
+
+	void reactionContact(Entite* other);
 };
 
 #endif

@@ -37,7 +37,7 @@ protected :
 public :
     /* CONSTRUCTEURS ET DESTRUCTEURS */
 	Mc();
-	~Mc();
+	virtual ~Mc() override;
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 	void update();
 

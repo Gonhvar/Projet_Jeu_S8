@@ -10,6 +10,7 @@ public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
 	Enemies();
 	Enemies(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]);
+	virtual ~Enemies() override {};
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 	void update();

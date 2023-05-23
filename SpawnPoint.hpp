@@ -24,6 +24,8 @@ public :
     /* CONSTRUCTEURS ET DESTRUCTEURS */
     SpawnPoint();
     SpawnPoint(float x, float y, Venera* main);
+
+    virtual ~SpawnPoint() override {};
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
     void spawn(int select, float timing);

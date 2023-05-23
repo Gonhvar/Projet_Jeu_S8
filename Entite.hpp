@@ -35,11 +35,14 @@ protected :
 	bool isRect = false; // permet de savoir si l'Entite est dans la rectList ou
 	bool isCirc = false; // la circList du stockeur
 
+	short faction = 1;  // Permet de déterminer le comportement vis-à-vis des autres Entite.
+						// 0 est la faction du Mc
+
 public :
 	/* CONSTRUCTEURS ET DESTRUCTEURS */
 	Entite();
 	Entite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE], Killable* parent = nullptr); // Si on indique pas de parent, ce sera nullptr par défaut
-	~Entite();
+	virtual ~Entite() override;
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 	void autoSetHitBox();
@@ -48,7 +51,7 @@ public :
 	int getPV();
 	int getPVMax();
 	void setPV(int health);
-	void changePV(int change);
+	void changePV(int change); // -=
 
 	void translate(Vector2D& v); // Déplace l'Entite de v
 	Vector2D& move(Vector2D& v); // Normalise la force de pousse de l'Entite à depForce
@@ -56,9 +59,9 @@ public :
 	void moveCollisionCercle2(Entite* other, Vector2D& v); // Modifie la vitesse de this et de l'Entite en fonction de la collision circulaire
 	Vector2D& moveCollisionRectangle(Entite* other, Vector2D& v); // Modifie la vitesse de this en fonction de la collision rectangulaire
 	void updateSpeedWithCollisions(); // Pour toutes les autres Entite, appel moveCollisionCercle2 et moveCollisionRectangle
-	void accelerateWithForce(float fx=0, float fy=0); // Ajoute l'intégrale de l'accélération durant cette frame à speed
 	
 	bool contact(Entite* other);
+	virtual void reactionContact(Entite* other);
 
 	void mort();
 
@@ -66,6 +69,8 @@ public :
 	float getDy();
 	int getAttackDmg();
 
+	void addForce(float fx, float fy);
+	void accelerateWithForce(float fx=0, float fy=0); // Ajoute l'intégrale de l'accélération les frottements durant cette frame à speed
 	float& getDepForce();
 };
 

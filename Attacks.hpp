@@ -28,7 +28,7 @@ public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
 	Attacks();
 	Attacks(Mc* j);
-	~Attacks();
+	virtual ~Attacks() override {};
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 	void updatePlayerCoord();

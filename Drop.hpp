@@ -13,6 +13,7 @@ public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
 	Drop() = default;
 	Drop(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]);
+	virtual ~Drop() override {};
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 };

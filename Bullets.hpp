@@ -20,6 +20,8 @@ public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
 	Bullets();
 	Bullets(int state, float x, float y);
+
+	virtual ~Bullets() override {};
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 	void update();
