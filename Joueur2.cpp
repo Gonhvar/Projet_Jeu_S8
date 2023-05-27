@@ -1,14 +1,15 @@
 #include "Joueur2.hpp"
+#include "Mc.hpp"
 
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 Joueur2::Joueur2(){
 
-    Sprite::joueur2 = this;
+    // Sprite::joueur2 = this;
 
     _hauteur = 16;
     _largeur = 16;
-
-    setCoord(joueur->getX(),joueur->getY(),0);
+    
+    setCoord(stockeur->getMc()->getX(),stockeur->getMc()->getY(), 0);
 
     setOnScreen(true);
 
@@ -31,11 +32,12 @@ Joueur2::Joueur2(){
 }
 
 Joueur2::~Joueur2() {
-    for (unsigned int i=0; i<bullets.size(); i++) {
-        delete(bullets[i]);
-    }
+    std::cout << "Delete Joueur2" << std::endl;
+    // for (unsigned int i=0; i<bullets.size(); i++) {
+    //     delete(bullets[i]);
+    // }
     bullets.clear();
-    Sprite::joueur2 = nullptr;
+    stockeur->addJoueur2(nullptr);
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
@@ -51,8 +53,8 @@ void Joueur2::update(){
 }
 
 void Joueur2::deplacementDynamique() {
-    vitesseActuelle[0] += k*((joueur->getX()+DECALAGE_J2) - _coord[0]) - frottement*vitesseActuelle[0];
-    vitesseActuelle[1] += k*((joueur->getY()-DECALAGE_J2) - _coord[1]) - frottement*vitesseActuelle[1];
+    vitesseActuelle[0] += k*((stockeur->getMc()->getX()+DECALAGE_J2) - _coord[0]) - frottement*vitesseActuelle[0];
+    vitesseActuelle[1] += k*((stockeur->getMc()->getY()-DECALAGE_J2) - _coord[1]) - frottement*vitesseActuelle[1];
 
     _coord[0] += vitesseActuelle[0];
     _coord[1] += vitesseActuelle[1];

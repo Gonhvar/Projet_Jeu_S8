@@ -1,4 +1,5 @@
 #include "Bullets.hpp"
+#include "Joueur2.hpp"
 
 
 Bullets::Bullets(){
@@ -24,8 +25,8 @@ Bullets::Bullets(int state, float directX, float directY) {
 		}
 		states = newStates;
 
-	_coord[0] = joueur2->getX();
-	_coord[1] = joueur2->getY();
+	_coord[0] = stockeur->getJ2()->getX();
+	_coord[1] = stockeur->getJ2()->getY();
 
 	stateRect.w = 32;
     stateRect.h = 32;

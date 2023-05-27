@@ -14,15 +14,17 @@ Venera::Venera() {
 	else {
 		stockeur = new Stockeur();
 		Sprite::stockeur = stockeur;
+
 		afficheur = new Affichage(app->renderer, stockeur);
 		Sprite::afficheur = afficheur;
+		
 		Sprite::map = new Map();
 
 		mc = new Mc();
-		j2 = new Joueur2();
 		stockeur->addMc(mc);
+
+		j2 = new Joueur2();
 		stockeur->addJoueur2(j2);
-		afficheur->setPlayer(mc);
 		
 		input = new Input();
 
@@ -33,7 +35,7 @@ Venera::Venera() {
 
 void Venera::initialisation() {
 	//enemies.push_back(new BasicSkeleton(100, 100));
-	spawnPoints.push_back(new SpawnPoint(50, 50, this));
+	spawnPoints.push_back(new SpawnPoint(50, 50));
 	
 
 	// ça c'est juste un exemple de bordure de map pour voir si ça marche un peu
@@ -80,32 +82,26 @@ void Venera::update() {
 	// update des Entite pour les déplacer
 	// update des Sprites pour les faire changer d'apparence
 	// récupére la touche pressée par le joueur
+	
 	input->update();
-	mc->update(); 
-	j2->update();
 
-	for (Enemies* enemy : *(stockeur->getEnemiesVector())) {
-		// if(enemy->contact(mc)){
-		// 	//std::cout << "L'ennemi touche le mc" << std::endl;
-		// 	enemy->attackBehaviour();
-		// }
-		
-		// if(mc->getAttack()->getOnScreen()){
-		// 	if(enemy->contact(mc->getAttack())){
-		// 		//std::cout << "L'attaque touche l'ennemi" << std::endl;
-		// 		enemy->takingDamage(mc->getAttack());
-		// 	}
-		// }
-		enemy->update();
-	}
+	//On arrete les enemy et les sprites car ils utilisent la position du joueur 
+	//Solution possible : Mettre une variable dans stockeur de la position du MC qu'on mettrait à jour 
+	if(Sprite::stockeur->getMc() != nullptr){
+		mc->update(); 
+		j2->update();
 
-	for (Sprite* s : *(stockeur->getSpriteVector())) {
-		s->update();
-	}
+		for (Enemies* enemy : *(stockeur->getEnemiesVector())) {
+			enemy->update();
+		}
 
+		for (Sprite* s : *(stockeur->getSpriteVector())) {
+			s->update();
+		}
 
-	for (SpawnPoint* sp : spawnPoints) {
-		sp->update();
+		for (SpawnPoint* sp : spawnPoints) {
+			sp->update();
+		}
 	}
 
 	afficheur->update();

@@ -2,6 +2,7 @@
 #define ENEMIES_HPP
 
 #include "Drop.hpp"
+#include "Mc.hpp"
 
 class Enemies : public Drop {
 protected:

@@ -2,7 +2,7 @@
 
 SpawnPoint::SpawnPoint(){};
 
-SpawnPoint::SpawnPoint(float x, float y, Venera* main) {
+SpawnPoint::SpawnPoint(float x, float y) {
     _coord[0] = x;
     _coord[1] = y;
     i = 0;

@@ -4,9 +4,6 @@
 
 #include "Sprite.hpp"
 #include "Enemies.hpp"
-#include "Mc.hpp"
-
-
 
 
 #define PATH_TO_TEXTURE_FOLDER "Textures/" // Chemin relatif vers le dossier où se trouvent les textures.
@@ -21,8 +18,6 @@ protected :
     SDL_Renderer* renderer;
 
     std::string imageFormat = ".png";
-    
-    Mc* player;
 
     float camPos[2]; // Position de la caméra
     float zoom; // Zoom de la caméra
@@ -40,7 +35,6 @@ public :
 
     void setZoom(float z);
     void setCamPos(float x, float y);
-		void setPlayer(Mc* thePlayer);
 
     void enleveSprite(const Sprite& s);
 

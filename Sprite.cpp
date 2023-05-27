@@ -1,11 +1,7 @@
 #include "Sprite.hpp"
 #include "affichage.hpp"
 
-
 Affichage* Sprite::afficheur;
-
-Sprite* Sprite::joueur;
-Sprite* Sprite::joueur2;
 
 Map* Sprite::map;
 Stockeur* Sprite::stockeur;

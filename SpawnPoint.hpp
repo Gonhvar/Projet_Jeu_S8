@@ -16,14 +16,13 @@ const States etatsDesSpawnPoint = {
 class SpawnPoint : public Entite {
 
 protected :
-    Venera* _main;
     int i;
     int phase;
     Uint32 FrameStartTimeMs;
 public :
     /* CONSTRUCTEURS ET DESTRUCTEURS */
     SpawnPoint();
-    SpawnPoint(float x, float y, Venera* main);
+    SpawnPoint(float x, float y);
 
     virtual ~SpawnPoint() override {};
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */

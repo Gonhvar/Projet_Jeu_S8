@@ -1,12 +1,13 @@
 #include "BasicSkeleton.hpp"
 
+
 BasicSkeleton::BasicSkeleton(float _x, float _y) {
     PV = 10;
     attackDamage = 5;
 
     depForce = BASICSKELETONSPEED;
     _hauteur = 64;
-    _largeur = 48;
+    _largeur = 64;
     
     rayon = 24;
     masse = 7;
@@ -53,7 +54,7 @@ void BasicSkeleton::deplacementBehaviour(){
     }
 
     //Calcul de la force que le Enemies veut rajouter
-    Vector2D v(joueur->getX() - _coord[0], joueur->getY() - _coord[1]);
+    Vector2D v(stockeur->getMc()->getX() - _coord[0], stockeur->getMc()->getY() - _coord[1]);
     move(v);
 
     // On change la vitesse actuelle du Mc en fonction des forces appliquées sur lui et des collisions

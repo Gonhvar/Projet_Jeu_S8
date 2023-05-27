@@ -5,6 +5,7 @@
 #define BASICBULLETSPEED 100.0
 #include "Entite.hpp"
 
+
 /*
 const States etatsDeBullets = {
 	"noTexture",

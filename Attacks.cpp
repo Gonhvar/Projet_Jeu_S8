@@ -1,10 +1,7 @@
 #include "Attacks.hpp"
 
+
 Attacks::Attacks(){
-
-}
-
-Attacks::Attacks(Mc* j) : joueur(j){
     
     _hauteur = 64;
     _largeur = 48;
@@ -123,8 +120,8 @@ void Attacks::update(int pushForceH, int pushForceB, int pushForceG, int pushFor
 }
 
 void Attacks::updatePlayerCoord(){
-    playerCoord[0] = joueur->getX();
-    playerCoord[1] = joueur->getY();
+    playerCoord[0] = stockeur->getMc()->getX();
+    playerCoord[1] = stockeur->getMc()->getY();
 }
 
 void Attacks::updateHitBox(float attackRangeX, float attackRangeY){

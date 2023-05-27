@@ -13,8 +13,6 @@ uint8_t stateTranslator[6] = {2, 1, 4, 0, 3, 4}; // On utilise ce tableau pour "
 
 //Constructeur spécial pour le MC (renseigne Sprite::joueur)
 Mc::Mc() {
-    //On donne en référence le joueur pour l'utiliser plus tard
-    Sprite::joueur = this;
     
     PV = 20;
     PVMax = PV;
@@ -23,7 +21,7 @@ Mc::Mc() {
     dashValue = 4.0;
 
     _hauteur = 64;
-    _largeur = 48;
+    _largeur = 64;
     rayon = 24;
     masse = 20;
     frottements = 350;
@@ -60,13 +58,16 @@ Mc::Mc() {
 
     autoSetHitBox();
     addSprite();
-    attack = new Attacks(this);
+    attack = new Attacks();
     //std::cout << "Création de Mc : " << states->spriteName << std::endl;
 }
 
 Mc::~Mc() {
+    std::cout << "Delete Mc" << std::endl;
+    delete stockeur->getJ2();
     delete attack;
-    Sprite::joueur = nullptr;
+
+    stockeur->addMc(nullptr);
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
