@@ -56,13 +56,8 @@ void BasicSkeleton::deplacementBehaviour(){
     Vector2D v(joueur->getX() - _coord[0], joueur->getY() - _coord[1]);
     move(v);
 
-    // On change la vitesse actuelle du Mc en fonction des forces appliquées sur lui et des collisions
-    accelerateWithForce(v.x, v.y);
-    
-    // Les collisions dépendent des itérations de déplacement
-    Killable::updateSpeedWithCollisions();
-
-    translate(speed);
+    // On pousse
+    addForce(v);
 }
 
 void BasicSkeleton::attackBehaviour(){

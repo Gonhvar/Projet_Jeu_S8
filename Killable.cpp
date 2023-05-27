@@ -2,12 +2,10 @@
 
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 Killable::Killable() {
-    possesseur = this;
     hitBoxType(1, 0); // Pour l'instant, on part du principe qu'un Killable a une hitBox ronde
 }
 
 Killable::Killable(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]) : Entite(sName, nbE, nbFPE, this) {
-    possesseur = this;
 }
 
 Killable::~Killable() {

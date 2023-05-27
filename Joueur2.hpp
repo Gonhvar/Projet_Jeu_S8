@@ -36,7 +36,8 @@ public:
 	void deplacementDynamique();
 
 	void newTir(int state, int directX, int directY);
-	
+
+	void removeBullet(Bullets* bullet);
 };
 
 #endif

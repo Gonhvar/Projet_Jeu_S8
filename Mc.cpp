@@ -55,11 +55,10 @@ Mc::Mc() {
 
     stateRect.w = 32;
     stateRect.h = 32;
-
-    speed.redef(0,0);
+    addSprite();
 
     autoSetHitBox();
-    addSprite();
+    hitBoxType(1, 0);
     attack = new Attacks(this);
     //std::cout << "Création de Mc : " << states->spriteName << std::endl;
 }
@@ -71,6 +70,7 @@ Mc::~Mc() {
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 void Mc::update() {
+    if (Sprite::stockeur->printEverything) std::cout << "MC::update()" << std::endl;
 
     if(dashOn){
         //Regarde si le temps de dash est fini (bloque les autres mouvement)
@@ -124,13 +124,8 @@ void Mc::update() {
     Vector2D v(pushForceD - pushForceG, pushForceB - pushForceH);
     move(v);
 
-    // On change la vitesse actuelle du Mc en fonction des forces appliquées sur lui et des collisions
-    accelerateWithForce(v.x, v.y);
-    
-    // Les collisions dépendent des itérations de déplacement
-    Killable::updateSpeedWithCollisions();
-
-    translate(speed);
+    // On pousse
+    addForce(v);
 }
 
 

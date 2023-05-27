@@ -5,7 +5,8 @@
 
 class Enemies : public Drop {
 protected:
-
+    uint32_t invicibilityTimeStart;
+	bool currentlyTakingDmg = false;
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
 	Enemies();

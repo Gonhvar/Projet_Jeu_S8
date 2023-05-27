@@ -1,15 +1,14 @@
 #include "Bullets.hpp"
+#include "Joueur2.hpp"
 
-
-Bullets::Bullets(){
-
-}
-
-Bullets::Bullets(int state, float directX, float directY) {
+/* CONSTRUCTEURS ET DESTRUCTEURS */
+Bullets::Bullets(int state, float directX, float directY, Joueur2* papa) {
 	//Mettre l'hitbox
-	dx = directX;
-	dy = directY;
-	depForce = BASICBULLETSPEED;
+	speed.redef(directX, directY);
+	parent = papa;
+	speed.normeToV(BASICBULLETSPEED);
+	masse = 1;
+	frottements = 0;
 	_hauteur = 16;
 	_largeur = 16;
 
@@ -31,13 +30,26 @@ Bullets::Bullets(int state, float directX, float directY) {
     stateRect.h = 32;
 
 	autoSetHitBox();
+	hitBoxType(1, 0);
 	addSprite();
 	//std::cout << "YEAHHHHH" << std::endl;
 }
 
+Bullets::~Bullets() {
+	parent->removeBullet(this);
+}
+/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+
 void Bullets::update(){
+    if (Sprite::stockeur->printEverything) std::cout << "Bullets::update() : " << this << std::endl;
 	Vector2D v(dx, dy);
 	move(v);
-	translate(v);
+	addForce(v);
 	//test si touche quoique ce soit (meme bords de la map)
+}
+
+void Bullets::reactionContact(Entite* other) {
+	std::cout << "Bullets::reactionContact" << std::endl;
+	other->changePV(10);
+	delete(this);
 }

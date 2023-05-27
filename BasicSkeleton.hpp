@@ -1,7 +1,7 @@
 #ifndef BASICSKELETON_HPP
 #define BASICSKELETON_HPP
 
-#define BASICSKELETONSPEED 300.0
+#define BASICSKELETONSPEED 100.0
 
 #include "Enemies.hpp"
 

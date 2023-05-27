@@ -21,6 +21,8 @@ protected:
 
 public:
 
+    bool printEverything = 0; // Sert au debug X(
+
     Stockeur();
 
     void addSprites(Sprite* sp);

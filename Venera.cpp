@@ -45,17 +45,15 @@ void Venera::initialisation() {
 	bord0->setCoord(300, -25, 0);
 	bord0->setOnScreen(true);
 	bord0->autoSetHitBox();
-	stockeur->addRectEntite(bord0);
+	bord0->hitBoxType(0, 1);
 
-	/*
 	Entite* bord1 = new Entite("Bord1", 1, liste);
 	bord1->setLargeur(50);
 	bord1->setHauteur(600);
 	bord1->setCoord(625, 300, 0);
 	bord1->setOnScreen(true);
 	bord1->autoSetHitBox();
-	stockeur->addRectEntite(bord1);
-*/
+	bord1->hitBoxType(0, 1);
 
 	Entite* bord2 = new Entite("Bord2", 1, liste);
 	bord2->setLargeur(600);
@@ -63,7 +61,7 @@ void Venera::initialisation() {
 	bord2->setCoord(300, 625, 0);
 	bord2->setOnScreen(true);
 	bord2->autoSetHitBox();
-	stockeur->addRectEntite(bord2);
+	bord2->hitBoxType(0, 1);
 
 	Entite* bord3 = new Entite("Bord3", 1, liste);
 	bord3->setLargeur(50);
@@ -71,7 +69,7 @@ void Venera::initialisation() {
 	bord3->setCoord(-25, 300, 0);
 	bord3->setOnScreen(true);
 	bord3->autoSetHitBox();
-	stockeur->addRectEntite(bord3);
+	bord3->hitBoxType(0, 1);
 }
 
 void Venera::update() {
@@ -80,34 +78,33 @@ void Venera::update() {
 	// update des Entite pour les déplacer
 	// update des Sprites pour les faire changer d'apparence
 	// récupére la touche pressée par le joueur
+
+	// Le joueur prend une décision (appui d'une touche)
 	input->update();
 	mc->update(); 
 	j2->update();
 
+	// Les Enemies prennent leur décisions
 	for (Enemies* enemy : *(stockeur->getEnemiesVector())) {
-		// if(enemy->contact(mc)){
-		// 	//std::cout << "L'ennemi touche le mc" << std::endl;
-		// 	enemy->attackBehaviour();
-		// }
-		
-		// if(mc->getAttack()->getOnScreen()){
-		// 	if(enemy->contact(mc->getAttack())){
-		// 		//std::cout << "L'attaque touche l'ennemi" << std::endl;
-		// 		enemy->takingDamage(mc->getAttack());
-		// 	}
-		// }
 		enemy->update();
 	}
 
+	// Ils sont tous déplacement selon leur décisions
+	for (Entite* entite : *(stockeur->getCircEntiteVector())) {
+		entite->updateSpeedWithCollisions();
+		entite->autoTranslate();
+	}
+
+	// Les Sprite sont mis à jour
 	for (Sprite* s : *(stockeur->getSpriteVector())) {
 		s->update();
 	}
-
 
 	for (SpawnPoint* sp : spawnPoints) {
 		sp->update();
 	}
 
+	// Le reste est affiché
 	afficheur->update();
 }
 
@@ -118,13 +115,17 @@ int main(){
 	Uint32 FrameStartTimeMs;
 	Uint32 FrameEndTimeMs;
 	Uint32 FrameNormalTimeMs = 1000/FPS;
+	// FrameNormalTimeMs = 400;
 	long FrameTimeMS;
 	long moyenne = 0;
 	Uint8 echantillon = 15;
 	Uint8 compteur = echantillon;
 	
-	// uint8_t i=5;
 	while(true){
+	    // if (Sprite::stockeur->printEverything) std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << std::endl;
+
+
+
 		//On récupére le temps actuel
 		FrameStartTimeMs = SDL_GetTicks();
 
@@ -142,7 +143,7 @@ int main(){
 		moyenne += FrameTimeMS;
 		if (!compteur--) {
 			moyenne /= echantillon;
-			// std::cout << "FPS : " << moyenne << std::endl;
+			std::cout << "FPS : " << moyenne << std::endl;
 			moyenne = 0;
 			compteur = echantillon;
 		}

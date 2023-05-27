@@ -7,8 +7,6 @@
 #define HITBOX_PTS 2
 #define FPS 60
 
-class Killable;
-
 class Entite : public Sprite {
 protected :
 	int PV = 1;
@@ -25,13 +23,12 @@ protected :
 	float dx = 0;
 	float dy = 0;
 
-	float masse = 1; // Augmente l'inertie et l'impact sur les autres Entite
+	float masse = 100; // Augmente l'inertie et l'impact sur les autres Entite
 					// n'impact pas la vitesse finale de l'Entite
-	float frottements = 350; // Diminue le temps de transition et la vitesse max
+	float frottements = 0; // Diminue le temps de transition et la vitesse max
 							// garder frottements < masse*FPS
 	Vector2D speed;
 
-	Killable* possesseur; // Si l'Entite fait partie d'un Killable alors c'est lui
 	bool isRect = false; // permet de savoir si l'Entite est dans la rectList ou
 	bool isCirc = false; // la circList du stockeur
 
@@ -41,12 +38,12 @@ protected :
 public :
 	/* CONSTRUCTEURS ET DESTRUCTEURS */
 	Entite();
-	Entite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE], Killable* parent = nullptr); // Si on indique pas de parent, ce sera nullptr par défaut
+	Entite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]);
 	virtual ~Entite() override;
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 	void autoSetHitBox();
-	void hitBoxType(bool rect, bool circ); // Met dans les listes mais n'enlève pas
+	void hitBoxType(bool circ, bool rect); // Met dans les listes mais n'enlève pas
 
 	int getPV();
 	int getPVMax();
@@ -54,6 +51,8 @@ public :
 	void changePV(int change); // -=
 
 	void translate(Vector2D& v); // Déplace l'Entite de v
+	void autoTranslate(); // Déplace l'Entite de speed
+									 // Cette fonction existe pour ne pas demander la vitesse de l'Entite pour ensuite lui rendre dans Venera
 	Vector2D& move(Vector2D& v); // Normalise la force de pousse de l'Entite à depForce
 	Vector2D& moveCollisionCercle(Entite* other, Vector2D& v); // Deprecated
 	void moveCollisionCercle2(Entite* other, Vector2D& v); // Modifie la vitesse de this et de l'Entite en fonction de la collision circulaire
@@ -69,9 +68,11 @@ public :
 	float getDy();
 	int getAttackDmg();
 
-	void addForce(float fx, float fy);
-	void accelerateWithForce(float fx=0, float fy=0); // Ajoute l'intégrale de l'accélération les frottements durant cette frame à speed
+	void addForce(float fx, float fy); // Ajoute l'intégrale de l'accélération avec durant cette frame à speed
+	void addForce(Vector2D& v); // Ajoute l'intégrale de l'accélération avec durant cette frame à speed
 	float& getDepForce();
+
+	void printSelf();
 };
 
 #endif

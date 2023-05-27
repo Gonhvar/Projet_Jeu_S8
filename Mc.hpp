@@ -2,7 +2,7 @@
 #define MC_HPP
 #define BASICSPEED 2000.0
 
-#include "Killable.hpp"
+#include "Entite.hpp"
 #include "Attacks.hpp"
 #include "Joueur2.hpp"
 
@@ -17,7 +17,7 @@ States etatsDesMc = ( // Eviter de le modifier
 */
 
 
-class Mc : public Killable {
+class Mc : public Entite {
 protected :
 	
 	//Multiplicateur de depForce
