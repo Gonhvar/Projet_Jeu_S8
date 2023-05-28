@@ -1,7 +1,7 @@
 #ifndef ATTACKS_HPP
 #define ATTACKS_HPP
 
-
+#include "Entite.hpp"
 #include "Mc.hpp"
 
 class Mc;
@@ -22,12 +22,10 @@ protected:
 	std::string combo;
 
 	float playerCoord[2];
-	Mc* joueur;
 
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
 	Attacks();
-	Attacks(Mc* j);
 	virtual ~Attacks() override {};
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 

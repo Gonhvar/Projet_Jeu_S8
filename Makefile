@@ -13,16 +13,16 @@ Vector2D.o : Vector2D.cpp Vector2D.hpp
 Entite.o : Entite.cpp Entite.hpp Sprite.hpp Vector2D.hpp
 	g++ -std=c++11 -Wall Entite.cpp -c
 
-Bullets.o : Bullets.cpp Bullets.hpp Entite.hpp
+Bullets.o : Bullets.cpp Bullets.hpp Entite.hpp Joueur2.hpp
 	g++ -std=c++11 -Wall Bullets.cpp -c 
 
 Joueur2.o : Joueur2.cpp Joueur2.hpp Sprite.hpp Bullets.hpp
 	g++ -std=c++11 -Wall Joueur2.cpp -c
 	
-Drop.o : Drop.cpp Drop.hpp Killable.hpp 
+Drop.o : Drop.cpp Drop.hpp Entite.hpp 
 	g++ -std=c++11 -Wall Drop.cpp -c
 
-Enemies.o : Enemies.cpp Enemies.hpp Drop.hpp 
+Enemies.o : Enemies.cpp Enemies.hpp Drop.hpp Mc.hpp Killable.hpp
 	g++ -std=c++11 -Wall Enemies.cpp -c
 
 Mc.o : Mc.cpp Mc.hpp Killable.hpp Attacks.hpp Joueur2.hpp
@@ -31,7 +31,7 @@ Mc.o : Mc.cpp Mc.hpp Killable.hpp Attacks.hpp Joueur2.hpp
 Input.o : Input.cpp Input.hpp Sprite.hpp Mc.hpp
 	g++ -std=c++11 -Wall Input.cpp -c
 
-Attacks.o : Attacks.cpp Attacks.hpp Mc.hpp
+Attacks.o : Attacks.cpp Attacks.hpp Mc.hpp Entite.hpp
 	g++ -std=c++11 -Wall Attacks.cpp -c
 
 BasicSkeleton.o : BasicSkeleton.cpp BasicSkeleton.hpp Enemies.hpp 

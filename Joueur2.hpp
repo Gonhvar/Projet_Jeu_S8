@@ -28,7 +28,7 @@ protected:
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
 	Joueur2();
-	virtual ~Joueur2() override;
+	virtual ~Joueur2();
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 	void update();

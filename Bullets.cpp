@@ -5,8 +5,8 @@
 Bullets::Bullets(int state, float directX, float directY, Joueur2* papa) {
 	//Mettre l'hitbox
 	speed.redef(directX, directY);
-	parent = papa;
 	speed.normeToV(BASICBULLETSPEED);
+	parent = papa;
 	masse = 1;
 	frottements = 0;
 	_hauteur = 16;
@@ -23,8 +23,8 @@ Bullets::Bullets(int state, float directX, float directY, Joueur2* papa) {
 		}
 		states = newStates;
 
-	_coord[0] = joueur2->getX();
-	_coord[1] = joueur2->getY();
+	_coord[0] = stockeur->getJ2()->getX();
+	_coord[1] = stockeur->getJ2()->getY();
 
 	stateRect.w = 32;
     stateRect.h = 32;
@@ -36,6 +36,7 @@ Bullets::Bullets(int state, float directX, float directY, Joueur2* papa) {
 }
 
 Bullets::~Bullets() {
+    std::cout << "Delete Bullets" << std::endl;
 	parent->removeBullet(this);
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
@@ -51,5 +52,5 @@ void Bullets::update(){
 void Bullets::reactionContact(Entite* other) {
 	std::cout << "Bullets::reactionContact" << std::endl;
 	other->changePV(10);
-	delete(this);
+	markedForDeath = true;
 }

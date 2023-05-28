@@ -2,19 +2,21 @@
 #define DROP_HPP
 
 #include "Entite.hpp"
-#include "Inc.hpp"
 
 class Drop : public Entite {
 protected:
-	uint8_t taux = 0; // de 0/255 à 255/255
-	std::vector<uint8_t> item;	// Tableau donnant les items que ce Drop peut posséder
+	int item;
 
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
 	Drop() = default;
-	Drop(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]);
+	Drop(std::vector<int> items, std::vector<int> taux, int x, int y);
 	virtual ~Drop() override {};
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+
+	void update();
+	void selectItem();
+	void getItem();
 
 };
 

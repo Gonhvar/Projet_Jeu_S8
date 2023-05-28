@@ -9,6 +9,7 @@ Killable::Killable(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]) : Ent
 }
 
 Killable::~Killable() {
+    std::cout << "Delete Killable" << std::endl;
     for (uint8_t i=0; i<entite.size(); i++) {
         delete(entite[i]);
     }

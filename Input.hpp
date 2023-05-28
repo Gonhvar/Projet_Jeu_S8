@@ -11,8 +11,6 @@ protected:
 
 	float dashValue;
 
-	Mc* _mc;
-
 public:
 	/* CONSTRUCTEURS ET DESTRUCTEURS */
 	Input();
@@ -22,9 +20,12 @@ public:
 	void update();
 
 	void get_keypress();
+	void get_otherkeypress();
 	void doKeyDown(SDL_KeyboardEvent& event);
 	void doKeyUp(SDL_KeyboardEvent& event);
 	void mousePress(SDL_MouseButtonEvent& b);
+
+	void doOtherKeyDown(SDL_KeyboardEvent &event);
 };
 
 #endif

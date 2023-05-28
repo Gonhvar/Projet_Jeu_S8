@@ -10,6 +10,7 @@ Entite::Entite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]) : Sprite(
 }
 
 Entite::~Entite(){
+    std::cout << "Delete Entite" << std::endl;
 	if (isCirc) {
 		Sprite::stockeur->removeCircEntite(this);
 	}
@@ -249,20 +250,20 @@ void Entite::updateSpeedWithCollisions() {
 	addForce(-speed.x*frottements, -speed.y*frottements);
 
 	// Collision avec les cercles :
-	if (isCirc) {
+	if (isCirc) { // Permet d'éviter la vérification du contact de l'Entite avec elle-même
 		std::vector<Entite*>& list1 = *(stockeur->getCircEntiteVector());
-		for (uint16_t i=0; i<list1.size(); i++) { // max 65000 Entite :O
-			if (this != list1[i]) {
+		for (Entite* entite : list1) { // max 65000 Entite :O
+			if (this != entite) {
 				// On pourrait ajouter un test pour vérifier que l'Entite est à porté.
-				Entite::moveCollisionCercle2(list1[i], speed);
+				Entite::moveCollisionCercle2(entite, speed);
 			}
     	}
 	}
 	else {
 		std::vector<Entite*>& list1 = *(stockeur->getCircEntiteVector());
-		for (uint16_t i=0; i<list1.size(); i++) { // max 65000 Entite :O
+		for (Entite* entite : list1) { // max 65000 Entite :O
 			// On pourrait ajouter un test pour vérifier que l'Entite est à porté.
-			Entite::moveCollisionCercle2(list1[i], speed);
+			Entite::moveCollisionCercle2(entite, speed);
 		}
 	}
 
@@ -270,18 +271,18 @@ void Entite::updateSpeedWithCollisions() {
     // Collision avec les rectangles :
 	if (isRect) {
 		std::vector<Entite*>& list2 = *(stockeur->getRectEntiteVector());
-		for (uint16_t i=0; i<list2.size(); i++) { // max 65000 Entite :O
-			if (this != list2[i]) {
+		for (Entite* entite : list2) { // max 65000 Entite :O
+			if (this != entite) {
 				// On pourrait ajouter un test pour vérifier que l'Entite est à porté.
-				Entite::moveCollisionRectangle(list2[i], speed);
+				Entite::moveCollisionRectangle(entite, speed);
 			}
 		}
 	}
 	else {
 		std::vector<Entite*>& list2 = *(stockeur->getRectEntiteVector());
-		for (uint16_t i=0; i<list2.size(); i++) { // max 65000 Entite :O
+		for (Entite* entite : list2) { // max 65000 Entite :O
 			// On pourrait ajouter un test pour vérifier que l'Entite est à porté.
-			Entite::moveCollisionRectangle(list2[i], speed);
+			Entite::moveCollisionRectangle(entite, speed);
 		}
 	}
 }
@@ -301,8 +302,7 @@ void Entite::reactionContact(Entite* other) {
 
 void Entite::mort() {
 	std::cout << "Entite.mort() de " << this << std::endl;
-	//Create Drop
-	delete(this);
+	markedForDeath = true;
 }
 
 float Entite::getDx(){

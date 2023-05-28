@@ -14,15 +14,17 @@ Venera::Venera() {
 	else {
 		stockeur = new Stockeur();
 		Sprite::stockeur = stockeur;
+
 		afficheur = new Affichage(app->renderer, stockeur);
 		Sprite::afficheur = afficheur;
+		
 		Sprite::map = new Map();
 
 		mc = new Mc();
-		j2 = new Joueur2();
 		stockeur->addMc(mc);
+
+		j2 = new Joueur2();
 		stockeur->addJoueur2(j2);
-		afficheur->setPlayer(mc);
 		
 		input = new Input();
 
@@ -33,7 +35,7 @@ Venera::Venera() {
 
 void Venera::initialisation() {
 	//enemies.push_back(new BasicSkeleton(100, 100));
-	spawnPoints.push_back(new SpawnPoint(50, 50, this));
+	spawnPoints.push_back(new SpawnPoint(50, 50));
 	
 
 	// ça c'est juste un exemple de bordure de map pour voir si ça marche un peu
@@ -81,8 +83,12 @@ void Venera::update() {
 
 	// Le joueur prend une décision (appui d'une touche)
 	input->update();
-	mc->update(); 
-	j2->update();
+
+	//On arrete les enemy et les sprites car ils utilisent la position du joueur 
+	//Solution possible : Mettre une variable dans stockeur de la position du MC qu'on mettrait à jour 
+	if(Sprite::stockeur->getMc() != nullptr){
+		mc->update(); 
+		j2->update();
 
 	// Les Enemies prennent leur décisions
 	for (Enemies* enemy : *(stockeur->getEnemiesVector())) {
@@ -95,13 +101,25 @@ void Venera::update() {
 		entite->autoTranslate();
 	}
 
-	// Les Sprite sont mis à jour
-	for (Sprite* s : *(stockeur->getSpriteVector())) {
-		s->update();
-	}
-
 	for (SpawnPoint* sp : spawnPoints) {
 		sp->update();
+	}
+
+		for(Drop* d : *(stockeur->getItemVector())){
+			d->update();
+		}
+	}
+
+	// Les Sprite sont mis à jour
+	for (Sprite* s : *(stockeur->getSpriteVector())) {
+		if (s->markedForDeath) {
+			std::cout << "Marked" << std::endl;
+			// delete(this);
+		}
+		else {
+			std::cout << "Not Marked" << std::endl;
+			s->update();
+		}
 	}
 
 	// Le reste est affiché

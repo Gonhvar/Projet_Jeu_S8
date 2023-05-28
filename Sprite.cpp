@@ -1,11 +1,7 @@
 #include "Sprite.hpp"
 #include "affichage.hpp"
 
-
 Affichage* Sprite::afficheur;
-
-Sprite* Sprite::joueur;
-Sprite* Sprite::joueur2;
 
 Map* Sprite::map;
 Stockeur* Sprite::stockeur;
@@ -34,6 +30,7 @@ Sprite::Sprite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]) {
 }
 
 Sprite::~Sprite() {
+    std::cout << "Delete Sprite" << std::endl;
 	delete states;
 	Sprite::stockeur->removeSprites(this);
 }

@@ -1,12 +1,18 @@
 #include "BasicSkeleton.hpp"
 
+
 BasicSkeleton::BasicSkeleton(float _x, float _y) {
     PV = 10;
     attackDamage = 5;
 
+    //Selection des drops qu'il pourrait avoir 
+    items = {0, 1};
+    //Il faut que ça fasse 100% en tout
+    taux = {20, 80};
+
     depForce = BASICSKELETONSPEED;
     _hauteur = 64;
-    _largeur = 48;
+    _largeur = 64;
     
     rayon = 24;
     masse = 7;
@@ -39,8 +45,12 @@ BasicSkeleton::BasicSkeleton(float _x, float _y) {
     std::cout << "Création de BasicSkeleton : " << states->spriteName << std::endl;
 
     autoSetHitBox();
-    
     addSprite();
+}
+
+BasicSkeleton::~BasicSkeleton(){
+    std::cout << "Delete BasicSkeleton" << std::endl;
+    new Drop(items, taux, _coord[0], _coord[1]);
 }
 
 void BasicSkeleton::deplacementBehaviour(){
@@ -53,7 +63,7 @@ void BasicSkeleton::deplacementBehaviour(){
     }
 
     //Calcul de la force que le Enemies veut rajouter
-    Vector2D v(joueur->getX() - _coord[0], joueur->getY() - _coord[1]);
+    Vector2D v(stockeur->getMc()->getX() - _coord[0], stockeur->getMc()->getY() - _coord[1]);
     move(v);
 
     // On pousse

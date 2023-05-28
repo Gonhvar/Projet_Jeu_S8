@@ -3,9 +3,8 @@
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 Input::Input(){
 	//std::cout <<"CREATION INPUT" << std::endl;
-	_mc = stockeur->getMc();
 
-	dashValue = _mc->getDashValue();
+	dashValue = stockeur->getMc()->getDashValue();
 
 	_hauteur = 32;
     _largeur = 32;
@@ -33,7 +32,12 @@ void Input::update(){
 	_coord[0] = mouseX;
 	_coord[1] = mouseY;
 
-    get_keypress();
+    if(stockeur->getMc() != nullptr){
+        get_keypress();
+    }
+    else{
+        get_otherkeypress();
+    }
 }
 
 void Input::get_keypress(){
@@ -62,6 +66,19 @@ void Input::get_keypress(){
     //printf("dx : %f | dy : %f \n", dx, dy);
 }
 
+void Input::get_otherkeypress(){
+    SDL_Event event;
+
+    while(SDL_PollEvent(&event))
+    {   
+        switch(event.type){
+            case SDL_KEYDOWN :
+                doOtherKeyDown(event.key);
+            default : break;
+        }
+    }
+}
+
 void Input::doKeyDown(SDL_KeyboardEvent &event)
 {   
     // Pour un seul press de button
@@ -72,30 +89,34 @@ void Input::doKeyDown(SDL_KeyboardEvent &event)
                 exit(0);
             
             case SDLK_SPACE :
-                if( !(_mc->getDashOn()) ){
-                    _mc->getDepForce() *= dashValue;
-                    _mc->setStartDashTime(SDL_GetTicks());
-                    _mc->setDashOn(true);
+                if( !(stockeur->getMc()->getDashOn())){
+                    stockeur->getMc()->getDepForce() *= dashValue;
+                    stockeur->getMc()->setStartDashTime(SDL_GetTicks());
+                    stockeur->getMc()->setDashOn(true);
 	            }
                 break;
 
             case SDLK_z :
-                _mc->setPushForceH(1);
+                stockeur->getMc()->setPushForceH(1);
                 break;
             case SDLK_s :
-                 _mc->setPushForceB(1);
+                stockeur->getMc()->setPushForceB(1);
                 break;
             case SDLK_q :
-                 _mc->setPushForceG(1);
+                stockeur->getMc()->setPushForceG(1);
                 break;
             case SDLK_d :
-                 _mc->setPushForceD(1);
+                stockeur->getMc()->setPushForceD(1);
                 break;
 			case SDLK_j :
-				_mc->getAttack()->updateAttack(1);
+                stockeur->getMc()->getAttack()->updateAttack(1);
 				break;
 			case SDLK_k :
-				_mc->getAttack()->updateAttack(2);
+                stockeur->getMc()->getAttack()->updateAttack(2);
+				break;
+
+            case SDLK_n :
+                stockeur->deleteAllEnemies();
 				break;
 
         }
@@ -108,20 +129,19 @@ void Input::doKeyUp(SDL_KeyboardEvent &event) {
             exit(0);
         
         case SDLK_SPACE :
-            
             break;
 
         case SDLK_z :
-            _mc->setPushForceH(0);
+            stockeur->getMc()->setPushForceH(0);
             break;
         case SDLK_s :
-            _mc->setPushForceB(0);
+            stockeur->getMc()->setPushForceB(0);
             break;
         case SDLK_q :
-            _mc->setPushForceG(0);
+            stockeur->getMc()->setPushForceG(0);
             break;
         case SDLK_d :
-            _mc->setPushForceD(0);
+            stockeur->getMc()->setPushForceD(0);
             break;
         }
 }
@@ -130,5 +150,16 @@ void Input::mousePress(SDL_MouseButtonEvent& b){
     if(b.button == SDL_BUTTON_LEFT){
         //handle a left-click
         stockeur->getJ2()->newTir(0, mouseX, mouseY);
+    }
+}
+
+void Input::doOtherKeyDown(SDL_KeyboardEvent &event){
+    // Pour un seul press de button
+	if (event.repeat == 0)
+	{ 
+        switch(event.keysym.sym) {
+            case SDLK_ESCAPE :
+                exit(0);
+        }
     }
 }

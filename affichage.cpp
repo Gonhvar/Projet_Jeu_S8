@@ -47,9 +47,9 @@ void Affichage::setCamPos(float x, float y) {
 	camPos[1] = y;
 }
 
-void Affichage::setPlayer(Mc* thePlayer) {
-	player = thePlayer;
-}
+// void Affichage::setPlayer(Mc* thePlayer) {
+// 	player = thePlayer;
+// }
 
 void Affichage::visit(Sprite* s, const std::string spriteName) {
 	// Ajoute s dans sprites et va chercher ses textures
@@ -83,7 +83,9 @@ void Affichage::enleveSprite(const Sprite& s) {
 void Affichage::update(){
 	//if (!player->dashOn) SDL_RenderClear(renderer);
 	SDL_RenderClear(renderer);
-	afficheHealth();
+	if(Sprite::stockeur->getMc() != nullptr){
+		afficheHealth();
+	}
 	affiche_all();
 }
 
@@ -97,7 +99,7 @@ void Affichage::afficheHealth(){
 	// char strtext[100];
 	// sprintf(strtext, "PV : %d/%d", player->getPV(), player->getPVMax());
 
-	std::string strtext = "PV : " + std::to_string(player->getPV()) + "/" + std::to_string(player->getPVMax());
+	std::string strtext = "PV : " + std::to_string(Sprite::stockeur->getMc()->getPV()) + "/" + std::to_string(Sprite::stockeur->getMc()->getPVMax());
 	
 	//std::cout << strtext << std::endl;
 	

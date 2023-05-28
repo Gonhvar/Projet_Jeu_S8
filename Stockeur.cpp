@@ -1,42 +1,69 @@
 #include "Stockeur.hpp"
+#include "Enemies.hpp"
+
 
 Stockeur::Stockeur(){}
 
 void Stockeur::addSprites(Sprite* sp){
-    //std::cout << "added Sprite : " << std::endl;
+    if (printEverything) {
+        std::cout << "added Sprite" << std::endl;
+        std::cout << "taille de sprites : " << sprites.size()+1 << std::endl;
+    }
     sprites.push_back(sp);
-    //std::cout << "taille de sprites : " << sprites.size() << std::endl;
 }
 
 void Stockeur::addCircEntite(Entite* en){
-    //std::cout << "added CircEntite" << std::endl;
+    if (printEverything) {
+        std::cout << "added circEntities" << std::endl;
+        std::cout << "taille de circEntities : " << circEntities.size()+1 << std::endl;
+    }
     circEntities.push_back(en);
-    //std::cout << "taille de circEntities : " << circEntities.size() << std::endl;
 }
 
 void Stockeur::addRectEntite(Entite* en){
-    //std::cout << "added RectEntite" << std::endl;
+    if (printEverything) {
+        std::cout << "added rectEntities" << std::endl;
+        std::cout << "taille de rectEntities : " << rectEntities.size()+1 << std::endl;
+    }
     rectEntities.push_back(en);
-    //std::cout << "taille de rectEntities : " << rectEntities.size() << std::endl;
 }
 
 void Stockeur::addEnemies(Enemies* en){
-    //std::cout << "added Enemies" << std::endl;
+    if (printEverything) {
+        std::cout << "added enemies" << std::endl;
+        std::cout << "taille de enemies : " << enemies.size()+1 << std::endl;
+    }
     enemies.push_back(en);
-    //std::cout << "taille de enemies : " << enemies.size() << std::endl;
+}
+
+void Stockeur::addItem(Drop* it){
+    if (printEverything) {
+        std::cout << "added items" << std::endl;
+        std::cout << "taille de items : " << items.size()+1 << std::endl;
+    }
+    items.push_back(it);
 }
 
 void Stockeur::addMc(Mc* j){
-    //std::cout << "added Mc" << std::endl;
+    if (printEverything) {
+        std::cout << "added mc" << std::endl;
+    }
     mc = j;
 }
 
 void Stockeur::addJoueur2(Joueur2* j){
+    if (printEverything) {
+        std::cout << "added j2" << std::endl;
+    }
     j2 = j;
 }
 
 
 void Stockeur::removeSprites(Sprite* sp){
+    if (printEverything) {
+        std::cout << "removed sprites" << std::endl;
+        std::cout << "taille de sprites : " << sprites.size()-1 << std::endl;
+    }
     auto it = std::find(sprites.begin(), sprites.end(), sp);
     if (it != sprites.end()) {
         sprites.erase(it); 
@@ -45,6 +72,10 @@ void Stockeur::removeSprites(Sprite* sp){
 }
 
 void Stockeur::removeCircEntite(Entite* en){
+    if (printEverything) {
+        std::cout << "removed circEntities" << std::endl;
+        std::cout << "taille de circEntities : " << circEntities.size()-1 << std::endl;
+    }
     auto it = std::find(circEntities.begin(), circEntities.end(), en);
     if (it != circEntities.end()) {
         circEntities.erase(it); 
@@ -52,6 +83,10 @@ void Stockeur::removeCircEntite(Entite* en){
 }
 
 void Stockeur::removeRectEntite(Entite* en){
+    if (printEverything) {
+        std::cout << "removed rectEntities" << std::endl;
+        std::cout << "taille de rectEntities : " << rectEntities.size()-1 << std::endl;
+    }
     auto it = std::find(rectEntities.begin(), rectEntities.end(), en);
     if (it != rectEntities.end()) {
         rectEntities.erase(it); 
@@ -59,6 +94,10 @@ void Stockeur::removeRectEntite(Entite* en){
 }
 
 void Stockeur::removeEnemies(Enemies* en){
+    if (printEverything) {
+        std::cout << "removed enemies" << std::endl;
+        std::cout << "taille de enemies : " << enemies.size()-1 << std::endl;
+    }
     auto it = std::find(enemies.begin(), enemies.end(), en);
     if (it != enemies.end()) {
         enemies.erase(it); 
@@ -87,4 +126,17 @@ std::vector<Entite*>* Stockeur::getRectEntiteVector(){
 
 std::vector<Enemies*>* Stockeur::getEnemiesVector(){
     return &enemies;
+}
+
+std::vector<Drop*>* Stockeur::getItemVector(){
+    return &items;
+}
+
+
+void Stockeur::deleteAllEnemies(){
+    std::cout << "enemies.size : " << enemies.size() << std::endl;
+    for(Enemies* en : enemies){
+        delete en;
+    }
+    enemies.clear();
 }
