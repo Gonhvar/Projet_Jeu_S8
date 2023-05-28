@@ -1,4 +1,6 @@
 #include "Stockeur.hpp"
+#include "Enemies.hpp"
+
 
 Stockeur::Stockeur(){}
 
@@ -24,6 +26,10 @@ void Stockeur::addEnemies(Enemies* en){
     //std::cout << "added Enemies" << std::endl;
     enemies.push_back(en);
     //std::cout << "taille de enemies : " << enemies.size() << std::endl;
+}
+
+void Stockeur::addItem(Drop* it){
+    items.push_back(it);
 }
 
 void Stockeur::addMc(Mc* j){
@@ -87,4 +93,17 @@ std::vector<Entite*>* Stockeur::getRectEntiteVector(){
 
 std::vector<Enemies*>* Stockeur::getEnemiesVector(){
     return &enemies;
+}
+
+std::vector<Drop*>* Stockeur::getItemVector(){
+    return &items;
+}
+
+
+void Stockeur::deleteAllEnemies(){
+    std::cout << "enemies.size : " << enemies.size() << std::endl;
+    for(Enemies* en : enemies){
+        delete en;
+    }
+    enemies.clear();
 }

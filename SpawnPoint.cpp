@@ -21,26 +21,30 @@ SpawnPoint::SpawnPoint(float x, float y) {
 		std::cout << "Création de SpawnPoint : " << states->spriteName << std::endl;
 }
 
-void SpawnPoint::spawn(int select, float timing){
+void SpawnPoint::spawn(int number, int select, float timing){
     //timing -> 1000 = 1 seconde
+    if(i < number){
+        if(SDL_GetTicks()-FrameStartTimeMs > timing){
+            switch(select){
+                case 0 :
+                    //BasicSkeleton 
+                    new BasicSkeleton(_coord[0], _coord[1]); // push automatiquement l'Enemy dans les listes :
+                                            // sprites
+                                            // circEntities
+                                            // enemies
+                    break;
 
-    switch(select){
-        case 0 :
-            //BasicSkeleton
-            if(SDL_GetTicks()-FrameStartTimeMs > timing){
-               new BasicSkeleton(_coord[0], _coord[1]); // push automatiquement l'Enemy dans les listes :
-								// sprites
-								// circEntities
-								// enemies
-               FrameStartTimeMs = SDL_GetTicks();
-               i++;
+                default :
+                    break;
             }
-            break;
-
-        default :
-            break;
+            i++;
+            FrameStartTimeMs = SDL_GetTicks();
+        }
     }
-
+    else{
+        i=0;
+        phase++;
+    }
 }
 
 void SpawnPoint::spawnWave(int selectWave){
@@ -51,16 +55,7 @@ void SpawnPoint::spawnWave(int selectWave){
             switch(phase){
                 case 0 : 
                     //std::cout << "Phase 0" << std::endl;
-                    //Le chiffre détermine le nombre d'enemies;
-                    if(i<1){
-                        spawn(0, 1000.0);
-                        
-                    }
-                    else{
-                        i=0;
-                        //On passe à la phase 2 (peut etre de l'attente suplémentaire ?)
-                        phase = 1;
-                    }
+                    spawn(2, 0, 1000.0);
                     break;
                 case 1 :
                     //Rien pour l'instant mais à remplir pour faire le jeu

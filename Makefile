@@ -22,10 +22,10 @@ Joueur2.o : Joueur2.cpp Joueur2.hpp Sprite.hpp Bullets.hpp
 Killable.o : Killable.cpp Killable.hpp Entite.hpp
 	g++ -std=c++11 -Wall Killable.cpp -c
 	
-Drop.o : Drop.cpp Drop.hpp Killable.hpp 
+Drop.o : Drop.cpp Drop.hpp Entite.hpp 
 	g++ -std=c++11 -Wall Drop.cpp -c
 
-Enemies.o : Enemies.cpp Enemies.hpp Drop.hpp Mc.hpp
+Enemies.o : Enemies.cpp Enemies.hpp Drop.hpp Mc.hpp Killable.hpp
 	g++ -std=c++11 -Wall Enemies.cpp -c
 
 Mc.o : Mc.cpp Mc.hpp Killable.hpp Attacks.hpp Joueur2.hpp

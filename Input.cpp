@@ -115,6 +115,10 @@ void Input::doKeyDown(SDL_KeyboardEvent &event)
                 stockeur->getMc()->getAttack()->updateAttack(2);
 				break;
 
+            case SDLK_n :
+                stockeur->deleteAllEnemies();
+				break;
+
         }
     }
 }

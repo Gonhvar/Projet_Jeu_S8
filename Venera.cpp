@@ -92,7 +92,7 @@ void Venera::update() {
 		j2->update();
 
 		for (Enemies* enemy : *(stockeur->getEnemiesVector())) {
-			enemy->update();
+				enemy->update();
 		}
 
 		for (Sprite* s : *(stockeur->getSpriteVector())) {
@@ -101,6 +101,10 @@ void Venera::update() {
 
 		for (SpawnPoint* sp : spawnPoints) {
 			sp->update();
+		}
+
+		for(Drop* d : *(stockeur->getItemVector())){
+			d->update();
 		}
 	}
 

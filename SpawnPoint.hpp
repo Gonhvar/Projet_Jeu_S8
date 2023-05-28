@@ -27,7 +27,7 @@ public :
     virtual ~SpawnPoint() override {};
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
-    void spawn(int select, float timing);
+    void spawn(int number, int select, float timing);
     void spawnWave(int selectWave);
     void update();
 

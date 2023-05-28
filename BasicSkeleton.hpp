@@ -20,7 +20,7 @@ protected:
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
 	BasicSkeleton(float _x, float _y);
-	virtual ~BasicSkeleton() override {};
+	virtual ~BasicSkeleton() override;
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 

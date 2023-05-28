@@ -5,6 +5,11 @@ BasicSkeleton::BasicSkeleton(float _x, float _y) {
     PV = 10;
     attackDamage = 5;
 
+    //Selection des drops qu'il pourrait avoir 
+    items = {0, 1};
+    //Il faut que ça fasse 100% en tout
+    taux = {20, 80};
+
     depForce = BASICSKELETONSPEED;
     _hauteur = 64;
     _largeur = 64;
@@ -40,8 +45,12 @@ BasicSkeleton::BasicSkeleton(float _x, float _y) {
     std::cout << "Création de BasicSkeleton : " << states->spriteName << std::endl;
 
     autoSetHitBox();
-    
     addSprite();
+}
+
+BasicSkeleton::~BasicSkeleton(){
+    std::cout << "Delete BasicSkeleton" << std::endl;
+    new Drop(items, taux, _coord[0], _coord[1]);
 }
 
 void BasicSkeleton::deplacementBehaviour(){

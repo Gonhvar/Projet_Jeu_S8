@@ -2,10 +2,13 @@
 #define ENEMIES_HPP
 
 #include "Drop.hpp"
+#include "Killable.hpp"
 #include "Mc.hpp"
 
-class Enemies : public Drop {
+class Enemies : public Killable {
 protected:
+	std::vector<int> items; //mettre ici les items possibles 
+	std::vector<int> taux;	//mettre ici les taux de drop des items
 
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
