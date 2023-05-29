@@ -10,7 +10,7 @@ Input::Input(){
     _largeur = 32;
 
 	States* newStates = new States(); // newStates est un pointeur temporaire
-		newStates->spriteName = "noTexture"; //Mettre un viseur 
+		newStates->spriteName = "Input"; //Mettre un viseur 
 		newStates->nbEtats = 1;
 		newStates->nbFrameParEtat[0] = 1;
 		for (int i=1; i<newStates->nbEtats; i++) {

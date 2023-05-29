@@ -7,6 +7,8 @@ Drop::Drop(std::vector<int> items, std::vector<int> taux, int x, int y){
     int rate = 0;
     int i = 0;
     
+    masse = 1;
+    frottements = 1;
     rayon = 24;
 
     _coord[0] = x;
@@ -14,6 +16,8 @@ Drop::Drop(std::vector<int> items, std::vector<int> taux, int x, int y){
 
     _largeur = 16;
     _hauteur = 16;
+    autoSetHitBox();
+    hitBoxType(1, 0);
 
     // std::cout << "Random : " << random << std::endl; 
     for(int t : taux){
@@ -32,7 +36,7 @@ Drop::Drop(std::vector<int> items, std::vector<int> taux, int x, int y){
 
 void Drop::update(){
     // std::cout << "Update Item : " << _coord[1] << std::endl;
-    _coord[1] += sin( 0.008 * SDL_GetTicks()) * 0.3;
+    addForce(0, sin( 0.008 * SDL_GetTicks()) * 0.3);
     //Detection de prise du joueur à rajouter
 }
 
@@ -46,13 +50,14 @@ void Drop::selectItem(){
         case 0 : 
             //Pas d'item
             std::cout << "Creation 0" << std::endl;
-            delete this;
+            delete this; // Pourquoi ça marche ??????
+                        // On supprime l'objet mais la fonction continue de l'utiliser AAAAAAAAAAAAAHHHHHHHHHHH !!!!!!!!!!!!!!!!!!!!!!!
             break;
         
         case 1 : 
             //Un item
             std::cout << "Creation 1" << std::endl;
-            newStates->spriteName = "noTexture"; 
+            newStates->spriteName = "Item1"; 
             newStates->nbEtats = 1;
             newStates->nbFrameParEtat[0] = 1;
             for (int i=1; i<newStates->nbEtats; i++) {
@@ -68,9 +73,13 @@ void Drop::selectItem(){
     states = newStates;
     onScreen = true;
     
-    autoSetHitBox();
     addSprite();
     std::cout << "fin creation Item" << std::endl;
+}
+
+void Drop::reactionContact(Entite* other) {
+    other->getDepForce() += 200;
+    markedForDeath = true;
 }
 
 //Charger ici les propriété quand le joueur ramasse l'item

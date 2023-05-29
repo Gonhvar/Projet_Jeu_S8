@@ -297,7 +297,9 @@ bool Entite::contact(Entite* other) {
 
 void Entite::reactionContact(Entite* other) {
 	// Fonction appellée quand this entre en contact avec other
-	std::cout << "Contact Entite : " << this << "(" << faction << ")" << " ->" << other << "(" << other->faction << ")"<< std::endl;
+	if (Sprite::stockeur->printEverything) {
+		std::cout << "Contact Entite : " << this << "(" << states->spriteName << ")" << " ->" << other << "(" << other->states->spriteName << ")"<< std::endl;
+	}
 }
 
 void Entite::mort() {

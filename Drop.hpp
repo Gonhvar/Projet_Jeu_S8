@@ -18,6 +18,7 @@ public:
 	void selectItem();
 	void getItem();
 
+	virtual void reactionContact(Entite* other);
 };
 
 #endif

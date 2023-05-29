@@ -44,10 +44,6 @@ void Joueur2::update(){
     if (Sprite::stockeur->printEverything) std::cout << "Joueur2::update()" << std::endl;
     //Mettre un effet de ressorts autour de ce point
     deplacementDynamique();
-
-    // for(Bullets* bullet : bullets){
-    //     bullet->update();
-    // }
 }
 
 void Joueur2::deplacementDynamique() {

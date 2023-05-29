@@ -90,20 +90,20 @@ void Venera::update() {
 		mc->update(); 
 		j2->update();
 
-	// Les Enemies prennent leur décisions
-	for (Enemies* enemy : *(stockeur->getEnemiesVector())) {
-		enemy->update();
-	}
+		// Les Enemies prennent leur décisions
+		for (Enemies* enemy : *(stockeur->getEnemiesVector())) {
+			enemy->update();
+		}
 
-	// Ils sont tous déplacement selon leur décisions
-	for (Entite* entite : *(stockeur->getCircEntiteVector())) {
-		entite->updateSpeedWithCollisions();
-		entite->autoTranslate();
-	}
+		// Ils sont tous déplacement selon leur décisions
+		for (Entite* entite : *(stockeur->getCircEntiteVector())) {
+			entite->updateSpeedWithCollisions();
+			entite->autoTranslate();
+		}
 
-	for (SpawnPoint* sp : spawnPoints) {
-		sp->update();
-	}
+		for (SpawnPoint* sp : spawnPoints) {
+			sp->update();
+		}
 
 		for(Drop* d : *(stockeur->getItemVector())){
 			d->update();
@@ -111,14 +111,16 @@ void Venera::update() {
 	}
 
 	// Les Sprite sont mis à jour
-	for (Sprite* s : *(stockeur->getSpriteVector())) {
-		if (s->markedForDeath) {
-			std::cout << "Marked" << std::endl;
-			// delete(this);
+	std::vector<Sprite*>& list = *(stockeur->getSpriteVector());
+	for (unsigned int s=0; s < list.size(); s++) {
+		if (stockeur->printEverything) std::cout << "eval " << s << " : " << list[s] << " ";
+		if (list[s]->markedForDeath) {
+			if (stockeur->printEverything) std::cout << "Marked" << std::endl;
+			delete(list[s]);
 		}
 		else {
-			std::cout << "Not Marked" << std::endl;
-			s->update();
+			if (stockeur->printEverything) std::cout << "Not Marked" << std::endl;
+			list[s]->update();
 		}
 	}
 

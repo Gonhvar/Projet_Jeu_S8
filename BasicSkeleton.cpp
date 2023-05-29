@@ -85,5 +85,8 @@ void BasicSkeleton::takingDamage(Entite* other){
 }
 
 void BasicSkeleton::reactionContact(Entite* other) {
+    if (Sprite::stockeur->printEverything) {
+		std::cout << "Contact BasicSkeleton : " << this << "(" << states->spriteName << ")" << " ->" << other << std::endl;
+	}
     other->changePV(1);
 }

@@ -26,7 +26,7 @@ protected :
 	float masse = 100; // Augmente l'inertie et l'impact sur les autres Entite
 					// n'impact pas la vitesse finale de l'Entite
 	float frottements = 0; // Diminue le temps de transition et la vitesse max
-							// garder frottements < masse*FPS
+							// garder frottements < masse*FPS !!!
 	Vector2D speed;
 
 	bool isRect = false; // permet de savoir si l'Entite est dans la rectList ou

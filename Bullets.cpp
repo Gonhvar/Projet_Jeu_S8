@@ -50,7 +50,9 @@ void Bullets::update(){
 }
 
 void Bullets::reactionContact(Entite* other) {
-	std::cout << "Bullets::reactionContact" << std::endl;
+	if (Sprite::stockeur->printEverything) {
+		std::cout << "Contact Bullets : " << this << "(" << states->spriteName << ")" << " ->" << other << std::endl;
+	}
 	other->changePV(10);
 	markedForDeath = true;
 }
