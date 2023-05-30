@@ -140,3 +140,23 @@ void Stockeur::deleteAllEnemies(){
     }
     enemies.clear();
 }
+
+void Stockeur::setMenuOff(bool toBe) {
+    menuOff = toBe;
+}
+
+bool Stockeur::getMenuOff() {
+    return menuOff;
+}
+
+void Stockeur::swapMenuOff() {
+    menuOff = !menuOff;
+}
+
+void Stockeur::setMode(int toBe) {
+    mode = toBe;
+}
+
+int Stockeur::getMode() {
+    return mode;
+}

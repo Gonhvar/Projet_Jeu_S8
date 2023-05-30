@@ -2,6 +2,7 @@
 
 
 BasicSkeleton::BasicSkeleton(float _x, float _y) {
+    faction = ENEMY_FACTION;
     PV = 10;
     attackDamage = 5;
 
@@ -88,5 +89,7 @@ void BasicSkeleton::reactionContact(Entite* other) {
     if (Sprite::stockeur->printEverything) {
 		std::cout << "Contact BasicSkeleton : " << this << "(" << states->spriteName << ")" << " ->" << other << std::endl;
 	}
-    other->changePV(1);
+    if (faction != other->getFaction()) {
+        other->changePV(1);
+	}
 }

@@ -27,6 +27,7 @@ Venera::Venera() {
 		stockeur->addJoueur2(j2);
 		
 		input = new Input();
+		input->addMe(mc);
 
 		initialisation();
 	}
@@ -84,48 +85,65 @@ void Venera::update() {
 	// Le joueur prend une décision (appui d'une touche)
 	input->update();
 
-	//On arrete les enemy et les sprites car ils utilisent la position du joueur 
-	//Solution possible : Mettre une variable dans stockeur de la position du MC qu'on mettrait à jour 
-	if(Sprite::stockeur->getMc() != nullptr){
-		mc->update(); 
-		j2->update();
+	if (Sprite::stockeur->getMenuOff()) { // Pas le menu
+		std::vector<Sprite*>& list = *(stockeur->getSpriteVector());
+		switch (Sprite::stockeur->getMode()) {
+			case MODE_JEU :
+				//On arrete les enemy et les sprites car ils utilisent la position du joueur 
+				//Solution possible : Mettre une variable dans stockeur de la position du MC qu'on mettrait à jour 
+				if(Sprite::stockeur->getMc() != nullptr){
+					mc->update(); 
+					j2->update();
 
-		// Les Enemies prennent leur décisions
-		for (Enemies* enemy : *(stockeur->getEnemiesVector())) {
-			enemy->update();
-		}
+					// Les Enemies prennent leur décisions
+					for (Enemies* enemy : *(stockeur->getEnemiesVector())) {
+						enemy->update();
+					}
 
-		// Ils sont tous déplacement selon leur décisions
-		for (Entite* entite : *(stockeur->getCircEntiteVector())) {
-			entite->updateSpeedWithCollisions();
-			entite->autoTranslate();
-		}
+					// Ils sont tous déplacement selon leur décisions
+					for (Entite* entite : *(stockeur->getCircEntiteVector())) {
+						entite->updateSpeedWithCollisions();
+						entite->autoTranslate();
+					}
 
-		for (SpawnPoint* sp : spawnPoints) {
-			sp->update();
-		}
+					for (SpawnPoint* sp : spawnPoints) {
+						sp->update();
+					}
 
-		for(Drop* d : *(stockeur->getItemVector())){
-			d->update();
+					for(Drop* d : *(stockeur->getItemVector())){
+						d->update();
+					}
+				}
+
+				// Les Sprite sont mis à jour
+				
+				for (unsigned int s=0; s < list.size(); s++) {
+					if (stockeur->printEverything) std::cout << "eval " << s << " : " << list[s] << " ";
+					if (list[s]->markedForDeath) {
+						if (stockeur->printEverything) std::cout << "Marked" << std::endl;
+						delete(list[s]);
+					}
+					else {
+						if (stockeur->printEverything) std::cout << "Not Marked" << std::endl;
+						list[s]->update();
+					}
+				}
+
+				// Le reste est affiché
+				afficheur->update();
+				break;
+
+			case MODE_MAP :
+				std::cout << "Mode Map" <<	std::endl;
+				break;
+			default : 
+				std::cout << "Mode noMode :(" <<	std::endl;
+				break; 
 		}
 	}
-
-	// Les Sprite sont mis à jour
-	std::vector<Sprite*>& list = *(stockeur->getSpriteVector());
-	for (unsigned int s=0; s < list.size(); s++) {
-		if (stockeur->printEverything) std::cout << "eval " << s << " : " << list[s] << " ";
-		if (list[s]->markedForDeath) {
-			if (stockeur->printEverything) std::cout << "Marked" << std::endl;
-			delete(list[s]);
-		}
-		else {
-			if (stockeur->printEverything) std::cout << "Not Marked" << std::endl;
-			list[s]->update();
-		}
+	else { // Mode menu
+		std::cout << "Mode Menu" <<	std::endl;
 	}
-
-	// Le reste est affiché
-	afficheur->update();
 }
 
 int main(){

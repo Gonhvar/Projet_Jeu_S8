@@ -303,7 +303,7 @@ void Entite::reactionContact(Entite* other) {
 }
 
 void Entite::mort() {
-	std::cout << "Entite.mort() de " << this << std::endl;
+	std::cout << "Entite.mort() de " << this << "(" << states->spriteName << ")" << std::endl;
 	markedForDeath = true;
 }
 
@@ -337,6 +337,10 @@ void Entite::addForce(Vector2D& v) {
 
 float& Entite::getDepForce(){
 	return depForce;
+}
+
+short Entite::getFaction() {
+	return faction;
 }
 
 void Entite::printSelf() {

@@ -10,6 +10,10 @@ class Drop;
 class Mc;
 class Joueur2;
 
+#define MODE_JEU 0
+#define MODE_MAP 1
+#define MODE_MAXNUM 2
+
 class Stockeur {
 protected:
     std::vector<Sprite*> sprites;
@@ -20,6 +24,9 @@ protected:
 
     Mc* mc;
     Joueur2* j2;
+
+    bool menuOff = true; // Pas de menu de base
+    int mode = MODE_JEU;
 
 public:
 
@@ -53,6 +60,12 @@ public:
 
     void deleteAllEnemies();
 
+    void setMenuOff(bool toBe);
+    bool getMenuOff();
+    void swapMenuOff();
+
+    void setMode(int toBe);
+    int getMode();
 };
 
 #endif

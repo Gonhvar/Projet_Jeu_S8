@@ -21,7 +21,7 @@ protected:
 	Joueur2* parent = nullptr; // Il faudra probablement remplacer ça par un Entite*
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
-	Bullets(int state, float x, float y, Joueur2* papa);
+	Bullets(int state, float x, float y, Joueur2* papa, short fact);
 
 	virtual ~Bullets() override;
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */

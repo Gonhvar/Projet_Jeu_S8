@@ -2,6 +2,7 @@
 
 
 Attacks::Attacks(){
+    faction = MC_FACTION;
     
     _hauteur = 64;
     _largeur = 48;

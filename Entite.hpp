@@ -7,6 +7,9 @@
 #define HITBOX_PTS 2
 #define FPS 60
 
+#define MC_FACTION 0
+#define ENEMY_FACTION 1
+
 class Entite : public Sprite {
 protected :
 	int PV = 1;
@@ -71,6 +74,8 @@ public :
 	void addForce(float fx, float fy); // Ajoute l'intégrale de l'accélération avec durant cette frame à speed
 	void addForce(Vector2D& v); // Ajoute l'intégrale de l'accélération avec durant cette frame à speed
 	float& getDepForce();
+
+	short getFaction();
 
 	void printSelf();
 };

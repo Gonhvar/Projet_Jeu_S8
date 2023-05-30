@@ -2,8 +2,9 @@
 #include "Joueur2.hpp"
 
 /* CONSTRUCTEURS ET DESTRUCTEURS */
-Bullets::Bullets(int state, float directX, float directY, Joueur2* papa) {
+Bullets::Bullets(int state, float directX, float directY, Joueur2* papa, short fact) {
 	//Mettre l'hitbox
+    faction = 0;
 	speed.redef(directX, directY);
 	speed.normeToV(BASICBULLETSPEED);
 	parent = papa;
@@ -53,6 +54,8 @@ void Bullets::reactionContact(Entite* other) {
 	if (Sprite::stockeur->printEverything) {
 		std::cout << "Contact Bullets : " << this << "(" << states->spriteName << ")" << " ->" << other << std::endl;
 	}
-	other->changePV(10);
+	if (faction != other->getFaction()) {
+		other->changePV(10);
+	}
 	markedForDeath = true;
 }

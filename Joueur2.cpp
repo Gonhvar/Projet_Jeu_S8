@@ -41,7 +41,9 @@ Joueur2::~Joueur2() {
 
 
 void Joueur2::update(){
-    if (Sprite::stockeur->printEverything) std::cout << "Joueur2::update()" << std::endl;
+    if (Sprite::stockeur->printEverything) {
+        std::cout << "Joueur2::update()" << std::endl;
+    }
     //Mettre un effet de ressorts autour de ce point
     deplacementDynamique();
 }
@@ -58,7 +60,7 @@ void Joueur2::newTir(int state, int directX, int directY){
     
     std::cout << "creation bullets" << std::endl;
     //std::cout << "Alors X : " << x - _coord[0] << " Y :" << y - _coord[0] << std::endl;
-    bullets.push_back(new Bullets(0, directX-_coord[0], directY-_coord[1], this));
+    bullets.push_back(new Bullets(0, directX-_coord[0], directY-_coord[1], this, MC_FACTION));
 }
 
 void Joueur2::removeBullet(Bullets* bullet) {

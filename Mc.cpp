@@ -13,8 +13,9 @@ uint8_t stateTranslator[6] = {2, 1, 4, 0, 3, 4}; // On utilise ce tableau pour "
 
 //Constructeur spécial pour le MC (renseigne Sprite::joueur)
 Mc::Mc() {
+    faction = MC_FACTION;
     
-    PV = 20;
+    PV = 2000;
     PVMax = PV;
 
     depForce = BASICSPEED;
@@ -71,7 +72,9 @@ Mc::~Mc() {
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 void Mc::update() {
-    if (Sprite::stockeur->printEverything) std::cout << "MC::update()" << std::endl;
+    if (Sprite::stockeur->printEverything) {
+        std::cout << "MC::update()" << std::endl;
+    }
 
     if(dashOn){
         //Regarde si le temps de dash est fini (bloque les autres mouvement)
@@ -79,8 +82,7 @@ void Mc::update() {
         //std::cout << actualDashTime << std::endl;
         if(actualDashTime > 1000/dashValue){
             dashOn = false;
-            depForce = BASICSPEED;
-
+            depForce = dashValue ? depForce/dashValue : BASICSPEED;
             //Faire un CD entre plusieurs dash ici
         }
     }
@@ -90,12 +92,11 @@ void Mc::update() {
 
     //Décision de l'état
     if (dashOn) {
-        std::cout << "dash" << std::endl;
         setEtat(5);
     }
     else {
         // Cette façon de faire est rapide mais ne marche que si les pushForce restent binaires
-        // A priori, il ne devrait pas y avoir de raison de sortir les pushForce d'un spectr binaire
+        // A priori, il ne devrait pas y avoir de raison de sortir les pushForce d'un spectre binaire
         // Calcul de l'état actuel à partir du déplacement
         int X = pushForceD - pushForceG;
         int Y = pushForceB - pushForceH;
@@ -164,4 +165,38 @@ bool Mc::getDashOn(){
 
 Attacks* Mc::getAttack(){
     return attack;
+}
+
+
+// Inplementer l'interface Controle pour pouvoir gérer les appels de Input
+void Mc::zDown() {
+    stockeur->getMc()->setPushForceH(1);
+}
+void Mc::zUp() {
+    stockeur->getMc()->setPushForceH(0);
+}
+void Mc::sDown() {
+    stockeur->getMc()->setPushForceB(1);
+}
+void Mc::sUp() {
+    stockeur->getMc()->setPushForceB(0);
+}
+void Mc::qDown() {
+    stockeur->getMc()->setPushForceG(1);
+}
+void Mc::qUp() {
+    stockeur->getMc()->setPushForceG(0);
+}
+void Mc::dDown() {
+    stockeur->getMc()->setPushForceD(1);
+}
+void Mc::dUp() {
+    stockeur->getMc()->setPushForceD(0);
+}
+void Mc::spaceDown() {
+    if( !(stockeur->getMc()->getDashOn())){
+        stockeur->getMc()->getDepForce() *= dashValue;
+        stockeur->getMc()->setStartDashTime(SDL_GetTicks());
+        stockeur->getMc()->setDashOn(true);
+    }
 }

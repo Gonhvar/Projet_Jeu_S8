@@ -24,7 +24,9 @@ Input::Input(){
 		
 	onScreen = true;
 	addSprite();
+    controleList.resize(1);
 }
+/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 void Input::update(){
 	
@@ -87,6 +89,10 @@ void Input::doKeyDown(SDL_KeyboardEvent &event)
         switch(event.keysym.sym) {
             case SDLK_ESCAPE :
                 exit(0);
+           
+            case SDLK_a :
+                std::cout << "menu swap" << std::endl;
+                stockeur->swapMenuOff();
             
             case SDLK_SPACE :
                 if( !(stockeur->getMc()->getDashOn())){
@@ -97,6 +103,7 @@ void Input::doKeyDown(SDL_KeyboardEvent &event)
                 break;
 
             case SDLK_z :
+                std::cout << "z key down" << std::endl;
                 stockeur->getMc()->setPushForceH(1);
                 break;
             case SDLK_s :
@@ -125,7 +132,7 @@ void Input::doKeyDown(SDL_KeyboardEvent &event)
 
 void Input::doKeyUp(SDL_KeyboardEvent &event) {
     switch(event.keysym.sym) {
-        case SDLK_ESCAPE :
+        case SDLK_ESCAPE : // a priori inutile mais autant le laisser là pour des raisons de sécurité
             exit(0);
         
         case SDLK_SPACE :
@@ -162,4 +169,9 @@ void Input::doOtherKeyDown(SDL_KeyboardEvent &event){
                 exit(0);
         }
     }
+}
+
+
+void Input::addMe(Controle* toAdd) {
+    controleList.push_back(toAdd);
 }

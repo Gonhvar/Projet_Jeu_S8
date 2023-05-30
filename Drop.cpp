@@ -1,13 +1,14 @@
 #include "Drop.hpp"
 
 Drop::Drop(std::vector<int> items, std::vector<int> taux, int x, int y){
+    faction = MC_FACTION;
 
     std::srand(time(NULL));
     int random = 1 + (rand()%100);
     int rate = 0;
     int i = 0;
     
-    masse = 1;
+    masse = 100;
     frottements = 1;
     rayon = 24;
 
@@ -68,8 +69,8 @@ void Drop::selectItem(){
         default :
             break;
     }
-    stateRect.w = 16;
-    stateRect.h = 16;
+    stateRect.w = 32;
+    stateRect.h = 32;
     states = newStates;
     onScreen = true;
     
@@ -78,8 +79,10 @@ void Drop::selectItem(){
 }
 
 void Drop::reactionContact(Entite* other) {
-    other->getDepForce() += 200;
-    markedForDeath = true;
+    if (other->getFaction() == MC_FACTION) {
+        other->getDepForce() *= 1.5;
+        markedForDeath = true;
+    }
 }
 
 //Charger ici les propriété quand le joueur ramasse l'item
