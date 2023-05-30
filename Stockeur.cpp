@@ -4,6 +4,8 @@
 
 Stockeur::Stockeur(){}
 
+// ADDER ----------------------------------------------------------------
+
 void Stockeur::addSprites(Sprite* sp){
     if (printEverything) {
         std::cout << "added Sprite" << std::endl;
@@ -36,12 +38,12 @@ void Stockeur::addEnemies(Enemies* en){
     enemies.push_back(en);
 }
 
-void Stockeur::addItem(Drop* it){
+void Stockeur::addItem(Drop* dr){
     if (printEverything) {
         std::cout << "added items" << std::endl;
         std::cout << "taille de items : " << items.size()+1 << std::endl;
     }
-    items.push_back(it);
+    items.push_back(dr);
 }
 
 void Stockeur::addMc(Mc* j){
@@ -58,6 +60,8 @@ void Stockeur::addJoueur2(Joueur2* j){
     j2 = j;
 }
 
+
+// REMOVER ----------------------------------------------------------------
 
 void Stockeur::removeSprites(Sprite* sp){
     if (printEverything) {
@@ -103,6 +107,22 @@ void Stockeur::removeEnemies(Enemies* en){
         enemies.erase(it); 
     }
 }
+
+void Stockeur::removeItem(Drop* dr){
+    if (printEverything) {
+        std::cout << "removed enemies" << std::endl;
+        std::cout << "taille de enemies : " << enemies.size()-1 << std::endl;
+    }
+    auto it = std::find(items.begin(), items.end(), dr);
+    if (it != items.end()) {
+        items.erase(it); 
+    }
+}
+
+
+
+
+// GETTER ----------------------------------------------------------------
 
 Mc* Stockeur::getMc() {
     return mc;

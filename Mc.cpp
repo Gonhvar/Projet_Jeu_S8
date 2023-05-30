@@ -6,9 +6,6 @@ uint8_t tabState[3][3][2] = { // Représente l'état et le flip en fonction de l
 	{{3,1}, {4,0}, {3,0}}
 };
 
-uint8_t stateTranslator[6] = {2, 1, 4, 0, 3, 4}; // On utilise ce tableau pour "remettre dans l'ordre" les sprite de la sprite sheet
-
-
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 
 //Constructeur spécial pour le MC (renseigne Sprite::joueur)
@@ -36,25 +33,35 @@ Mc::Mc() {
     //states = &(etatsDesMc);
 		States* newStates = new States(); // newStates est un pointeur temporaire
 		newStates->spriteName = "Robot"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
-		newStates->nbEtats = 6;
+		newStates->nbEtats = 9;
 		newStates->nbFrameParEtat[0] = 2;
 		newStates->nbFrameParEtat[1] = 2;
 		newStates->nbFrameParEtat[2] = 2;
 		newStates->nbFrameParEtat[3] = 2;
 		newStates->nbFrameParEtat[4] = 2;
 		newStates->nbFrameParEtat[5] = 2;
-		newStates->nbFrameParEtat[6] = 0;
-		newStates->nbFrameParEtat[7] = 0;
-		newStates->nbFrameParEtat[8] = 0;
+		newStates->nbFrameParEtat[6] = 2;
+		newStates->nbFrameParEtat[7] = 2;
+		newStates->nbFrameParEtat[8] = 2;
 		newStates->nbFrameParEtat[9] = 0;
 
 		states = newStates;
+    addSprite("Mc");
         
     maxDelay = 7; // Change de frame tous les 4 ticks
 
+
+    stateRectIn.w = 32;
+    stateRectIn.h = 32;
+    stateRectIn.x = 0;
+    stateRectIn.y = 0;
     stateRect.w = 32;
     stateRect.h = 32;
-    addSprite();
+
+    std::cout <<"Mc rect : " << getRightRectangle()->x << ", " << getRightRectangle()->y << std::endl;
+
+    // stateRect.w = 32;
+    // stateRect.h = 32;
 
     autoSetHitBox();
     hitBoxType(1, 0);
@@ -91,8 +98,9 @@ void Mc::update() {
     attack->update(pushForceH, pushForceB, pushForceG, pushForceD);
 
     //Décision de l'état
-    if (dashOn) {
-        setEtat(5);
+    int newEtat;
+    if (dashOn) { // dash
+        newEtat = etat%3 +6;
     }
     else {
         // Cette façon de faire est rapide mais ne marche que si les pushForce restent binaires
@@ -100,25 +108,22 @@ void Mc::update() {
         // Calcul de l'état actuel à partir du déplacement
         int X = pushForceD - pushForceG;
         int Y = pushForceB - pushForceH;
-        int newEtat;
-        if (!X && !Y) { // On ne pousse pas
+        if (!X && !Y) { // Ne pousse pas
             newEtat = etat%3;
-            newEtat = stateTranslator[newEtat];
             maxDelay = 14; // Donne un air plus détendu à l'arrêt
             // std::cout << "X :" << X << ", Y :" << Y << std::endl;
             // std::cout << "etat :" << newEtat << ", flip :" << flip << std::endl;
         }
-        else {
+        else { // Pousse
             newEtat = tabState[Y+1][X+1][0];
             flip = tabState[Y+1][X+1][1];
-            newEtat = stateTranslator[newEtat];
             maxDelay = 7;
             // std::cout << "X :" << X << ", Y :" << Y << std::endl;
             // std::cout << "etat :" << newEtat << ", flip :" << flip << std::endl;
         }
-        if (newEtat != etat) {
-            setEtat(newEtat);
-        }
+    }
+    if (newEtat != etat) {
+        setEtat(newEtat);
     }
 
 

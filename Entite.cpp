@@ -106,11 +106,12 @@ Vector2D& Entite::moveCollisionCercle(Entite* other, Vector2D& v) {
 	return v;
 }
 
-void Entite::moveCollisionCercle2(Entite* other, Vector2D& v) {
+void Entite::moveCollisionCercle2(Entite* other) {
 
 	float distX = other->_coord[0] - _coord[0];
 	float distY = other->_coord[1] - _coord[1];
-
+	Vector2D v(speed.x, speed.y);
+	v -= other->speed;
 	float A = v.norme * v.norme;
 	float B = -2* (v.x*(distX) + v.y*(distY));
 	float C = distX*distX + distY*distY - (rayon + other->rayon)*(rayon + other->rayon);
@@ -134,14 +135,18 @@ void Entite::moveCollisionCercle2(Entite* other, Vector2D& v) {
 			if (alpha2 > 0) { // On est dans l'Entite
 				Vector2D v2(_coord[0] - other->_coord[0], _coord[1] - other->_coord[1]);
 				v2.normeToV(rayon + other->rayon - v2.norme + 0.0001);
-				Vector2D v3(v2.x, v2.y);
-				v2 *= (other->masse / (masse + other->masse));
-				v3 *= -(masse / (masse + other->masse));
-				
-				v += v2;
-				other->speed += v3;
+
+				speed.plus(
+					v2.x * other->masse / (masse + other->masse),
+					v2.y * other->masse / (masse + other->masse)
+				);
+				other->speed.plus(
+					-v2.x * masse / (masse + other->masse),
+					-v2.y * masse / (masse + other->masse)
+				);
 
 				reactionContact(other);
+				other->reactionContact(this);
 			}
 		}
 		else if (alpha1 < 1){ // on va cogner l'Entite
@@ -151,29 +156,29 @@ void Entite::moveCollisionCercle2(Entite* other, Vector2D& v) {
 			Vector2D v2(_coord[0] + v.x*alpha1 - other->_coord[0], 
 						_coord[1] + v.y*alpha1 - other->_coord[1]);
 			v2.normeToV(1);
-			v2 *= (v.x - other->speed.x)*v2.x + (v.y- other->speed.y)*v2.y; // On multiplie par le produit scalaire avec la vitesse relative
+			v2 *= (speed.x - other->speed.x)*v2.x + (speed.y- other->speed.y)*v2.y; // On multiplie par le produit scalaire avec la vitesse relative
 										// i.e à quel point on frappe other
 
 			// this est repoussé selon la normale à l'intersection proportionnelement à la masse de l'autre
-			// v.x -= v2.x * (other->masse / (masse + other->masse));
-			// v.y -= v2.y * (other->masse / (masse + other->masse));
-			v.plus(
+			speed.plus(
 				-v2.x * (other->masse / (masse + other->masse)),
 				-v2.y * (other->masse / (masse + other->masse))
 			);
 
 			// pareil pour l'autre
-			v2.x = v2.x * (masse / (masse + other->masse));
-			v2.y = v2.y * (masse / (masse + other->masse));
-			other->speed += v2;
+			other->speed.plus(
+				v2.x * (masse / (masse + other->masse)),
+				v2.y * (masse / (masse + other->masse))
+			);
 
 			reactionContact(other);
+			other->reactionContact(this);
 		}
 	}
 
 }
 
-Vector2D& Entite::moveCollisionRectangle(Entite* other, Vector2D& v) {
+void Entite::moveCollisionRectangle(Entite* other) {
 	// Ce code est moche mais je voulais d'abord vérifier qu'il marche avant de l'optimiser
 
 	// Apparamment, il n'y a pas vraiment mieux en terme d'optimisation
@@ -186,16 +191,16 @@ Vector2D& Entite::moveCollisionRectangle(Entite* other, Vector2D& v) {
 	uint8_t nbContact = contact[0] + contact[1] + contact[2] + contact[3];
 	if (nbContact == 3) { // Empêche this de rentrer dans other
 		if (!contact[0]) { // On est à droite
-			v.x = std::max(v.x, other->hitBox[1][0] - hitBox[0][0]);
+			speed.x = std::max(speed.x, other->hitBox[1][0] - hitBox[0][0]);
 		}
 		else if (!contact[1]) { // On est à gauche
-			v.x = std::min(v.x, other->hitBox[0][0] - hitBox[1][0]);
+			speed.x = std::min(speed.x, other->hitBox[0][0] - hitBox[1][0]);
 		}
 		else if (!contact[2]) { // On est en-dessous
-			v.y = std::max(v.y, other->hitBox[1][1] - hitBox[0][1]);
+			speed.y = std::max(speed.y, other->hitBox[1][1] - hitBox[0][1]);
 		}
 		else { // On est au-dessus
-			v.y = std::min(v.y, other->hitBox[0][1] - hitBox[1][1]);
+			speed.y = std::min(speed.y, other->hitBox[0][1] - hitBox[1][1]);
 		}
 	} else if (nbContact == 4) { // Repousse this en dehors de other
 		uint8_t indiceMin = 0;
@@ -219,26 +224,25 @@ Vector2D& Entite::moveCollisionRectangle(Entite* other, Vector2D& v) {
 
 		switch (indiceMin) {
 			case 0 :
-				v.x += other->hitBox[1][0] - hitBox[0][0];
+				speed.x += other->hitBox[1][0] - hitBox[0][0];
 				break;
 			case 1 :
-				v.x += other->hitBox[0][0] - hitBox[1][0];
+				speed.x += other->hitBox[0][0] - hitBox[1][0];
 				break;
 			case 2 :
-				v.y += other->hitBox[1][1] - hitBox[0][1];
+				speed.y += other->hitBox[1][1] - hitBox[0][1];
 				break;
 			case 3 :
-				v.y += other->hitBox[0][1] - hitBox[1][1];
+				speed.y += other->hitBox[0][1] - hitBox[1][1];
 				break;
 		}
-		v.redef(v.x, v.y);
+		speed.redef(speed.x, speed.y);
 	}
-	return v;
 }
 
 
-void Entite::updateSpeedWithCollisions() {
-	// Pour toutes les autres Entite, appel moveCollisionCercle2 et moveCollisionRectangle
+void Entite::updateSpeedWithRectCollisions() {
+	// Pour toutes les autres Entite, appel moveCollisionRectangle
 	// et met à jour la vitesse de l'Entite en prenant en compte ses frottements
 	if (Sprite::stockeur->printEverything) {
 		std::cout << "Entite::update() (" << states->spriteName << ")" << std::endl;
@@ -249,41 +253,10 @@ void Entite::updateSpeedWithCollisions() {
 
 	addForce(-speed.x*frottements, -speed.y*frottements);
 
-	// Collision avec les cercles :
-	if (isCirc) { // Permet d'éviter la vérification du contact de l'Entite avec elle-même
-		std::vector<Entite*>& list1 = *(stockeur->getCircEntiteVector());
-		for (Entite* entite : list1) { // max 65000 Entite :O
-			if (this != entite) {
-				// On pourrait ajouter un test pour vérifier que l'Entite est à porté.
-				Entite::moveCollisionCercle2(entite, speed);
-			}
-    	}
-	}
-	else {
-		std::vector<Entite*>& list1 = *(stockeur->getCircEntiteVector());
-		for (Entite* entite : list1) { // max 65000 Entite :O
-			// On pourrait ajouter un test pour vérifier que l'Entite est à porté.
-			Entite::moveCollisionCercle2(entite, speed);
-		}
-	}
-
-
-    // Collision avec les rectangles :
-	if (isRect) {
-		std::vector<Entite*>& list2 = *(stockeur->getRectEntiteVector());
-		for (Entite* entite : list2) { // max 65000 Entite :O
-			if (this != entite) {
-				// On pourrait ajouter un test pour vérifier que l'Entite est à porté.
-				Entite::moveCollisionRectangle(entite, speed);
-			}
-		}
-	}
-	else {
-		std::vector<Entite*>& list2 = *(stockeur->getRectEntiteVector());
-		for (Entite* entite : list2) { // max 65000 Entite :O
-			// On pourrait ajouter un test pour vérifier que l'Entite est à porté.
-			Entite::moveCollisionRectangle(entite, speed);
-		}
+	std::vector<Entite*>& list2 = *(stockeur->getRectEntiteVector());
+	for (Entite* entite : list2) { // max 65000 Entite :O
+		// On pourrait ajouter un test pour vérifier que l'Entite est à porté.
+		Entite::moveCollisionRectangle(entite);
 	}
 }
 

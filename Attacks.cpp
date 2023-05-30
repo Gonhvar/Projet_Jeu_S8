@@ -19,11 +19,12 @@ Attacks::Attacks(){
 			newStates->nbFrameParEtat[i] = 0;
 		}
 
-        stateRect.w = 32;
-        stateRect.h = 32;
+        // Pas encore de SpriteSheet pour Attack : retour au 32x32 de noTexture
+        // stateRect.w = 32;
+        // stateRect.h = 32;
 
 		states = newStates;
-		addSprite();
+		addSprite("Attacks");
 }
 
 

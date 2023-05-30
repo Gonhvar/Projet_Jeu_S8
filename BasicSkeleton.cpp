@@ -40,13 +40,21 @@ BasicSkeleton::BasicSkeleton(float _x, float _y) {
 		states = newStates;
     maxDelay = 7; // Change de frame tous les 20 ticks
 
+
+    stateRectIn.w = 32;
+    stateRectIn.h = 32;
+    stateRectIn.x = 0;
+    stateRectIn.y = 0;
     stateRect.w = 32;
     stateRect.h = 32;
+
+    // stateRect.w = 32;
+    // stateRect.h = 32;
 
     std::cout << "Création de BasicSkeleton : " << states->spriteName << std::endl;
 
     autoSetHitBox();
-    addSprite();
+    addSprite("BasicSkeleton");
 }
 
 BasicSkeleton::~BasicSkeleton(){

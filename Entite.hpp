@@ -58,9 +58,9 @@ public :
 									 // Cette fonction existe pour ne pas demander la vitesse de l'Entite pour ensuite lui rendre dans Venera
 	Vector2D& move(Vector2D& v); // Normalise la force de pousse de l'Entite à depForce
 	Vector2D& moveCollisionCercle(Entite* other, Vector2D& v); // Deprecated
-	void moveCollisionCercle2(Entite* other, Vector2D& v); // Modifie la vitesse de this et de l'Entite en fonction de la collision circulaire
-	Vector2D& moveCollisionRectangle(Entite* other, Vector2D& v); // Modifie la vitesse de this en fonction de la collision rectangulaire
-	void updateSpeedWithCollisions(); // Pour toutes les autres Entite, appel moveCollisionCercle2 et moveCollisionRectangle
+	void moveCollisionCercle2(Entite* other); // Modifie la vitesse de this et de l'Entite en fonction de la collision circulaire
+	void moveCollisionRectangle(Entite* other); // Modifie la vitesse de this en fonction de la collision rectangulaire
+	void updateSpeedWithRectCollisions(); // Pour toutes les autres Entite, appel de moveCollisionRectangle
 	
 	bool contact(Entite* other);
 	virtual void reactionContact(Entite* other);

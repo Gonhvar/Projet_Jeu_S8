@@ -1,5 +1,6 @@
 #include "Drop.hpp"
 
+/* CONSTRUCTEURS ET DESTRUCTEURS */
 Drop::Drop(std::vector<int> items, std::vector<int> taux, int x, int y){
     faction = MC_FACTION;
 
@@ -35,6 +36,11 @@ Drop::Drop(std::vector<int> items, std::vector<int> taux, int x, int y){
     stockeur->addItem(this);
 }
 
+Drop::~Drop() {
+    stockeur->addItem(this);
+}
+/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+
 void Drop::update(){
     // std::cout << "Update Item : " << _coord[1] << std::endl;
     addForce(0, sin( 0.008 * SDL_GetTicks()) * 0.3);
@@ -46,7 +52,7 @@ void Drop::update(){
 void Drop::selectItem(){
     
     States* newStates = new States(); // newStates est un pointeur temporaire
-
+    item = !item ? 1 : item;
     switch(item){
         case 0 : 
             //Pas d'item
@@ -58,7 +64,7 @@ void Drop::selectItem(){
         case 1 : 
             //Un item
             std::cout << "Creation 1" << std::endl;
-            newStates->spriteName = "Item1"; 
+            newStates->spriteName = "Bonus_degats"; 
             newStates->nbEtats = 1;
             newStates->nbFrameParEtat[0] = 1;
             for (int i=1; i<newStates->nbEtats; i++) {
@@ -69,12 +75,20 @@ void Drop::selectItem(){
         default :
             break;
     }
-    stateRect.w = 32;
-    stateRect.h = 32;
+
+    stateRectIn.w = 32;
+    stateRectIn.h = 32;
+    stateRectIn.x = 0;
+    stateRectIn.y = 0;
+    stateRect.w = 12;
+    stateRect.h = 9;
+    
+    // stateRect.w = 32;
+    // stateRect.h = 32;
     states = newStates;
     onScreen = true;
     
-    addSprite();
+    addSprite("Drop");
     std::cout << "fin creation Item" << std::endl;
 }
 

@@ -2,7 +2,6 @@
 #define ENEMIES_HPP
 
 #include "Drop.hpp"
-#include "Killable.hpp"
 #include "Mc.hpp"
 
 class Enemies : public Entite {

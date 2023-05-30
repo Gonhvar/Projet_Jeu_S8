@@ -38,7 +38,7 @@ public:
     void addCircEntite(Entite* en);
     void addRectEntite(Entite* en);
     void addEnemies(Enemies* en);
-    void addItem(Drop* it);
+    void addItem(Drop* dr);
 
     void addMc(Mc* j);
     void addJoueur2(Joueur2* j);
@@ -47,6 +47,7 @@ public:
     void removeCircEntite(Entite* en);
     void removeRectEntite(Entite* en);
     void removeEnemies(Enemies* en);
+    void removeItem(Drop* dr);
 
     Mc* getMc();
     Joueur2* getJ2();

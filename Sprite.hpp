@@ -28,7 +28,13 @@ protected :
 
     const States* states = nullptr; // Ne pas modifier ce qu'il y a à l'adresse merci !
                                     // Pour l'instant chaque Sprite (ou descendant) a son propre state
-    SDL_Rect stateRect = {0, 0, 32, 32};
+    
+    // Les tailles sont en pixels
+    SDL_Rect stateRect = {0, 0, 32, 32}; // Rectangle intérieur à afficher :
+                                         // où dans la SpriteSheet
+                                         // dimension dans la SpriteSheet
+    SDL_Rect stateRectIn = {0, 0, 32, 32}; // décalage x, décalage y : où commencent le Sprite dans un carreau
+                                           // dimension d'un carreau
     
     SDL_Texture* texture = nullptr; // Sprite sheet
 
@@ -78,7 +84,7 @@ public:
     bool getOnScreen();
     void setOnScreen(bool toBe);
 
-    void addSprite();
+    void addSprite(std::string className);
     SDL_Texture* getTexture();
     void setTexture(SDL_Texture* t);
     const SDL_Rect* getRightRectangle(); // Sert à renvoyer la texture que ce Sprite veut afficher

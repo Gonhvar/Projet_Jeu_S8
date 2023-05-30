@@ -5,7 +5,7 @@
 #include "Sprite.hpp"
 #include "Bullets.hpp"
 
-#define DECALAGE_J2 20
+#define DECALAGE_J2 30
 
 /*
 const States etatsDeJoueur2 = {

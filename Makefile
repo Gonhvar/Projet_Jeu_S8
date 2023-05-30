@@ -22,10 +22,10 @@ Joueur2.o : Joueur2.cpp Joueur2.hpp Sprite.hpp Bullets.hpp
 Drop.o : Drop.cpp Drop.hpp Entite.hpp 
 	g++ -std=c++11 -Wall Drop.cpp -c
 
-Enemies.o : Enemies.cpp Enemies.hpp Drop.hpp Mc.hpp Killable.hpp
+Enemies.o : Enemies.cpp Enemies.hpp Drop.hpp Mc.hpp
 	g++ -std=c++11 -Wall Enemies.cpp -c
 
-Mc.o : Mc.cpp Mc.hpp Killable.hpp Attacks.hpp Joueur2.hpp
+Mc.o : Mc.cpp Mc.hpp Attacks.hpp Joueur2.hpp
 	g++ -std=c++11 -Wall Mc.cpp -c
 
 Input.o : Input.cpp Input.hpp Sprite.hpp Mc.hpp
@@ -46,7 +46,7 @@ affichage.o : affichage.cpp affichage.hpp Sprite.hpp Mc.hpp
 camera.o : Camera.cpp Camera.hpp 
 	g++ -std=c++11 -Wall Camera.cpp -c
 
-Venera.o : Venera.cpp Venera.hpp affichage.hpp Killable.hpp Mc.hpp BasicSkeleton.hpp SpawnPoint.hpp Joueur2.hpp Input.hpp
+Venera.o : Venera.cpp Venera.hpp affichage.hpp Mc.hpp BasicSkeleton.hpp SpawnPoint.hpp Joueur2.hpp Input.hpp
 	g++ -std=c++11 -Wall Venera.cpp -c
 
 Map.o : Map.cpp Map.hpp Venera.hpp

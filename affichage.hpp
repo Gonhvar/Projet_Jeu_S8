@@ -38,7 +38,7 @@ public :
 
     void enleveSprite(const Sprite& s);
 
-    void visit(Sprite* s, const std::string spriteName);
+    void visit(Sprite* s, std::string className, const std::string spriteName);
 
     void update();
 

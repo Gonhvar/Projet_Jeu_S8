@@ -10,20 +10,24 @@ Input::Input(){
     _largeur = 32;
 
 	States* newStates = new States(); // newStates est un pointeur temporaire
-		newStates->spriteName = "Input"; //Mettre un viseur 
+		newStates->spriteName = "Viseur"; //Mettre un viseur 
 		newStates->nbEtats = 1;
 		newStates->nbFrameParEtat[0] = 1;
 		for (int i=1; i<newStates->nbEtats; i++) {
 			newStates->nbFrameParEtat[i] = 0;
 		}
 
-        stateRect.w = 32;
-        stateRect.h = 32;
+        stateRectIn.w = 16;
+        stateRectIn.h = 16;
+        stateRectIn.x = 0;
+        stateRectIn.y = 0;
+        stateRect.w = 11;
+        stateRect.h = 11;
 
 		states = newStates;
 		
 	onScreen = true;
-	addSprite();
+	addSprite("Input");
     controleList.resize(1);
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */

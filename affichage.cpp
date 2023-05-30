@@ -51,7 +51,7 @@ void Affichage::setCamPos(float x, float y) {
 // 	player = thePlayer;
 // }
 
-void Affichage::visit(Sprite* s, const std::string spriteName) {
+void Affichage::visit(Sprite* s, std::string className, const std::string spriteName) {
 	// Ajoute s dans sprites et va chercher ses textures
 
 	// On vérifie si l'image n'a pas déjà été chargée
@@ -61,7 +61,7 @@ void Affichage::visit(Sprite* s, const std::string spriteName) {
 		std::cout << "Image de " << spriteName << " déjà chargée :)" << std::endl;
 	}
 	else { // Sinon on la charge et on la stocke dans imageChargees
-		std::string pathComplet = PATH_TO_TEXTURE_FOLDER + spriteName + "/" + spriteName + "_Sheet" + imageFormat;
+		std::string pathComplet = PATH_TO_TEXTURE_FOLDER + className + "/" + spriteName + "_Sheet" + imageFormat;
 		std::cout << "Chargement de " << spriteName << " à " << pathComplet << std::endl;
 		const char* filename = pathComplet.c_str();
 				

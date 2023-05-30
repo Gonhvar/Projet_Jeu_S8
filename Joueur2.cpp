@@ -15,17 +15,25 @@ Joueur2::Joueur2(){
 
     //states = &(etatsDeJoueur2);
 		States* newStates = new States(); // newStates est un pointeur temporaire
-		newStates->spriteName = "Joueur2"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
+		newStates->spriteName = "Drone"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
 		newStates->nbEtats = 1;
 		newStates->nbFrameParEtat[0] = 1;
 		for (int i=1; i<newStates->nbEtats; i++) {
 			newStates->nbFrameParEtat[i] = 0;
 		}
-		states = newStates;    
-        stateRect.w = 32;
-        stateRect.h = 32;
+		states = newStates;
+    	addSprite("Joueur2");
+
+    stateRectIn.w = 32;
+    stateRectIn.h = 32;
+    stateRectIn.x = 0;
+    stateRectIn.y = 0;
+    stateRect.w = 10;
+    stateRect.h = 8;
+
+    // stateRect.w = 32;
+    // stateRect.h = 32;
 	
-    	addSprite();
     //std::cout << "Creation" << std::endl;
 }
 

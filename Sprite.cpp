@@ -23,7 +23,7 @@ Sprite::Sprite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]) {
 		newStates->nbFrameParEtat[i] = nbFPE[i];
 	}
 	states = newStates;
-	addSprite();
+	addSprite("Sprite");
 	
 
 	std::cout << "Sprite texture : " << texture << std::endl;
@@ -89,8 +89,8 @@ void Sprite::setOnScreen(bool toBe){
 	onScreen = toBe;
 }
 
-void Sprite::addSprite(){
-	afficheur->visit(this, states->spriteName);
+void Sprite::addSprite(std::string className){
+	afficheur->visit(this, className, states->spriteName);
 }
 
 SDL_Texture* Sprite::getTexture() {
@@ -114,7 +114,7 @@ void Sprite::setEtat(uint8_t toBe) {
 		etat = toBe;
 		frame = 0;
 		delay = maxDelay;
-		stateRect.y = stateRect.h * etat;
+		stateRect.y = stateRectIn.h * etat + stateRectIn.y;
 	} else {
 		std::cout << "Dans Sprite::setEtat : on demande à passer dans l'état " << (int)toBe << ",  mais il n'y en a que " << (int) states->nbEtats << std::endl;
 	}
@@ -124,7 +124,7 @@ void Sprite::update() {
 	if (!delay) {
 		frame = (frame+1)%states->nbFrameParEtat[etat];
 		delay = maxDelay;
-		stateRect.x = stateRect.w * frame;
+		stateRect.x = stateRectIn.w * frame + stateRectIn.x;
 	}
 	else delay--;
 }

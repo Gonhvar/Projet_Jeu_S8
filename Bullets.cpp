@@ -27,12 +27,13 @@ Bullets::Bullets(int state, float directX, float directY, Joueur2* papa, short f
 	_coord[0] = stockeur->getJ2()->getX();
 	_coord[1] = stockeur->getJ2()->getY();
 
-	stateRect.w = 32;
-    stateRect.h = 32;
+	// Pas encore de SpriteSheet pour Bullets : retour au 32x32 de noTexture
+	// stateRect.w = 32;
+    // stateRect.h = 32;
 
 	autoSetHitBox();
 	hitBoxType(1, 0);
-	addSprite();
+	addSprite("Bullets");
 	//std::cout << "YEAHHHHH" << std::endl;
 }
 

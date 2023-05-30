@@ -11,7 +11,7 @@ public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
 	Drop() = default;
 	Drop(std::vector<int> items, std::vector<int> taux, int x, int y);
-	virtual ~Drop() override {};
+	virtual ~Drop() override;
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 	void update();

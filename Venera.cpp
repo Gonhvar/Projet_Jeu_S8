@@ -100,12 +100,17 @@ void Venera::update() {
 						enemy->update();
 					}
 
-					// Ils sont tous déplacement selon leur décisions
-					for (Entite* entite : *(stockeur->getCircEntiteVector())) {
-						entite->updateSpeedWithCollisions();
-						entite->autoTranslate();
+					// Frottements, collisions et déplacement des CircEntite
+					std::vector<Entite*>& liste = *(stockeur->getCircEntiteVector());
+					for (unsigned int i=0; i<liste.size(); i++) {
+						liste[i]->updateSpeedWithRectCollisions();
+						for (unsigned int j=i+1; j<liste.size(); j++) {
+							liste[i]->moveCollisionCercle2(liste[j]);
+						}
+						liste[i]->autoTranslate();
 					}
 
+					// Les SpawnPoints font spawner
 					for (SpawnPoint* sp : spawnPoints) {
 						sp->update();
 					}
@@ -115,8 +120,7 @@ void Venera::update() {
 					}
 				}
 
-				// Les Sprite sont mis à jour
-				
+				// Les Sprite sont mis à jour ou supprimé selon
 				for (unsigned int s=0; s < list.size(); s++) {
 					if (stockeur->printEverything) std::cout << "eval " << s << " : " << list[s] << " ";
 					if (list[s]->markedForDeath) {
@@ -181,7 +185,7 @@ int main(){
 		moyenne += FrameTimeMS;
 		if (!compteur--) {
 			moyenne /= echantillon;
-			std::cout << "FPS : " << moyenne << std::endl;
+			// std::cout << "FPS : " << moyenne << std::endl;
 			moyenne = 0;
 			compteur = echantillon;
 		}

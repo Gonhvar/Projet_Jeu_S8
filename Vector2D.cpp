@@ -25,6 +25,14 @@ Vector2D& Vector2D::operator+=(const Vector2D& o) {
     return *this;
 }
 
+Vector2D& Vector2D::operator-=(const Vector2D& o) {
+    // Ajoute le vecteur de droite au vecteur de gauche
+    x -= o.x;
+    y -= o.y;
+    norme = sqrt(x*x + y*y);
+    return *this;
+}
+
 Vector2D& Vector2D::operator*=(const float a) {
     // Multiplie le vecteur par le scalaire à gauche
     x *= a;
