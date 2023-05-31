@@ -26,6 +26,7 @@ protected :
 
 	uint32_t startDashTime;
 	uint32_t actualDashTime;
+
 	bool dashOn = false;
 	
 	Attacks* attack;
@@ -66,6 +67,8 @@ public :
     virtual void dUp();
     virtual void spaceDown();
     virtual void spaceUp() {}; // On met de {} quand on ne fait rien
+
+	Attacks* getAttacks();
 };
 
 #endif

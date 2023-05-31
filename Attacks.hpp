@@ -16,10 +16,13 @@ const States etatAttacks = {
 
 class Attacks : public Entite {
 protected:
+
 	int state;
 	int range;
 	uint32_t cdAttack;
 	std::string combo;
+
+	int attackMultiplier;
 
 	float playerCoord[2];
 
@@ -34,6 +37,7 @@ public:
 	void updateAttack(int attack);
 	void update(int pushForceH, int pushForceB, int pushForceG, int pushForceD);
 
+	void setAttackMultiplier(int x);
 };
 
 #endif

@@ -107,7 +107,7 @@ void Input::doKeyDown(SDL_KeyboardEvent &event)
                 break;
 
             case SDLK_z :
-                std::cout << "z key down" << std::endl;
+                // std::cout << "z key down" << std::endl;
                 stockeur->getMc()->setPushForceH(1);
                 break;
             case SDLK_s :

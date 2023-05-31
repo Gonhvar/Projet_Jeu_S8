@@ -60,11 +60,9 @@ Mc::Mc() {
 
     std::cout <<"Mc rect : " << getRightRectangle()->x << ", " << getRightRectangle()->y << std::endl;
 
-    // stateRect.w = 32;
-    // stateRect.h = 32;
-
     autoSetHitBox();
     hitBoxType(1, 0);
+
     attack = new Attacks();
     //std::cout << "Création de Mc : " << states->spriteName << std::endl;
 }
@@ -204,4 +202,8 @@ void Mc::spaceDown() {
         stockeur->getMc()->setStartDashTime(SDL_GetTicks());
         stockeur->getMc()->setDashOn(true);
     }
+}
+
+Attacks* Mc::getAttacks(){
+    return attack;
 }

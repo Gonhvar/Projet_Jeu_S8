@@ -8,7 +8,7 @@ SpawnPoint::SpawnPoint(float x, float y) {
     i = 0;
     phase = 0;
     FrameStartTimeMs = SDL_GetTicks();
-
+    
     //states = &(etatsDesSpawnPoint);
 		States* newStates = new States(); // newStates est un pointeur temporaire
 		newStates->spriteName = "SpawnPoint"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
@@ -17,7 +17,11 @@ SpawnPoint::SpawnPoint(float x, float y) {
 		for (int i=1; i<newStates->nbEtats; i++) {
 			newStates->nbFrameParEtat[i] = 0;
 		}
-		states = newStates;    
+		
+        
+        states = newStates;  
+        
+        onScreen = true;  
 		std::cout << "Création de SpawnPoint : " << states->spriteName << std::endl;
 }
 

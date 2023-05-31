@@ -109,14 +109,17 @@ void Stockeur::removeEnemies(Enemies* en){
 }
 
 void Stockeur::removeItem(Drop* dr){
-    if (printEverything) {
+
+    if(printEverything) {
         std::cout << "removed enemies" << std::endl;
         std::cout << "taille de enemies : " << enemies.size()-1 << std::endl;
     }
     auto it = std::find(items.begin(), items.end(), dr);
     if (it != items.end()) {
+        std::cout << "Erase en cours de l'item" << std::endl;
         items.erase(it); 
     }
+    std::cout << "Checkpoint" << std::endl;
 }
 
 

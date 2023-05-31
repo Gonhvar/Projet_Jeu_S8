@@ -12,8 +12,8 @@
 
 class Entite : public Sprite {
 protected :
-	int PV = 1;
-	int PVMax = 1;
+	int PV = 100;
+	int PVMax = 100;
 	int attackDamage = 0;
 	
 	float hitBox[HITBOX_PTS][2] = {

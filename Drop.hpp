@@ -6,6 +6,11 @@
 class Drop : public Entite {
 protected:
 	int item;
+	bool stillInUse;
+	uint32_t cd;
+	uint32_t startUse;
+	
+	Entite* otherEntite;
 
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */

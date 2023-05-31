@@ -276,7 +276,7 @@ void Entite::reactionContact(Entite* other) {
 }
 
 void Entite::mort() {
-	std::cout << "Entite.mort() de " << this << "(" << states->spriteName << ")" << std::endl;
+	std::cout << "Entite.mort() de " << this << " = (" << states->spriteName << ")" << std::endl;
 	markedForDeath = true;
 }
 

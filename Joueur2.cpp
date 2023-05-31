@@ -6,8 +6,8 @@ Joueur2::Joueur2(){
 
     // Sprite::joueur2 = this;
 
-    _hauteur = 16;
-    _largeur = 16;
+    _hauteur = 32;
+    _largeur = 32;
     
     setCoord(stockeur->getMc()->getX(),stockeur->getMc()->getY(), 0);
 
@@ -24,12 +24,13 @@ Joueur2::Joueur2(){
 		states = newStates;
     	addSprite("Joueur2");
 
-    stateRectIn.w = 32;
-    stateRectIn.h = 32;
+    stateRectIn.w = 16;
+    stateRectIn.h = 16;
     stateRectIn.x = 0;
     stateRectIn.y = 0;
-    stateRect.w = 10;
-    stateRect.h = 8;
+
+    stateRect.w = 16;
+    stateRect.h = 16;
 
     // stateRect.w = 32;
     // stateRect.h = 32;
@@ -57,6 +58,7 @@ void Joueur2::update(){
 }
 
 void Joueur2::deplacementDynamique() {
+    
     vitesseActuelle[0] += k*((stockeur->getMc()->getX()+DECALAGE_J2) - _coord[0]) - frottement*vitesseActuelle[0];
     vitesseActuelle[1] += k*((stockeur->getMc()->getY()-DECALAGE_J2) - _coord[1]) - frottement*vitesseActuelle[1];
 

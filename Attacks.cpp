@@ -25,6 +25,8 @@ Attacks::Attacks(){
 
 		states = newStates;
 		addSprite("Attacks");
+
+        attackMultiplier = 1;
 }
 
 
@@ -71,7 +73,7 @@ void Attacks::update(int pushForceH, int pushForceB, int pushForceG, int pushFor
             //std::cout << "Attaque simple" << std::endl;
             //std::cout << "directionX :" << directionX << " directionY :" << directionY << std::endl;
             this->setOnScreen(true);
-            attackDamage = 5;
+            attackDamage = 5 * attackMultiplier;
             range = 60;
             
             //Met à jour l'attaque
@@ -87,7 +89,7 @@ void Attacks::update(int pushForceH, int pushForceB, int pushForceG, int pushFor
             //std::cout << "Attaque lourde" << std::endl;
 
             this->setOnScreen(true);
-            attackDamage = 10;
+            attackDamage = 10 *attackMultiplier;
             range = 30;
             
             //Met à jour l'attaque
@@ -103,7 +105,7 @@ void Attacks::update(int pushForceH, int pushForceB, int pushForceG, int pushFor
             std::cout << "Combo llh!" << std::endl;
 
             this->setOnScreen(true);
-            attackDamage = 30;
+            attackDamage = 30 * attackMultiplier;
             range = 60;
 
             //Met à jour l'attaque
@@ -169,3 +171,6 @@ void Attacks::updateAttack(int attack){
     }
 }
 
+void Attacks::setAttackMultiplier(int x){
+    attackMultiplier = x;
+}
