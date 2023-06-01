@@ -14,7 +14,7 @@ Bullets::Bullets(int state, float directX, float directY, Joueur2* papa, short f
 	onScreen = true;
 	//states = &(etatsDeBullets);
 		States* newStates = new States(); // newStates est un pointeur temporaire
-		newStates->spriteName = "Bullets"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
+		newStates->spriteName = "Glow_Bullet"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
 		newStates->nbEtats = 1;
 		newStates->nbFrameParEtat[0] = 1;
 		for (int i=1; i<newStates->nbEtats; i++) {
@@ -25,9 +25,12 @@ Bullets::Bullets(int state, float directX, float directY, Joueur2* papa, short f
 	_coord[0] = stockeur->getJ2()->getX();
 	_coord[1] = stockeur->getJ2()->getY();
 
-	// Pas encore de SpriteSheet pour Bullets : retour au 32x32 de noTexture
-	// stateRect.w = 32;
-    // stateRect.h = 32;
+	stateRectIn.w = 256;
+    stateRectIn.h = 128;
+    stateRectIn.x = 0;
+    stateRectIn.y = 0;
+    stateRect.w = 256;
+    stateRect.h = 128;
 
 	masse = 1;
 	frottements = 0;

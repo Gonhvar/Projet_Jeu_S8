@@ -35,7 +35,10 @@ Input::Input(){
 void Input::update(){
 	
 	SDL_GetMouseState(&mouseX, &mouseY);
-	_coord[0] = mouseX;
+	mouseX += Sprite::afficheur->getCameraX();
+    mouseY += Sprite::afficheur->getCameraY();
+    
+    _coord[0] = mouseX;
 	_coord[1] = mouseY;
 
     if(stockeur->getMc() != nullptr){
@@ -161,8 +164,6 @@ void Input::mousePress(SDL_MouseButtonEvent& b){
     if(b.button == SDL_BUTTON_LEFT){
         //handle a left-click
         stockeur->getJ2()->newTir(0, mouseX, mouseY);
-        
-        stockeur->getAudioManager()->playSound("01");
     }
 }
 

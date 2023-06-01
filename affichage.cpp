@@ -2,11 +2,7 @@
 
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 
-Affichage::Affichage(SDL_Renderer* rend, Stockeur* st) : renderer(rend) {
-	camPos[0] = 0;
-	camPos[1] = 0;
-	zoom = 1;
-
+Affichage::Affichage(SDL_Renderer* rend, SDL_Window* win, Stockeur* st) : renderer(rend), window(win) {
 	sprites = st->getSpriteVector();
 
 	noTexture = IMG_LoadTexture(renderer, NO_TEXTURE_FOUND);
@@ -37,19 +33,6 @@ Affichage::~Affichage(){
     imageChargees.clear();
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
-
-void Affichage::setZoom(float z) {
-	zoom = z;
-}
-
-void Affichage::setCamPos(float x, float y) {
-	camPos[0] = x;
-	camPos[1] = y;
-}
-
-// void Affichage::setPlayer(Mc* thePlayer) {
-// 	player = thePlayer;
-// }
 
 void Affichage::visit(Sprite* s, std::string className, const std::string spriteName) {
 	// Ajoute s dans sprites et va chercher ses textures
@@ -82,6 +65,17 @@ void Affichage::enleveSprite(const Sprite& s) {
 
 void Affichage::update(){
 	//if (!player->dashOn) SDL_RenderClear(renderer);
+	// Suivi du Mc
+	Vector2D dep(
+		Sprite::stockeur->getMc()->getX() - (camera.x + camera.w/2),
+		Sprite::stockeur->getMc()->getY() - (camera.y + camera.h/2)
+	);
+	if (dep.norme > rayonDistMc) {
+		dep.normeToV(dep.norme - rayonDistMc);
+		camera.x += dep.x;
+		camera.y += dep.y;
+	}
+
 	SDL_RenderClear(renderer);
 	if(Sprite::stockeur->getMc() != nullptr){
 		afficheHealth();
@@ -120,20 +114,36 @@ void Affichage::afficheHealth(){
 void Affichage::affiche_all() const{
 	
 	SDL_Rect dest;
+	int winW = 1, winH = 1;
 	// On affiche la texture du sprite avec 
 	for(Sprite* s : *sprites){
 		if(s->getOnScreen()){
 			// position relative du Sprite par rapport à la caméra
-			dest.x = (s->getSpriteX() - camPos[0]) * zoom;
-			dest.y = (s->getSpriteY() - camPos[1]) * zoom;
+			SDL_GetWindowSize(window, &winW, &winH);
 
-			dest.w = s->getLargeur() * zoom;
-			dest.h = s->getHauteur() * zoom;
+			// dest.x = (s->getSpriteX() - camera.x) * winW / camera.w;
+			// dest.w = s->getLargeur() * winW / camera.w;
+			// dest.y = (s->getSpriteY() - camera.y) * winW / camera.h;
+			// dest.h = s->getHauteur() * winW / camera.h;
 
-			//SDL_QueryTexture(s.textures[0], NULL, NULL, &dest.w, &dest.h);
+			dest.x = (s->getSpriteX() - camera.x);
+			dest.w = s->getLargeur();
+			dest.y = (s->getSpriteY() - camera.y);
+			dest.h = s->getHauteur();
+
 			//SDL_RenderCopy(renderer, s->getRightTexture(), NULL, &dest);
 			SDL_RenderCopyEx(renderer, s->getTexture(), s->getRightRectangle(), &dest, 0, NULL, s->getFlip() ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 		}
 	}
 	SDL_RenderPresent(renderer); // Met à jour l'écran avec le backbuffer du renderer
 };
+
+
+
+
+int Affichage::getCameraX() {
+	return camera.x;
+}
+int Affichage::getCameraY() {
+	return camera.y;
+}

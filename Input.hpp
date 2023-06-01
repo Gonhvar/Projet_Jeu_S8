@@ -1,8 +1,9 @@
 #ifndef INPUT_HPP
 #define INPUT_HPP
 
-#include "Sprite.hpp"
+// #include "Sprite.hpp"
 #include "Mc.hpp"
+#include "affichage.hpp"
 
 class Input : public Sprite {
 protected:

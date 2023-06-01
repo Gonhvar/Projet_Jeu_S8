@@ -24,7 +24,7 @@ void AudioManager::playSound(std::string name){
     if (sound == nullptr) {
         // Error handling for loading the sound file
         // Display an error message, log, or exit the program
-        std::cout << "Problémes chargement son" << std::endl;
+        std::cout << "Problèmes chargement son à " << fullName << std::endl;
     }
     Mix_VolumeChunk(sound, volume);
 

@@ -16,11 +16,12 @@ protected :
     std::map<std::string, SDL_Texture*>::iterator imIterator; // Permet simplement de ne pas avoir à allouer de la mémoire à chaque fois que l'on veut itérer sur imageChargees
 
     SDL_Renderer* renderer;
+    SDL_Window* window;
 
     std::string imageFormat = ".png";
 
-    float camPos[2]; // Position de la caméra
-    float zoom; // Zoom de la caméra
+    SDL_Rect camera {0, 0, 512, 512}; // Position et taille de la caméra
+    float rayonDistMc = 50;
 
     SDL_Texture* noTexture; // Texture mise par défaut lorsqu'aucune n'a été trouvée
     TTF_Font* font;
@@ -28,13 +29,10 @@ protected :
     
 public :
     /* CONSTRUCTEURS ET DESTRUCTEURS */
-    Affichage(SDL_Renderer* rend, Stockeur* st);
+    Affichage(SDL_Renderer* rend, SDL_Window* win, Stockeur* st);
     Affichage();
     ~Affichage();
     /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
-
-    void setZoom(float z);
-    void setCamPos(float x, float y);
 
     void enleveSprite(const Sprite& s);
 
@@ -45,6 +43,9 @@ public :
     void affiche_all() const;
 
     void afficheHealth();
+
+    int getCameraX();
+    int getCameraY();
 };
 
 #endif

@@ -11,13 +11,11 @@
 
 class SpawnPoint;
 
-typedef struct {
-	SDL_Renderer* renderer;
-	SDL_Window* window;
-} App;
-
 class Venera {
 private :
+	SDL_Renderer* renderer;
+	SDL_Window* window;
+
 	Stockeur* stockeur;
 	Mc* mc;
 	Joueur2* j2;
@@ -29,10 +27,6 @@ private :
 
 	//Map map;
 	std::vector<SpawnPoint*> spawnPoints;
-
-
-public : // J'ai mis ça public parce que sinon on ne pouvait pas y accéder dans le main. On réglera ça plus tard.
-	App* app;
 	
 public :
 	Venera();
