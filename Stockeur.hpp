@@ -2,6 +2,7 @@
 #define CAMERA_HPP
 
 #include "Inc.hpp"
+#include "AudioManager.hpp"
 
 class Sprite;
 class Entite;
@@ -9,6 +10,7 @@ class Enemies;
 class Drop;
 class Mc;
 class Joueur2;
+class AudioManager;
 
 #define MODE_JEU 0
 #define MODE_MAP 1
@@ -24,6 +26,7 @@ protected:
 
     Mc* mc;
     Joueur2* j2;
+    AudioManager* audioManager;
 
     bool menuOff = true; // Pas de menu de base
     int mode = MODE_JEU;
@@ -42,7 +45,8 @@ public:
 
     void addMc(Mc* j);
     void addJoueur2(Joueur2* j);
-    
+    void addAudioManager(AudioManager* audioM);
+
     void removeSprites(Sprite* sp);
     void removeCircEntite(Entite* en);
     void removeRectEntite(Entite* en);
@@ -51,6 +55,7 @@ public:
 
     Mc* getMc();
     Joueur2* getJ2();
+    AudioManager* getAudioManager();
     
     std::vector<Sprite*>* getSpriteVector();
     std::vector<Entite*>* getCircEntiteVector();

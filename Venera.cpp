@@ -29,6 +29,9 @@ Venera::Venera() {
 		input = new Input();
 		input->addMe(mc);
 
+		audioM = new AudioManager();
+		stockeur->addAudioManager(audioM);
+
 		initialisation();
 	}
 }
@@ -188,7 +191,6 @@ int main(){
 
 		//On attends le temps requis pour avoir un nombre de FPS
 		while(SDL_GetTicks() - FrameStartTimeMs < FrameNormalTimeMs);
-
 		//Calcul des FPS
 		FrameTimeMS = FrameEndTimeMs - FrameStartTimeMs;
 		FrameTimeMS = 1000 / (float) FrameTimeMS;
@@ -200,4 +202,7 @@ int main(){
 			compteur = echantillon;
 		}
 	}
+
+	Mix_Quit();
+	SDL_Quit();
 }

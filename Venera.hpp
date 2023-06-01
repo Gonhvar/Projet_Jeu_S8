@@ -7,6 +7,7 @@
 #include "SpawnPoint.hpp"
 #include "Joueur2.hpp"
 #include "Input.hpp"
+#include "AudioManager.hpp"
 
 class SpawnPoint;
 
@@ -20,6 +21,7 @@ private :
 	Stockeur* stockeur;
 	Mc* mc;
 	Joueur2* j2;
+	AudioManager* audioM;
 	
 	Input* input;
 

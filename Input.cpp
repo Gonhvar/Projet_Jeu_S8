@@ -161,6 +161,8 @@ void Input::mousePress(SDL_MouseButtonEvent& b){
     if(b.button == SDL_BUTTON_LEFT){
         //handle a left-click
         stockeur->getJ2()->newTir(0, mouseX, mouseY);
+        
+        stockeur->getAudioManager()->playSound("01");
     }
 }
 

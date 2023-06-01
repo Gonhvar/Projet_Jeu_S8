@@ -62,6 +62,10 @@ void Stockeur::addJoueur2(Joueur2* j){
 }
 
 
+void Stockeur::addAudioManager(AudioManager* audioM){
+    audioManager = audioM;
+}
+
 // REMOVER ----------------------------------------------------------------
 
 void Stockeur::removeSprites(Sprite* sp){
@@ -154,6 +158,10 @@ std::vector<Enemies*>* Stockeur::getEnemiesVector(){
 
 std::vector<Drop*>* Stockeur::getItemVector(){
     return &items;
+}
+
+AudioManager* Stockeur::getAudioManager(){
+    return audioManager;
 }
 
 
