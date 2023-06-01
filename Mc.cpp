@@ -12,7 +12,7 @@ uint8_t tabState[3][3][2] = { // Représente l'état et le flip en fonction de l
 Mc::Mc() {
     faction = MC_FACTION;
     
-    PV = 2000;
+    PV = 20;
     PVMax = PV;
 
     depForce = BASICSPEED;

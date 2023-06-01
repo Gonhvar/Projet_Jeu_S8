@@ -19,6 +19,7 @@ void Stockeur::addCircEntite(Entite* en){
         std::cout << "added circEntities" << std::endl;
         std::cout << "taille de circEntities : " << circEntities.size()+1 << std::endl;
     }
+std::cout << circEntities.size() << std::endl;
     circEntities.push_back(en);
 }
 

@@ -2,7 +2,7 @@
 
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 Drop::Drop(std::vector<int> items, std::vector<int> taux, int x, int y){
-    faction = MC_FACTION;
+    faction = MC_FRIENDLY_FACTION;
 
     std::srand(time(NULL));
     int random = 1 + (rand()%100);
@@ -10,7 +10,7 @@ Drop::Drop(std::vector<int> items, std::vector<int> taux, int x, int y){
     int i = 0;
     
     masse = 100;
-    frottements = 1;
+    frottements = 100;
     rayon = 24;
 
     _coord[0] = x;
@@ -39,6 +39,7 @@ Drop::Drop(std::vector<int> items, std::vector<int> taux, int x, int y){
 }
 
 Drop::~Drop() {
+	std::cout << "Delete Drop" << std::endl;
     stockeur->removeItem(this);
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */

@@ -37,6 +37,7 @@ Venera::Venera() {
 void Venera::initialisation() {
 	//enemies.push_back(new BasicSkeleton(100, 100));
 	spawnPoints.push_back(new SpawnPoint(50, 50));
+	spawnPoints.push_back(new SpawnPoint(500, 500));
 	
 
 	// ça c'est juste un exemple de bordure de map pour voir si ça marche un peu
@@ -58,6 +59,7 @@ void Venera::initialisation() {
 	bord1->autoSetHitBox();
 	bord1->hitBoxType(0, 1);
 
+
 	Entite* bord2 = new Entite("Bord2", 1, liste);
 	bord2->setLargeur(600);
 	bord2->setHauteur(50);
@@ -73,6 +75,7 @@ void Venera::initialisation() {
 	bord3->setOnScreen(true);
 	bord3->autoSetHitBox();
 	bord3->hitBoxType(0, 1);
+
 }
 
 void Venera::update() {
@@ -86,7 +89,7 @@ void Venera::update() {
 	input->update();
 
 	if (Sprite::stockeur->getMenuOff()) { // Pas le menu
-		std::vector<Sprite*>& list = *(stockeur->getSpriteVector());
+		std::vector<Sprite*>& spriteListe = *(stockeur->getSpriteVector());
 		switch (Sprite::stockeur->getMode()) {
 			case MODE_JEU :
 				//On arrete les enemy et les sprites car ils utilisent la position du joueur 
@@ -121,15 +124,22 @@ void Venera::update() {
 				}
 
 				// Les Sprite sont mis à jour ou supprimé selon
-				for (unsigned int s=0; s < list.size(); s++) {
-					if (stockeur->printEverything) std::cout << "eval " << s << " : " << list[s] << " ";
-					if (list[s]->markedForDeath) {
-						if (stockeur->printEverything) std::cout << "Marked" << std::endl;
-						delete(list[s]);
+				for (unsigned int s=0; s < spriteListe.size(); s++) {
+					if (stockeur->printEverything) {
+						std::cout << "eval " << s << " : " << spriteListe[s] << " ";
+					}
+					if (spriteListe[s]->markedForDeath) {
+						if (stockeur->printEverything) {
+							std::cout << "Marked (" << spriteListe[s]->getStates()->spriteName << ")" << std::endl;
+						}
+						delete(spriteListe[s]);
+						s--;
 					}
 					else {
-						if (stockeur->printEverything) std::cout << "Not Marked" << std::endl;
-						list[s]->update();
+						if (stockeur->printEverything){
+							std::cout << "Not Marked (" << spriteListe[s]->getStates()->spriteName << ")" << std::endl;
+						}
+						spriteListe[s]->update();
 					}
 				}
 
@@ -185,7 +195,7 @@ int main(){
 		moyenne += FrameTimeMS;
 		if (!compteur--) {
 			moyenne /= echantillon;
-			// std::cout << "FPS : " << moyenne << std::endl;
+			std::cout << "FPS : " << moyenne << std::endl;
 			moyenne = 0;
 			compteur = echantillon;
 		}

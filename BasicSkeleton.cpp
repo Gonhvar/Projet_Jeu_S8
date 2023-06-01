@@ -62,7 +62,7 @@ BasicSkeleton::~BasicSkeleton(){
     new Drop(items, taux, _coord[0], _coord[1]);
 }
 
-void BasicSkeleton::deplacementBehaviour(){
+Vector2D BasicSkeleton::deplacementBehaviour(){
 
     if (currentlyTakingDmg && SDL_GetTicks() - invicibilityTimeStart > 150) {
         //std::cout << "invicibility ends" << std::endl;
@@ -77,6 +77,7 @@ void BasicSkeleton::deplacementBehaviour(){
 
     // On pousse
     addForce(v);
+	return v;
 }
 
 void BasicSkeleton::attackBehaviour(){

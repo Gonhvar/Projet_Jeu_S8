@@ -2,7 +2,7 @@
 #define BULLETS_HPP
 
 #pragma once
-#define BASICBULLETSPEED 30.0
+#define BASICBULLETSPEED 75.0
 #include "Entite.hpp"
 
 class Joueur2;

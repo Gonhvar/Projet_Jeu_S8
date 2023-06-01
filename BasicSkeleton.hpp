@@ -24,7 +24,7 @@ public:
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 
-	void deplacementBehaviour();
+	Vector2D deplacementBehaviour();
 	void attackBehaviour();
 	void takingDamage(Entite* other);
 

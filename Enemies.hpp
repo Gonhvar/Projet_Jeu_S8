@@ -20,7 +20,7 @@ public:
 
 	void update();
 
-	virtual void deplacementBehaviour() = 0;
+	virtual Vector2D deplacementBehaviour() = 0;
 	virtual void attackBehaviour() = 0;
 	virtual void takingDamage(Entite* other) = 0;
 

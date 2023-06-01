@@ -1,5 +1,18 @@
 #include "Entite.hpp"
 
+bool Entite::factionInteractWith[MAX_FACTION][MAX_FACTION] = { // Matrice triangulairement symétrique
+	{0, 1, 0, 1},
+	{1, 0, 0, 0},
+	{0, 0, 1, 1},
+	{1, 0, 1, 1}
+};
+/*
+{0, 1, 0, 1},
+	{1, 0, 0, 1},
+	{0, 0, 0, 1},
+	{1, 1, 1, 1}
+*/
+
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 Entite::Entite() {
 	speed.redef(0,0);
@@ -107,75 +120,76 @@ Vector2D& Entite::moveCollisionCercle(Entite* other, Vector2D& v) {
 }
 
 void Entite::moveCollisionCercle2(Entite* other) {
-
-	float distX = other->_coord[0] - _coord[0];
-	float distY = other->_coord[1] - _coord[1];
 	Vector2D v(speed.x, speed.y);
 	v -= other->speed;
-	float A = v.norme * v.norme;
-	float B = -2* (v.x*(distX) + v.y*(distY));
-	float C = distX*distX + distY*distY - (rayon + other->rayon)*(rayon + other->rayon);
+	if (v.norme > 0.00001 && factionInteractWith[faction][other->faction]) {
+		float distX = other->_coord[0] - _coord[0];
+		float distY = other->_coord[1] - _coord[1];
 
-	// SI C EST NUL ON A UNE INTERSECTION ALPHA = 0 : CA VEUT DIRE QUE LES DEUX ENTITE SONT EN CONTACT
+		float A = v.norme * v.norme;
+		float B = -2* (v.x*(distX) + v.y*(distY));
+		float C = distX*distX + distY*distY - (rayon + other->rayon)*(rayon + other->rayon);
+
+		// SI C EST NUL ON A UNE INTERSECTION ALPHA = 0 : CA VEUT DIRE QUE LES DEUX ENTITE SONT EN CONTACT
 
 
-	float delta = B*B - 4*A*C;
-	if (delta > 0) { // Il y aura intersection 
-					// (s'il n'y en a qu'une alors on frolle et ça n'aura pas d'impact donc on ignore ce cas) 
-		float alpha1 = (-B + sqrt(delta))/(2*A);
-		float alpha2 = (-B - sqrt(delta))/(2*A);
+		float delta = B*B - 4*A*C;
+		if (delta > 0) { // Il y aura intersection 
+						// (s'il n'y en a qu'une alors on frolle et ça n'aura pas d'impact donc on ignore ce cas) 
+			float alpha1 = (-B + sqrt(delta))/(2*A);
+			float alpha2 = (-B - sqrt(delta))/(2*A);
 
-		if (alpha1 > alpha2) { // On tri alpha1 et alpha2 pour raccourcir les tests suivants
-			float temp = alpha1;
-			alpha1 = alpha2;
-			alpha2 = temp;
-		}
+			if (alpha1 > alpha2) { // On tri alpha1 et alpha2 pour raccourcir les tests suivants
+				float temp = alpha1;
+				alpha1 = alpha2;
+				alpha2 = temp;
+			}
 
-		if (alpha1 < 0) {
-			if (alpha2 > 0) { // On est dans l'Entite
-				Vector2D v2(_coord[0] - other->_coord[0], _coord[1] - other->_coord[1]);
-				v2.normeToV(rayon + other->rayon - v2.norme + 0.0001);
+			if (alpha1 < 0) {
+				if (alpha2 > 0) { // On est dans l'Entite
+					Vector2D v2(_coord[0] - other->_coord[0], _coord[1] - other->_coord[1]);
+					v2.normeToV(rayon + other->rayon - v2.norme + 0.0001);
 
+					speed.plus(
+						v2.x * other->masse / (masse + other->masse),
+						v2.y * other->masse / (masse + other->masse)
+					);
+					other->speed.plus(
+						-v2.x * masse / (masse + other->masse),
+						-v2.y * masse / (masse + other->masse)
+					);
+
+					reactionContact(other);
+					other->reactionContact(this);
+				}
+			}
+			else if (alpha1 < 1){ // on va cogner l'Entite
+				alpha1 -= 0.0001;
+				alpha1 = alpha1 < 0.0001 ? 0 : alpha1;
+
+				Vector2D v2(_coord[0] + v.x*alpha1 - other->_coord[0], 
+							_coord[1] + v.y*alpha1 - other->_coord[1]);
+				v2.normeToV(1);
+				v2 *= (speed.x - other->speed.x)*v2.x + (speed.y- other->speed.y)*v2.y; // On multiplie par le produit scalaire avec la vitesse relative
+											// i.e à quel point on frappe other
+
+				// this est repoussé selon la normale à l'intersection proportionnelement à la masse de l'autre
 				speed.plus(
-					v2.x * other->masse / (masse + other->masse),
-					v2.y * other->masse / (masse + other->masse)
+					-v2.x * (other->masse / (masse + other->masse)),
+					-v2.y * (other->masse / (masse + other->masse))
 				);
+
+				// pareil pour l'autre
 				other->speed.plus(
-					-v2.x * masse / (masse + other->masse),
-					-v2.y * masse / (masse + other->masse)
+					v2.x * (masse / (masse + other->masse)),
+					v2.y * (masse / (masse + other->masse))
 				);
 
 				reactionContact(other);
 				other->reactionContact(this);
 			}
 		}
-		else if (alpha1 < 1){ // on va cogner l'Entite
-			alpha1 -= 0.0001;
-			alpha1 = alpha1 < 0.0001 ? 0 : alpha1;
-
-			Vector2D v2(_coord[0] + v.x*alpha1 - other->_coord[0], 
-						_coord[1] + v.y*alpha1 - other->_coord[1]);
-			v2.normeToV(1);
-			v2 *= (speed.x - other->speed.x)*v2.x + (speed.y- other->speed.y)*v2.y; // On multiplie par le produit scalaire avec la vitesse relative
-										// i.e à quel point on frappe other
-
-			// this est repoussé selon la normale à l'intersection proportionnelement à la masse de l'autre
-			speed.plus(
-				-v2.x * (other->masse / (masse + other->masse)),
-				-v2.y * (other->masse / (masse + other->masse))
-			);
-
-			// pareil pour l'autre
-			other->speed.plus(
-				v2.x * (masse / (masse + other->masse)),
-				v2.y * (masse / (masse + other->masse))
-			);
-
-			reactionContact(other);
-			other->reactionContact(this);
-		}
 	}
-
 }
 
 void Entite::moveCollisionRectangle(Entite* other) {
@@ -250,6 +264,8 @@ void Entite::updateSpeedWithRectCollisions() {
 			printSelf();
 		}
 	}
+
+//	if(states->spriteName == "Robot") {speed.printSelf();}
 
 	addForce(-speed.x*frottements, -speed.y*frottements);
 
