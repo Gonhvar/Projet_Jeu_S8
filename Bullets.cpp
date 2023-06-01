@@ -1,10 +1,10 @@
 #include "Bullets.hpp"
-#include "Joueur2.hpp"
 
 /* CONSTRUCTEURS ET DESTRUCTEURS */
-Bullets::Bullets(int state, float directX, float directY, Joueur2* papa, short fact) {
+
+Bullets::Bullets(int state, float directX, float directY, Entite* papa, short fact) {
 	//Mettre l'hitbox
-    faction = MC_BULLET_FACTION;
+    faction = fact;
 	speed.redef(directX, directY);
 	speed.normeToV(BASICBULLETSPEED);
 	parent = papa;
@@ -22,8 +22,8 @@ Bullets::Bullets(int state, float directX, float directY, Joueur2* papa, short f
 		}
 		states = newStates;
 
-	_coord[0] = stockeur->getJ2()->getX();
-	_coord[1] = stockeur->getJ2()->getY();
+	_coord[0] = papa->getX();
+	_coord[1] = papa->getY();
 
 	// Pas encore de SpriteSheet pour Bullets : retour au 32x32 de noTexture
 	// stateRect.w = 32;
@@ -35,12 +35,11 @@ Bullets::Bullets(int state, float directX, float directY, Joueur2* papa, short f
 	autoSetHitBox();
 	hitBoxType(1, 0);
 	addSprite("Bullets");
-	//std::cout << "YEAHHHHH" << std::endl;
 }
 
 Bullets::~Bullets() {
     std::cout << "Delete Bullets" << std::endl;
-	parent->removeBullet(this);
+	stockeur->removeBullet(this);
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 

@@ -18,11 +18,13 @@ class SpawnPoint : public Entite {
 protected :
     int i;
     int phase;
+    int wave;
     Uint32 FrameStartTimeMs;
+
 public :
     /* CONSTRUCTEURS ET DESTRUCTEURS */
     SpawnPoint();
-    SpawnPoint(float x, float y);
+    SpawnPoint(float x, float y,  int wave);
 
     virtual ~SpawnPoint() override {};
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */

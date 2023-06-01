@@ -42,9 +42,10 @@ public :
 
     void update();
 
-    void affiche_all() const;
-
     void afficheHealth();
+    void affiche_all() const;
+    void setMcColor();
+
 };
 
 #endif

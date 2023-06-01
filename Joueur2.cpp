@@ -43,7 +43,6 @@ Joueur2::~Joueur2() {
     // for (unsigned int i=0; i<bullets.size(); i++) {
     //     delete(bullets[i]);
     // }
-    bullets.clear();
     stockeur->addJoueur2(nullptr);
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
@@ -70,12 +69,5 @@ void Joueur2::newTir(int state, int directX, int directY){
     
     std::cout << "creation bullets" << std::endl;
     //std::cout << "Alors X : " << x - _coord[0] << " Y :" << y - _coord[0] << std::endl;
-    bullets.push_back(new Bullets(0, directX-_coord[0], directY-_coord[1], this, MC_FACTION));
-}
-
-void Joueur2::removeBullet(Bullets* bullet) {
-    auto it = std::find(bullets.begin(), bullets.end(), bullet);
-    if (it != bullets.end()) {
-        bullets.erase(it); 
-    }
+    stockeur->addBullets(new Bullets(0, directX-_coord[0], directY-_coord[1], this, MC_FACTION) );
 }

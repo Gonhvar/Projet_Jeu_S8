@@ -38,9 +38,9 @@ Venera::Venera() {
 
 
 void Venera::initialisation() {
-	//enemies.push_back(new BasicSkeleton(100, 100));
-	spawnPoints.push_back(new SpawnPoint(50, 50));
-	spawnPoints.push_back(new SpawnPoint(500, 500));
+	// enemies.push_back(new BasicSkeleton(100, 100));
+	// spawnPoints.push_back(new SpawnPoint(50, 50, 0));
+	spawnPoints.push_back(new SpawnPoint(50, 50, 1));
 	
 
 	// ça c'est juste un exemple de bordure de map pour voir si ça marche un peu

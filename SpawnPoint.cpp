@@ -2,7 +2,7 @@
 
 SpawnPoint::SpawnPoint(){};
 
-SpawnPoint::SpawnPoint(float x, float y) {
+SpawnPoint::SpawnPoint(float x, float y, int wave) {
     _coord[0] = x;
     _coord[1] = y;
     i = 0;
@@ -17,8 +17,8 @@ SpawnPoint::SpawnPoint(float x, float y) {
 		for (int i=1; i<newStates->nbEtats; i++) {
 			newStates->nbFrameParEtat[i] = 0;
 		}
-		
-        
+
+		this->wave = wave;
         states = newStates;  
         
         onScreen = true;  
@@ -36,6 +36,11 @@ void SpawnPoint::spawn(int number, int select, float timing){
                                             // sprites
                                             // circEntities
                                             // enemies
+                    break;
+
+                case 1 :
+                    //SkeletonShooter
+                    new SkeletonShooter(_coord[0], _coord[1]);
                     break;
 
                 default :
@@ -73,6 +78,22 @@ void SpawnPoint::spawnWave(int selectWave){
 
             break;
 
+        case 1 :
+            switch(phase){
+                case 0 : 
+                    //std::cout << "Phase 0" << std::endl;
+                    spawn(1, 1, 500.0);
+                    break;
+                case 1 :
+                    //Rien pour l'instant mais à remplir pour faire le jeu
+                    break;
+                
+                default :
+                    phase = 0;
+                    break;
+            }
+            break;
+
         default :
             break;
     }
@@ -80,6 +101,6 @@ void SpawnPoint::spawnWave(int selectWave){
 
 void SpawnPoint::update(){
     //A modifier en fonction des besoins
-    spawnWave(0);
+    spawnWave(wave);
 }
 
