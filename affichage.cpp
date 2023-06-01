@@ -41,13 +41,12 @@ void Affichage::visit(Sprite* s, std::string className, const std::string sprite
 	imIterator = imageChargees.find(spriteName);
 	if (imIterator != imageChargees.end()) { // Déjà chargée
 		s->setTexture(imIterator->second);
-		std::cout << "Image de " << spriteName << " déjà chargée :)" << std::endl;
+		// std::cout << "Image de " << spriteName << " déjà chargée :)" << std::endl;
 	}
 	else { // Sinon on la charge et on la stocke dans imageChargees
 		std::string pathComplet = PATH_TO_TEXTURE_FOLDER + className + "/" + spriteName + "_Sheet" + imageFormat;
-		std::cout << "Chargement de " << spriteName << " à " << pathComplet << std::endl;
+		// std::cout << "Chargement de " << spriteName << " à " << pathComplet << std::endl;
 		const char* filename = pathComplet.c_str();
-				
 		SDL_Texture* textureChargee = IMG_LoadTexture(renderer, filename);
 				
 		if (!textureChargee) { // L'image n'a pas pu être chargée. On prend la texture par défaut.
@@ -58,10 +57,6 @@ void Affichage::visit(Sprite* s, std::string className, const std::string sprite
 		imageChargees[spriteName] = textureChargee;
 	}
 };
-
-void Affichage::enleveSprite(const Sprite& s) {
-	//remove(sprites.begin(), sprites.end(), &s);
-}
 
 void Affichage::update(){
 	//if (!player->dashOn) SDL_RenderClear(renderer);
@@ -79,11 +74,13 @@ void Affichage::update(){
 	SDL_RenderClear(renderer);
 	if(Sprite::stockeur->getMc() != nullptr){
 		afficheHealth();
+		
+		// setMcColor();
 	}
 	affiche_all();
 }
 
-//Cette fonction ne marche pas encore 
+
 void Affichage::afficheHealth(){
 	SDL_Rect dest;
 	SDL_Surface* textSurface;
@@ -138,6 +135,18 @@ void Affichage::affiche_all() const{
 	SDL_RenderPresent(renderer); // Met à jour l'écran avec le backbuffer du renderer
 };
 
+//Incomplet
+void Affichage::setMcColor(){
+	Uint8 red = 255;
+    Uint8 green = 0;
+    Uint8 blue = 0;
+	
+	std::string pathComplet = PATH_TO_TEXTURE_FOLDER;
+
+	SDL_Texture* textureChargee = IMG_LoadTexture(renderer, pathComplet.c_str());
+	SDL_SetTextureColorMod(textureChargee, red, green, blue);
+	imageChargees["Mc"] = textureChargee;
+}	
 
 
 

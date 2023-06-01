@@ -39,6 +39,12 @@ void Stockeur::addEnemies(Enemies* en){
     enemies.push_back(en);
 }
 
+
+void Stockeur::addBullets(Bullets* bul){
+    bullets.push_back(bul);
+}
+
+
 void Stockeur::addItem(Drop* dr){
     if (printEverything) {
         std::cout << "added items" << std::endl;
@@ -128,6 +134,12 @@ void Stockeur::removeItem(Drop* dr){
 }
 
 
+void Stockeur::removeBullet(Bullets* bullet) {
+    auto it = std::find(bullets.begin(), bullets.end(), bullet);
+    if (it != bullets.end()) {
+        bullets.erase(it); 
+    }
+}
 
 
 // GETTER ----------------------------------------------------------------
@@ -158,6 +170,10 @@ std::vector<Enemies*>* Stockeur::getEnemiesVector(){
 
 std::vector<Drop*>* Stockeur::getItemVector(){
     return &items;
+}
+
+std::vector<Bullets*>* Stockeur::getBulletsVector(){
+    return &bullets;
 }
 
 AudioManager* Stockeur::getAudioManager(){
@@ -192,3 +208,5 @@ void Stockeur::setMode(int toBe) {
 int Stockeur::getMode() {
     return mode;
 }
+
+

@@ -115,7 +115,7 @@ void Sprite::setEtat(uint8_t toBe) {
 		frame = 0;
 		delay = maxDelay;
 		stateRect.y = stateRectIn.h * etat + stateRectIn.y;
-	} else {
+	} else if (Sprite::stockeur->printEverything) {
 		std::cout << "Dans Sprite::setEtat : on demande à passer dans l'état " << (int)toBe << ",  mais il n'y en a que " << (int) states->nbEtats << std::endl;
 	}
 }

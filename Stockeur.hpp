@@ -11,6 +11,7 @@ class Drop;
 class Mc;
 class Joueur2;
 class AudioManager;
+class Bullets;
 
 #define MODE_JEU 0
 #define MODE_MAP 1
@@ -23,6 +24,8 @@ protected:
     std::vector<Entite*> rectEntities;
     std::vector<Enemies*> enemies;
     std::vector<Drop*> items;
+
+    std::vector<Bullets*> bullets;
 
     Mc* mc;
     Joueur2* j2;
@@ -42,6 +45,7 @@ public:
     void addRectEntite(Entite* en);
     void addEnemies(Enemies* en);
     void addItem(Drop* dr);
+    void addBullets(Bullets* bul);
 
     void addMc(Mc* j);
     void addJoueur2(Joueur2* j);
@@ -52,6 +56,7 @@ public:
     void removeRectEntite(Entite* en);
     void removeEnemies(Enemies* en);
     void removeItem(Drop* dr);
+    void removeBullet(Bullets* bullet);
 
     Mc* getMc();
     Joueur2* getJ2();
@@ -62,6 +67,7 @@ public:
     std::vector<Entite*>* getRectEntiteVector();
     std::vector<Enemies*>* getEnemiesVector();
     std::vector<Drop*>* getItemVector();
+    std::vector<Bullets*>* getBulletsVector();
 
 
     void deleteAllEnemies();
@@ -72,6 +78,7 @@ public:
 
     void setMode(int toBe);
     int getMode();
+
 };
 
 #endif

@@ -5,9 +5,6 @@
 #define BASICBULLETSPEED 5.0
 #include "Entite.hpp"
 
-class Joueur2;
-
-
 /*
 const States etatsDeBullets = {
 	"noTexture",
@@ -18,10 +15,10 @@ const States etatsDeBullets = {
 
 class Bullets : public Entite {
 protected:
-	Joueur2* parent = nullptr; // Il faudra probablement remplacer ça par un Entite*
+	Entite* parent = nullptr;
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
-	Bullets(int state, float x, float y, Joueur2* papa, short fact);
+	Bullets(int state, float directX, float directY, Entite* papa, short fact);
 
 	virtual ~Bullets() override;
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */

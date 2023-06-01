@@ -1,17 +1,12 @@
 #include "Entite.hpp"
 
 bool Entite::factionInteractWith[MAX_FACTION][MAX_FACTION] = { // Matrice triangulairement symétrique
-	{0, 1, 0, 1},
-	{1, 0, 0, 0},
-	{0, 0, 1, 1},
-	{1, 0, 1, 1}
+	{0, 1, 0, 1, 1},
+	{1, 0, 0, 0, 0},
+	{0, 0, 1, 1, 1},
+	{1, 0, 1, 1, 0},
+	{1, 0, 1, 0, 1}
 };
-/*
-{0, 1, 0, 1},
-	{1, 0, 0, 1},
-	{0, 0, 0, 1},
-	{1, 1, 1, 1}
-*/
 
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 Entite::Entite() {
@@ -204,17 +199,24 @@ void Entite::moveCollisionRectangle(Entite* other) {
 	contact[3] = hitBox[1][1] > other->hitBox[0][1]; // On est en-dessous
 	uint8_t nbContact = contact[0] + contact[1] + contact[2] + contact[3];
 	if (nbContact == 3) { // Empêche this de rentrer dans other
+		float speedX = speed.x, speedY = speed.y;
 		if (!contact[0]) { // On est à droite
-			speed.x = std::max(speed.x, other->hitBox[1][0] - hitBox[0][0]);
+			speedX = std::max(speed.x, other->hitBox[1][0] - hitBox[0][0]);
 		}
 		else if (!contact[1]) { // On est à gauche
-			speed.x = std::min(speed.x, other->hitBox[0][0] - hitBox[1][0]);
+			speedX = std::min(speed.x, other->hitBox[0][0] - hitBox[1][0]);
 		}
 		else if (!contact[2]) { // On est en-dessous
-			speed.y = std::max(speed.y, other->hitBox[1][1] - hitBox[0][1]);
+			speedY = std::max(speed.y, other->hitBox[1][1] - hitBox[0][1]);
 		}
 		else { // On est au-dessus
-			speed.y = std::min(speed.y, other->hitBox[0][1] - hitBox[1][1]);
+			speedY = std::min(speed.y, other->hitBox[0][1] - hitBox[1][1]);
+		}
+		if (speedX != speed.x || speedY != speed.y) { // Il y a effectivement contact
+			if (faction == MC_BULLET_FACTION || faction == ENEMY_BULLET_FACTION) {
+			markedForDeath = true;
+		}
+		speed.redef(speedX, speedY);
 		}
 	} else if (nbContact == 4) { // Repousse this en dehors de other
 		uint8_t indiceMin = 0;

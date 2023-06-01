@@ -85,12 +85,14 @@ void BasicSkeleton::attackBehaviour(){
 }
 
 void BasicSkeleton::takingDamage(Entite* other){
-    if(!currentlyTakingDmg){
-        //std::cout << "il se prend des dmg" << std::endl;
-        changePV(other->getAttackDmg());
-        currentlyTakingDmg = true;
-        depForce *= knockback;
-        invicibilityTimeStart = SDL_GetTicks();
+    if(other->getFaction() != ENEMY_FACTION){
+        if(!currentlyTakingDmg){
+            //std::cout << "il se prend des dmg" << std::endl;
+            changePV(other->getAttackDmg());
+            currentlyTakingDmg = true;
+            depForce *= knockback;
+            invicibilityTimeStart = SDL_GetTicks();
+        }
     }
 }
 

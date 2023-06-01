@@ -4,6 +4,7 @@
 #include "affichage.hpp"
 #include "Mc.hpp"
 #include "BasicSkeleton.hpp"
+#include "SkeletonShooter.hpp"
 #include "SpawnPoint.hpp"
 #include "Joueur2.hpp"
 #include "Input.hpp"

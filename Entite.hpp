@@ -11,7 +11,8 @@
 #define MC_FRIENDLY_FACTION 1
 #define MC_BULLET_FACTION 2
 #define ENEMY_FACTION 3
-#define MAX_FACTION 4
+#define ENEMY_BULLET_FACTION 4
+#define MAX_FACTION 5
 
 
 class Entite : public Sprite {
