@@ -8,7 +8,11 @@
 #define FPS 60
 
 #define MC_FACTION 0
-#define ENEMY_FACTION 1
+#define MC_FRIENDLY_FACTION 1
+#define MC_BULLET_FACTION 2
+#define ENEMY_FACTION 3
+#define MAX_FACTION 4
+
 
 class Entite : public Sprite {
 protected :
@@ -38,12 +42,16 @@ protected :
 	short faction = 1;  // Permet de déterminer le comportement vis-à-vis des autres Entite.
 						// 0 est la faction du Mc
 
+
+
 public :
 	/* CONSTRUCTEURS ET DESTRUCTEURS */
 	Entite();
 	Entite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]);
 	virtual ~Entite() override;
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+
+	static bool factionInteractWith[MAX_FACTION][MAX_FACTION];
 
 	void autoSetHitBox();
 	void hitBoxType(bool circ, bool rect); // Met dans les listes mais n'enlève pas

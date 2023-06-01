@@ -4,12 +4,10 @@
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 Bullets::Bullets(int state, float directX, float directY, Joueur2* papa, short fact) {
 	//Mettre l'hitbox
-    faction = 0;
+    faction = MC_BULLET_FACTION;
 	speed.redef(directX, directY);
 	speed.normeToV(BASICBULLETSPEED);
 	parent = papa;
-	masse = 1;
-	frottements = 0;
 	_hauteur = 16;
 	_largeur = 16;
 
@@ -31,6 +29,9 @@ Bullets::Bullets(int state, float directX, float directY, Joueur2* papa, short f
 	// stateRect.w = 32;
     // stateRect.h = 32;
 
+	masse = 1;
+	frottements = 0;
+	rayon = 8;	
 	autoSetHitBox();
 	hitBoxType(1, 0);
 	addSprite("Bullets");
@@ -55,8 +56,6 @@ void Bullets::reactionContact(Entite* other) {
 	if (Sprite::stockeur->printEverything) {
 		std::cout << "Contact Bullets : " << this << "(" << states->spriteName << ")" << " ->" << other << std::endl;
 	}
-	if (faction != other->getFaction()) {
-		other->changePV(10);
-	}
+	other->changePV(10);
 	markedForDeath = true;
 }
