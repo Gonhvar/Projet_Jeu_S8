@@ -101,6 +101,6 @@ void SpawnPoint::spawnWave(int selectWave){
 
 void SpawnPoint::update(){
     //A modifier en fonction des besoins
-    spawnWave(wave);
+    //spawnWave(wave);
 }
 

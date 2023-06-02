@@ -14,8 +14,6 @@ const States etatsDeBullets = {
 */
 
 class Bullets : public Entite {
-protected:
-	Entite* parent = nullptr;
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
 	Bullets(int state, float directX, float directY, Entite* papa, short fact);

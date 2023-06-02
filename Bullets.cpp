@@ -7,7 +7,6 @@ Bullets::Bullets(int state, float directX, float directY, Entite* papa, short fa
     faction = fact;
 	speed.redef(directX, directY);
 	speed.normeToV(BASICBULLETSPEED);
-	parent = papa;
 	_hauteur = 16;
 	_largeur = 16;
 

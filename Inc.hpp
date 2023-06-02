@@ -20,4 +20,8 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
 
+
+#include <sstream>
+#include <fstream>
+
 // #define nullptr NULL

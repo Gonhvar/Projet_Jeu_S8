@@ -204,4 +204,32 @@ int main(){
 
 	Mix_Quit();
 	SDL_Quit();
+
+	// std::fstream file("data.txt", std::ios::out | std::ios::trunc);
+
+    // if (file.is_open()) {
+    //     std::string myString = "";
+	// 	Vector2D v(1, 2);
+	// 	v.serialize(myString);
+	// 	file << myString;
+    //     file.close();
+    //     std::cout << "Enregistrement terminé." << std::endl;
+    // } else {
+    //     std::cout << "Impossible d'ouvrir le fichier." << std::endl;
+    // }
+
+	// std::ifstream inputFile("data.txt"); 
+	
+    // if (inputFile.is_open()) {
+    //     std::string content((std::istreambuf_iterator<char>(inputFile)),
+    //                         (std::istreambuf_iterator<char>()));
+        
+    //     std::cout << "Contenu du fichier :\n" << content << std::endl;
+	// 	Vector2D v(0, 0);
+	// 	v.deSerialize(content);
+    //     inputFile.close();
+    // } else {
+    //     std::cout << "Impossible d'ouvrir le fichier." << std::endl;
+    // }
+
 }

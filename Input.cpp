@@ -35,11 +35,10 @@ Input::Input(){
 void Input::update(){
 	
 	SDL_GetMouseState(&mouseX, &mouseY);
-	mouseX += Sprite::afficheur->getCameraX();
-    mouseY += Sprite::afficheur->getCameraY();
-    
-    _coord[0] = mouseX;
-	_coord[1] = mouseY;
+    _coord[0] = Sprite::afficheur->getCameraX() + mouseX / Sprite::afficheur->getZoom();
+	_coord[1] = Sprite::afficheur->getCameraY() + mouseY / Sprite::afficheur->getZoom();
+    mouseX = _coord[0];
+    mouseY = _coord[1];
 
     if(stockeur->getMc() != nullptr){
         get_keypress();
