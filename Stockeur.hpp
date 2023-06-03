@@ -33,6 +33,8 @@ protected:
     Joueur2* j2;
     AudioManager* audioManager;
 
+    uint32_t gameTime;
+
     bool menuOff = true; // Pas de menu de base
     int mode = MODE_JEU;
 
@@ -80,6 +82,7 @@ public:
 
     void setMode(int toBe);
     int getMode();
+    uint32_t& getGameTime();
 
     void saveGame();
     void loadGame();

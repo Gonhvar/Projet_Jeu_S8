@@ -85,7 +85,7 @@ void Mc::update() {
     if(dashOn){
         //Regarde si le temps de dash est fini (bloque les autres mouvement)
         std::cout << "1" << std::endl;
-        actualDashTime = SDL_GetTicks() - startDashTime;
+        actualDashTime = stockeur->getGameTime() - startDashTime;
         std::cout << "1.5" << std::endl;
         if(actualDashTime > 1000/dashValue){
             dashOn = false;
@@ -178,11 +178,13 @@ bool Mc::getDashOn(){
     return dashOn;
 }
 
-Attacks* Mc::getAttack(){
+Attacks* Mc::getAttacks(){
     return attack;
 }
 
-
+int& Mc::getColor(){
+    return color;
+}
 
 
 // Inplementer l'interface Controle pour pouvoir gérer les appels de Input
@@ -213,18 +215,12 @@ void Mc::dUp() {
 void Mc::spaceDown() {
     if( !(stockeur->getMc()->getDashOn())){
         stockeur->getMc()->getDepForce() *= dashValue;
-        stockeur->getMc()->setStartDashTime(SDL_GetTicks());
+        stockeur->getMc()->setStartDashTime(stockeur->getGameTime());
         stockeur->getMc()->setDashOn(true);
     }
 }
 
-Attacks* Mc::getAttacks(){
-    return attack;
-}
 
-int& Mc::getColor(){
-    return color;
-}
 
 
 

@@ -30,6 +30,7 @@ Attacks::Attacks(){
 		states = newStates;
 		addSprite("Attacks");
 
+    state = 0;
     attackMultiplier = 1;
     startCdAttack = SDL_GetTicks();
     needToClearCombo = false;
@@ -45,8 +46,11 @@ void Attacks::update(int pushForceH, int pushForceB, int pushForceG, int pushFor
     // findDirection(pushForceH, pushForceB, pushForceG, pushForceD);
     std::cout << "1" << std::endl;
 
-    if(SDL_GetTicks()-startCdAttack > cdAttack){
+    findDirection(pushForceH, pushForceB, pushForceG, pushForceD);
+
+    if(stockeur->getGameTime()-startCdAttack > cdAttack){
         state = 0;
+        this->setOnScreen(false);
         if(needToClearCombo){
             std::cout << "Combo cleared" << std::endl; 
             combo.clear();
@@ -63,43 +67,8 @@ void Attacks::update(int pushForceH, int pushForceB, int pushForceG, int pushFor
     updatePlayerCoord();
     std::cout << "4" << std::endl;
 
-    //std::cout << "etat : " << state << std::endl;
-    switch(state){
-        case 0 :
-            this->setOnScreen(false);
-            break;
-        
-        case 1 :
-            //std::cout << "Attaque simple" << std::endl;
-            //std::cout << "directionX :" << directionX << " directionY :" << directionY << std::endl;
-            attackDamage = 1 * attackMultiplier;
-            range = 60;
-            cdAttack = 200;
-            break;
-        
-        case 2 : 
-            //std::cout << "Attaque lourde" << std::endl;
-            attackDamage = 5 *attackMultiplier;
-            range = 30;
-            cdAttack = 300;
-            break;
-            
-        case 5 :
-            std::cout << "Combo llh!" << std::endl;
-            attackDamage = 30 * attackMultiplier;
-            range = 20;
-            cdAttack = 100; 
-            break;
-        
-        default :
-            break;
-    }
-    std::cout << "5" << std::endl;
-
-
     if(state != 0){
         //Met à jour l'attaque
-        this->setOnScreen(true);
         updateHitBox(range*directionX, range*directionY);
     }
     std::cout << "6 : fin attacks" << std::endl;
@@ -120,37 +89,6 @@ void Attacks::updateHitBox(float attackRangeX, float attackRangeY){
 
     _coord[0] = (hitBox[0][0] + hitBox[1][0])/2;
     _coord[1] = (hitBox[0][1] + hitBox[1][1])/2; 
-}
-
-void Attacks::updateAttack(int attack){
-
-    if(state == 0){
-        if(attack !=0){
-            switch(attack){
-                case 1 :
-                    //light attaque
-                    //std::cout << "Light" << std::endl;
-                    combo += "l";
-                    break;
-
-                case 2 :
-                    //heavy attaque
-                    //std::cout << "Heavy" << std::endl;
-                    combo += "h";
-                    break;
-
-                default : 
-                    std::cout << "Erreur nb attaque non reconnue" << std::endl;
-                    break;
-            }
-            startCdAttack = SDL_GetTicks();
-            findCombo();
-            // std::cout << "Attack combo is : "<< combo << std::endl; 
-        }
-    }
-    else{
-        std::cout << "Cooldown d'attaque en cours" << std::endl;
-    }
 }
 
 void Attacks::setAttackMultiplier(int x){
@@ -182,6 +120,44 @@ void Attacks::findCombo(){
         state = 5;
         needToClearCombo = true;
     }
+    else if(combo == "lll"){
+        state = 1;
+        needToClearCombo = true;
+    }
+}
+
+void Attacks::applyCombo(){
+    //std::cout << "etat : " << state << std::endl;
+    switch(state){
+        case 0 :
+            this->setOnScreen(false);
+            break;
+        
+        case 1 :
+            //std::cout << "Attaque simple" << std::endl;
+            //std::cout << "directionX :" << directionX << " directionY :" << directionY << std::endl;
+            attackDamage = 1 * attackMultiplier;
+            range = 60;
+            cdAttack = 400;
+            break;
+        
+        case 2 : 
+            //std::cout << "Attaque lourde" << std::endl;
+            attackDamage = 5 *attackMultiplier;
+            range = 30;
+            cdAttack = 600;
+            break;
+            
+        case 5 :
+            // std::cout << "Combo llh!" << std::endl;
+            attackDamage = 30 * attackMultiplier;
+            range = 20;
+            cdAttack = 100; 
+            break;
+        
+        default :
+            break;
+    }
 }
 
 void Attacks::findDirection(int pushForceH, int pushForceB, int pushForceG, int pushForceD){
@@ -207,4 +183,37 @@ void Attacks::findDirection(int pushForceH, int pushForceB, int pushForceG, int 
         directionX =0;
     }
     std::cout << "why?????" << std::endl;
+}
+
+void Attacks::updateAttack(int attack){
+
+    if(state == 0){
+        if(attack !=0){
+            switch(attack){
+                case 1 :
+                    //light attaque
+                    //std::cout << "Light" << std::endl;
+                    combo += "l";
+                    break;
+
+                case 2 :
+                    //heavy attaque
+                    //std::cout << "Heavy" << std::endl;
+                    combo += "h";
+                    break;
+
+                default : 
+                    std::cout << "Erreur nb attaque non reconnue" << std::endl;
+                    break;
+            }
+            startCdAttack = stockeur->getGameTime();
+            findCombo();
+            applyCombo();
+            this->setOnScreen(true);
+            // std::cout << "Attack combo is : "<< combo << std::endl; 
+        }
+    }
+    else{
+        std::cout << "Cooldown d'attaque en cours" << std::endl;
+    }
 }

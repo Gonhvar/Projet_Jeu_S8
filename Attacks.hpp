@@ -46,6 +46,7 @@ public:
 	void setAttackMultiplier(int x);
 
 	void findCombo();
+	void applyCombo();
 	void findDirection(int pushForceH, int pushForceB, int pushForceG, int pushForceD);
 };
 

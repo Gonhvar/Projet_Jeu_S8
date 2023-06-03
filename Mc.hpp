@@ -27,13 +27,13 @@ protected :
 	bool dashOn = false;
 	
 	Attacks* attack;
+	int color;
 
 	int pushForceH = 0;
 	int pushForceB = 0;
 	int pushForceG = 0;
 	int pushForceD = 0;
 	
-	int color;
 
 public :
     /* CONSTRUCTEURS ET DESTRUCTEURS */
@@ -42,20 +42,16 @@ public :
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 	void update();
 
-	Attacks* getAttack();
 	bool getDashOn();
 	float& getDashValue();
 	Attacks* getAttacks();
 	int& getColor();
-	
-
 	
 	void setPushForceH(int n);
 	void setPushForceB(int n);
 	void setPushForceG(int n);
 	void setPushForceD(int n);
 	void setStartDashTime(uint32_t time);
-
 	void setDashOn(bool n);
 	
 

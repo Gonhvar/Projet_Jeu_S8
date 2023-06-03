@@ -150,6 +150,7 @@ void Venera::update() {
 					}
 				}
 
+				stockeur->getGameTime() = SDL_GetTicks();
 				
 				break;
 

@@ -209,6 +209,10 @@ int Stockeur::getMode() {
     return mode;
 }
 
+uint32_t& Stockeur::getGameTime(){
+    return gameTime;
+}
+
 
 void Stockeur::saveGame() {
     std::string savedState = "";

@@ -116,7 +116,7 @@ void Input::doKeyDown(SDL_KeyboardEvent &event)
             case SDLK_SPACE :
                 if( !(stockeur->getMc()->getDashOn())){
                     stockeur->getMc()->getDepForce() *= dashValue;
-                    stockeur->getMc()->setStartDashTime(SDL_GetTicks());
+                    stockeur->getMc()->setStartDashTime(stockeur->getGameTime());
                     stockeur->getMc()->setDashOn(true);
 	            }
                 break;
@@ -135,10 +135,10 @@ void Input::doKeyDown(SDL_KeyboardEvent &event)
                 stockeur->getMc()->setPushForceD(1);
                 break;
 			case SDLK_j :
-                stockeur->getMc()->getAttack()->updateAttack(1);
+                stockeur->getMc()->getAttacks()->updateAttack(1);
 				break;
 			case SDLK_k :
-                stockeur->getMc()->getAttack()->updateAttack(2);
+                stockeur->getMc()->getAttacks()->updateAttack(2);
 				break;
 
             case SDLK_n :
