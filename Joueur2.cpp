@@ -73,3 +73,37 @@ void Joueur2::newTir(int state, int directX, int directY){
 
     Sprite::stockeur->getAudioManager()->playSound("01");
 }
+
+
+// Fonctions de sauvegarde de l'objet
+
+std::string Joueur2::serialize(std::string& toWrite) {
+	std::cout << "Serialisation" << std::endl;
+	// On n'enregistre que les paramètres nécessaires. Certains constructeur renseignent déjà les autres 
+    // Ces paramètres nécessaires sont en fait les paramètres contextuels (susceptibles de changer à chaque instant)
+	std::ostringstream oss;
+    oss << k << "|" << frottement  << "|" << vitesseActuelle[0] << "|" << vitesseActuelle[1] << "|";
+	std::cout << "parsed" << std::endl;
+	std::cout << "oss : " << oss.str() <<std::endl; 
+    toWrite += oss.str();
+    return "Joueur2";
+}
+
+void Joueur2::deSerialize(std::string& toRead) {
+    std::istringstream iss(toRead);
+    std::string token;
+    if (std::getline(iss, token, '|')) {
+        k = std::stof(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        frottement = std::stof(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        vitesseActuelle[0] = std::stof(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        vitesseActuelle[1] = std::stof(token);
+    }
+    
+    std::cout << "fin deSerialize : ";
+}

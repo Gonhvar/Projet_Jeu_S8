@@ -34,6 +34,10 @@ public:
 	void deplacementDynamique();
 
 	void newTir(int state, int directX, int directY);
+	
+    // Fonctions de sauvegarde de l'objet
+    virtual std::string serialize(std::string& toWrite);
+    virtual void deSerialize(std::string& toRead);
 };
 
 #endif

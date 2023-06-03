@@ -109,7 +109,7 @@ void Input::doKeyDown(SDL_KeyboardEvent &event)
 
             case SDLK_l :
                 if (!stockeur->getMenuOff()) { // le jeu est en pause
-                    stockeur->loadGame();
+                    stockeur->loadSave();
                 }
                 break;
             

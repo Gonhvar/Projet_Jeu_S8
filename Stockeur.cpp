@@ -223,7 +223,15 @@ void Stockeur::saveGame() {
         className += "|";
         savedState += className;
         savedState += serialized;
-        savedState += "\n*\n";
+        savedState += "\n*";
+    }
+
+    if (j2!= nullptr) {
+        className = j2->serialize(serialized);
+        className += "|";
+        savedState += className;
+        savedState += serialized;
+        savedState += "\n*";
     }
 
 
@@ -240,8 +248,39 @@ void Stockeur::saveGame() {
 }
 
 
-void Stockeur::loadGame() {
-    delete mc;
-    mc = new Mc();
-    // mc.deSerialize()
+
+void Stockeur::loadSave(std::string path) {
+    std::string pathComplet = PATH_TO_SAVE;
+    pathComplet += path;
+    std::ifstream inputFile(path);
+
+    if (inputFile.is_open()) {
+        std::string content((std::istreambuf_iterator<char>(inputFile)),
+                            (std::istreambuf_iterator<char>()));
+        
+        std::cout << "Contenu du fichier :\n" << content << std::endl;
+        inputFile.close();
+
+        // On lit le type de ce que l'on va construire
+        std::istringstream iss(content);
+        std::string objectToken;
+        while (std::getline(iss, objectToken, '*')) {
+            std::istringstream iss(objectToken);
+            std::string classToken; // On va vérifier la classe à laquelle appartient l'objet
+            if (std::getline(iss, classToken, '|')) {
+                if (classToken == "Mc") {
+                    mc = new Mc();
+                    mc->serialize(classToken);
+                }
+                
+                else if (classToken == "Joueur2") {
+                    j2 = new Joueur2();
+                    j2->serialize(classToken);
+                }
+            }
+        }
+        
+    } else {
+        std::cout << "Impossible d'ouvrir le fichier." << std::endl;
+    }
 }

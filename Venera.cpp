@@ -20,14 +20,12 @@ Venera::Venera() {
 		
 		Sprite::map = new Map();
 
-		mc = new Mc();
-		stockeur->addMc(mc);
+		stockeur->addMc(new Mc());
 
-		j2 = new Joueur2();
-		stockeur->addJoueur2(j2);
+		stockeur->addJoueur2(new Joueur2());
 		
 		input = new Input();
-		input->addMe(mc);
+		input->addMe(Sprite::stockeur->getMc());
 
 		audioM = new AudioManager();
 		stockeur->addAudioManager(audioM);
@@ -102,8 +100,8 @@ void Venera::update() {
 				//Solution possible : Mettre une variable dans stockeur de la position du MC qu'on mettrait à jour 
 				if(Sprite::stockeur->getMc() != nullptr){
 					
-					mc->update();
-					j2->update();
+					Sprite::stockeur->getMc()->update();
+					Sprite::stockeur->getJ2()->update();
 
 					// Les Enemies prennent leur décisions
 					for (Enemies* enemy : *(stockeur->getEnemiesVector())) {
@@ -211,6 +209,14 @@ int main(){
 
 	Mix_Quit();
 	SDL_Quit();
+
+	// delete Sprite::stockeur->getMc();
+	// std::cout << "DELETED MC : " << Sprite::stockeur->getMc() << std::endl;
+	// Mc* mc = new Mc();
+	// Sprite::stockeur->addMc(mc);
+	// std::cout << "REMADE MC : " << Sprite::stockeur->getMc() << std::endl;
+	// std::cout << Sprite::stockeur->getMc()->getAttacks() << std::endl;
+	// Sprite::stockeur->getMc()->getAttacks()->update(2, 0, 0, 0);
 
 	// std::fstream file("data.txt", std::ios::out | std::ios::trunc);
 

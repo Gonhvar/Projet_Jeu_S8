@@ -84,24 +84,16 @@ void Mc::update() {
     // std::cout << "Checkpoint2" << std::endl;
     if(dashOn){
         //Regarde si le temps de dash est fini (bloque les autres mouvement)
-        std::cout << "1" << std::endl;
         actualDashTime = stockeur->getGameTime() - startDashTime;
-        std::cout << "1.5" << std::endl;
         if(actualDashTime > 1000/dashValue){
             dashOn = false;
             depForce = dashValue ? depForce/dashValue : BASICSPEED;
             //Faire un CD entre plusieurs dash ici
         }
     }
-    std::cout << "2" << std::endl;
 
     //faire test de direction ici;
-    pushForceH = 1;
-    std::cout << "Mc : " << this << std::endl;
-    std::cout << pushForceH << ", " << pushForceB << ", " << pushForceG << ", " << pushForceD <<std::endl;
-    std::cout << "attack : " << this->attack << std::endl;
     this->attack->update(pushForceH, pushForceB, pushForceG, pushForceD);
-    std::cout << "3" << std::endl;
 
     //Décision de l'état
     int newEtat;
@@ -132,17 +124,13 @@ void Mc::update() {
         setEtat(newEtat);
     }
 
-        std::cout << "4" << std::endl;
 
     //Calcul de la force que le MC veut rajouter
     Vector2D v(pushForceD - pushForceG, pushForceB - pushForceH);
     move(v);
-    std::cout << "5" << std::endl;
 
     // On pousse
     addForce(v);
-    std::cout << "5" << std::endl;
-
 }
 
 

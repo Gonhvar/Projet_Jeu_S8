@@ -40,7 +40,7 @@ protected:
 
 public:
 
-    bool printEverything = 1; // Sert au debug X(
+    bool printEverything = 0; // Sert au debug X(
 
     Stockeur();
 
@@ -85,7 +85,8 @@ public:
     uint32_t& getGameTime();
 
     void saveGame();
-    void loadGame();
+    void loadSave(std::string path = "game");
+    void loadMc();
 };
 
 #endif

@@ -18,8 +18,8 @@ private :
 	SDL_Window* window;
 
 	Stockeur* stockeur;
-	Mc* mc;
-	Joueur2* j2;
+	// Mc* mc;
+	// Joueur2* j2;
 	AudioManager* audioM;
 	
 	Input* input;
