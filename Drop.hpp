@@ -21,9 +21,9 @@ public:
 
 	void update();
 	void selectItem();
-	void getItem();
-
 	virtual void reactionContact(Entite* other);
+
+	void resetColor();
 };
 
 #endif

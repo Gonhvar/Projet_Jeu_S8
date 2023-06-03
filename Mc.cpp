@@ -62,7 +62,8 @@ Mc::Mc() {
 
     autoSetHitBox();
     hitBoxType(1, 0);
-
+    
+    color = NONE;
     attack = new Attacks();
     //std::cout << "Création de Mc : " << states->spriteName << std::endl;
 }
@@ -77,10 +78,11 @@ Mc::~Mc() {
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 void Mc::update() {
+    // std::cout << "Checkpoint" << std::endl;
     if (Sprite::stockeur->printEverything) {
         std::cout << "MC::update()" << std::endl;
     }
-
+    // std::cout << "Checkpoint2" << std::endl;
     if(dashOn){
         //Regarde si le temps de dash est fini (bloque les autres mouvement)
         actualDashTime = SDL_GetTicks() - startDashTime;
@@ -206,4 +208,8 @@ void Mc::spaceDown() {
 
 Attacks* Mc::getAttacks(){
     return attack;
+}
+
+int& Mc::getColor(){
+    return color;
 }

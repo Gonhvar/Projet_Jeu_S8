@@ -13,6 +13,7 @@ Venera::Venera() {
 	else {
 		stockeur = new Stockeur();
 		Sprite::stockeur = stockeur;
+		stockeur->setMode(MODE_JEU);
 
 		afficheur = new Affichage(renderer, window, stockeur);
 		Sprite::afficheur = afficheur;
@@ -78,6 +79,7 @@ void Venera::initialisation() {
 	bord3->autoSetHitBox();
 	bord3->hitBoxType(0, 1);
 
+
 }
 
 void Venera::update() {
@@ -93,10 +95,13 @@ void Venera::update() {
 	if (Sprite::stockeur->getMenuOff()) { // Pas le menu
 		std::vector<Sprite*>& spriteListe = *(stockeur->getSpriteVector());
 		switch (Sprite::stockeur->getMode()) {
+
+			
 			case MODE_JEU :
 				//On arrete les enemy et les sprites car ils utilisent la position du joueur 
 				//Solution possible : Mettre une variable dans stockeur de la position du MC qu'on mettrait à jour 
 				if(Sprite::stockeur->getMc() != nullptr){
+					
 					mc->update(); 
 					j2->update();
 

@@ -76,14 +76,32 @@ void Affichage::update(){
 			camera.y += dep.y;
 		}
 	}
-
 	SDL_RenderClear(renderer);
-	if(Sprite::stockeur->getMc() != nullptr){
-		afficheHealth();
-		
-		setMcColor();
-	}
+
 	affiche_all();
+	
+	if(Sprite::stockeur->getMc() != nullptr){
+		afficheHealth();	
+		//On change la couleur du mc 
+		switch(Sprite::stockeur->getMc()->getColor()){
+			case 1 :
+				setMcColor(255, 0, 0);
+
+				break;
+			case 2 :
+				setMcColor(0, 255, 0);
+				break;
+
+			case 3 :
+				setMcColor(0, 0, 255);
+				break;
+
+			default :
+				break;
+		}
+	}
+
+	SDL_RenderPresent(renderer); // Met à jour l'écran avec le backbuffer du renderer
 }
 
 
@@ -134,15 +152,10 @@ void Affichage::affiche_all() const{
 			SDL_RenderCopyEx(renderer, s->getTexture(), s->getRightRectangle(), &dest, 0, NULL, s->getFlip() ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 		}
 	}
-	SDL_RenderPresent(renderer); // Met à jour l'écran avec le backbuffer du renderer
 };
 
-//Incomplet
-void Affichage::setMcColor(){
-	Uint8 red = 255;
-    Uint8 green = 0;
-    Uint8 blue = 0;
 
+void Affichage::setMcColor(Uint8 red, Uint8 green, Uint8 blue){
 	// SDL_Texture* textureChargee = IMG_LoadTexture(renderer, pathComplet.c_str());
 	SDL_SetTextureColorMod(Sprite::stockeur->getMc()->getTexture(), red, green, blue);
 }	

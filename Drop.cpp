@@ -1,4 +1,5 @@
 #include "Drop.hpp"
+#include "Mc.hpp"
 
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 Drop::Drop(std::vector<int> items, std::vector<int> taux, int x, int y){
@@ -62,7 +63,12 @@ void Drop::update(){
                 default :
                     break;
             }
+            stockeur->getMc()->getColor() = NONE;
             markedForDeath = true;
+        }
+        else{
+            //Si le joueur est toujours sous l'effet de l'effet, il reset la couleur du joueur
+            resetColor();
         }
     }else{
         addForce(0, sin( 0.1 * SDL_GetTicks()) * 64);
@@ -97,6 +103,8 @@ void Drop::selectItem(){
             break;
     }
 
+    stockeur->getMc()->getColor() = NONE;
+
     stateRectIn.w = 32;
     stateRectIn.h = 32;
     stateRectIn.x = 0;
@@ -111,7 +119,7 @@ void Drop::selectItem(){
     onScreen = true;
     
     addSprite("Drop");
-    std::cout << "fin creation Item" << std::endl;
+    // std::cout << "fin creation Item" << std::endl;
 }
 
 void Drop::reactionContact(Entite* other) {
@@ -140,13 +148,14 @@ void Drop::reactionContact(Entite* other) {
     }
 }
 
-//Charger ici les propriété quand le joueur ramasse l'item
-void Drop::getItem(){
+//Mettre les couleurs ici :
+void Drop::resetColor(){
     switch(item){
         case 1 : 
-            break;
+                stockeur->getMc()->getColor() = RED;
+                break;
 
         default :
-            break;
+                break;
     }
 }

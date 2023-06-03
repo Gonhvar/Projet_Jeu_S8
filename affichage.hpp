@@ -44,7 +44,7 @@ public :
 
     void afficheHealth();
     void affiche_all() const;
-    void setMcColor();
+    void setMcColor(Uint8 red, Uint8 green, Uint8 blue);
 
     int getCameraX();
     int getCameraY();

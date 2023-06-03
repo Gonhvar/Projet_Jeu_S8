@@ -9,13 +9,11 @@
 
 class Attacks;
 
-/*
-States etatsDesMc = ( // Eviter de le modifier
-	"Robot",
-	1,
-	({1, 0, 0, 0, 0, 0, 0, 0, 0, 0})
-);
-*/
+
+#define NONE 0
+#define RED 1
+#define GREEN 2
+#define BLUE 3
 
 
 class Mc : public Entite, public Controle {
@@ -35,6 +33,8 @@ protected :
 	int pushForceB = 0;
 	int pushForceG = 0;
 	int pushForceD = 0;
+	
+	int color;
 
 public :
     /* CONSTRUCTEURS ET DESTRUCTEURS */
@@ -69,6 +69,7 @@ public :
     virtual void spaceUp() {}; // On met de {} quand on ne fait rien
 
 	Attacks* getAttacks();
+	int& getColor();
 };
 
 #endif
