@@ -19,14 +19,27 @@ AudioManager::AudioManager(){
 void AudioManager::playSound(std::string name){
 
     std::string fullName = "Sound/" + name + ".mp3";
+    
     Mix_Chunk* sound = Mix_LoadWAV(fullName.c_str());
 
     if (sound == nullptr) {
         // Error handling for loading the sound file
-        // Display an error message, log, or exit the program
-        std::cout << "Problèmes chargement son à " << fullName << std::endl;
+        std::cout << "Problèmes chargement son à " << Mix_GetError() << fullName << std::endl;
+    }else{
+        Mix_VolumeChunk(sound, volume);
+        Mix_PlayChannel(-1, sound, 0);
     }
-    Mix_VolumeChunk(sound, volume);
+}
 
-    Mix_PlayChannel(-1, sound, 0);
+void AudioManager::playMusic(std::string name){
+    std::string fullName = "Sound/" + name + ".mp3";
+    Mix_Music* music = Mix_LoadMUS(fullName.c_str());
+
+    if (music == nullptr) {
+        // Error handling for loading the sound file
+        // Display an error message, log, or exit the program
+        std::cout << "Problèmes chargement musique à " << fullName << std::endl;
+    }
+    Mix_VolumeMusic(volume);
+    Mix_PlayMusic(music, -1);
 }
