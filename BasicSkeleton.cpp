@@ -64,11 +64,11 @@ BasicSkeleton::~BasicSkeleton(){
 
 Vector2D BasicSkeleton::deplacementBehaviour(){
 
-    if (currentlyTakingDmg && SDL_GetTicks() - invicibilityTimeStart > 150) {
+    if (currentlyTakingDmg && stockeur->getGameTime() - invicibilityTimeStart > 150) {
         //std::cout << "invicibility ends" << std::endl;
         currentlyTakingDmg = false;
         depForce = BASICSKELETONSPEED;
-        //std::cout << "invicibility : " << SDL_GetTicks() - invicibilityTimeStart << std::endl;
+        //std::cout << "invicibility : " << stockeur->getGameTime() - invicibilityTimeStart << std::endl;
     }
 
     //Calcul de la force que le Enemies veut rajouter
@@ -91,7 +91,7 @@ void BasicSkeleton::takingDamage(Entite* other){
             changePV(other->getAttackDmg());
             currentlyTakingDmg = true;
             depForce *= knockback;
-            invicibilityTimeStart = SDL_GetTicks();
+            invicibilityTimeStart = stockeur->getGameTime();
         }
     }
 }

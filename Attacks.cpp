@@ -28,7 +28,7 @@ Attacks::Attacks(){
 
         state = 0;
         attackMultiplier = 1;
-        startCdAttack = SDL_GetTicks();
+        startCdAttack = stockeur->getGameTime();
         needToClearCombo = false;
 }
 
@@ -37,7 +37,7 @@ void Attacks::update(int pushForceH, int pushForceB, int pushForceG, int pushFor
 
     findDirection(pushForceH, pushForceB, pushForceG, pushForceD);
 
-    if(SDL_GetTicks()-startCdAttack > cdAttack){
+    if(stockeur->getGameTime()-startCdAttack > cdAttack){
         state = 0;
         this->setOnScreen(false);
         if(needToClearCombo){
@@ -186,7 +186,7 @@ void Attacks::updateAttack(int attack){
                     std::cout << "Erreur nb attaque non reconnue" << std::endl;
                     break;
             }
-            startCdAttack = SDL_GetTicks();
+            startCdAttack = stockeur->getGameTime();
             findCombo();
             applyCombo();
             this->setOnScreen(true);

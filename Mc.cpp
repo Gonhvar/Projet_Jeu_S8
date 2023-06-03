@@ -85,7 +85,7 @@ void Mc::update() {
     // std::cout << "Checkpoint2" << std::endl;
     if(dashOn){
         //Regarde si le temps de dash est fini (bloque les autres mouvement)
-        actualDashTime = SDL_GetTicks() - startDashTime;
+        actualDashTime = stockeur->getGameTime() - startDashTime;
         //std::cout << actualDashTime << std::endl;
         if(actualDashTime > 1000/dashValue){
             dashOn = false;
@@ -177,7 +177,6 @@ int& Mc::getColor(){
 }
 
 
-
 // Inplementer l'interface Controle pour pouvoir gérer les appels de Input
 void Mc::zDown() {
     stockeur->getMc()->setPushForceH(1);
@@ -206,7 +205,7 @@ void Mc::dUp() {
 void Mc::spaceDown() {
     if( !(stockeur->getMc()->getDashOn())){
         stockeur->getMc()->getDepForce() *= dashValue;
-        stockeur->getMc()->setStartDashTime(SDL_GetTicks());
+        stockeur->getMc()->setStartDashTime(stockeur->getGameTime());
         stockeur->getMc()->setDashOn(true);
     }
 }

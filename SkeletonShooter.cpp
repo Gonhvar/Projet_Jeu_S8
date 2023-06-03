@@ -55,11 +55,11 @@ SkeletonShooter::~SkeletonShooter(){
 
 Vector2D SkeletonShooter::deplacementBehaviour(){
 
-    if (currentlyTakingDmg && SDL_GetTicks() - invicibilityTimeStart > 150) {
+    if (currentlyTakingDmg && stockeur->getGameTime() - invicibilityTimeStart > 150) {
         //std::cout << "invicibility ends" << std::endl;
         currentlyTakingDmg = false;
         depForce = BASICSKELETONSHOOTERSPEED;
-        //std::cout << "invicibility : " << SDL_GetTicks() - invicibilityTimeStart << std::endl;
+        //std::cout << "invicibility : " << stockeur->getGameTime() - invicibilityTimeStart << std::endl;
     }
 
     float deltaX = stockeur->getMc()->getX() - _coord[0];
@@ -84,10 +84,10 @@ Vector2D SkeletonShooter::deplacementBehaviour(){
 
 void SkeletonShooter::attackBehaviour(){
 
-    if(SDL_GetTicks() - startShooting > cooldown){
+    if(stockeur->getGameTime() - startShooting > cooldown){
         std::cout << "Creation bullet SkeletonShooter" << std::endl;
         stockeur->addBullets(new Bullets(0, stockeur->getMc()->getX(), stockeur->getMc()->getY(), this, ENEMY_BULLET_FACTION));
-        startShooting = SDL_GetTicks();
+        startShooting = stockeur->getGameTime();
     }
 }
 
@@ -98,7 +98,7 @@ void SkeletonShooter::takingDamage(Entite* other){
             changePV(other->getAttackDmg());
             currentlyTakingDmg = true;
             depForce *= knockback;
-            invicibilityTimeStart = SDL_GetTicks();
+            invicibilityTimeStart = stockeur->getGameTime();
         }
     }
 }

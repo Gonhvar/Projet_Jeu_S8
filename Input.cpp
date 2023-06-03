@@ -109,7 +109,7 @@ void Input::doKeyDown(SDL_KeyboardEvent &event)
             case SDLK_SPACE :
                 if( !(stockeur->getMc()->getDashOn())){
                     stockeur->getMc()->getDepForce() *= dashValue;
-                    stockeur->getMc()->setStartDashTime(SDL_GetTicks());
+                    stockeur->getMc()->setStartDashTime(stockeur->getGameTime());
                     stockeur->getMc()->setDashOn(true);
 	            }
                 break;
