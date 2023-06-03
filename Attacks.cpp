@@ -27,41 +27,28 @@ Attacks::Attacks(){
 		addSprite("Attacks");
 
         attackMultiplier = 1;
+        startCdAttack = SDL_GetTicks();
+        needToClearCombo = false;
 }
 
 
 void Attacks::update(int pushForceH, int pushForceB, int pushForceG, int pushForceD){
-    //Direction par défaut, on pourait peut être garder en mémoire la direction précédente pour la mettre ici ?
-    int directionX = 0;
-    int directionY = 0;
 
-    if(pushForceH == 1){
-        directionY =-1;
-    }
-    else if(pushForceB == 1){
-        directionY =1;
-    }
+    findDirection(pushForceH, pushForceB, pushForceG, pushForceD);
 
-    if(pushForceG == 1){
-        directionX =-1;
+    if(SDL_GetTicks()-startCdAttack > cdAttack){
+        state = 0;
+        if(needToClearCombo){
+            std::cout << "Combo cleared" << std::endl; 
+            combo.clear();
+            needToClearCombo = false;
+        }
     }
-    else if(pushForceD == 1){
-        directionX =1;
+    else{
+        //Bloquer le joueur ici si on veut
     }
-
-    //Par défaut
-    if(directionX==0 && directionY == 0){
-        directionX=1;
-    }
-
-    //Exemple qu'on pourait imaginer
-    if(combo == "llh"){
-        state = 5;
-    }
-
+    
     updatePlayerCoord();
-
-    //Arreter le joueur ici avec onDash
 
     //std::cout << "etat : " << state << std::endl;
     switch(state){
@@ -72,55 +59,35 @@ void Attacks::update(int pushForceH, int pushForceB, int pushForceG, int pushFor
         case 1 :
             //std::cout << "Attaque simple" << std::endl;
             //std::cout << "directionX :" << directionX << " directionY :" << directionY << std::endl;
-            this->setOnScreen(true);
-            attackDamage = 5 * attackMultiplier;
+            attackDamage = 1 * attackMultiplier;
             range = 60;
-            
-            //Met à jour l'attaque
-            updateHitBox(range*directionX, range*directionY);
-
-            //Cooldown de l'attaque
-            if(SDL_GetTicks() - cdAttack > 200 ){
-                state = 0;
-            }
+            cdAttack = 200;
             break;
         
         case 2 : 
             //std::cout << "Attaque lourde" << std::endl;
-
-            this->setOnScreen(true);
-            attackDamage = 10 *attackMultiplier;
+            attackDamage = 5 *attackMultiplier;
             range = 30;
-            
-            //Met à jour l'attaque
-            updateHitBox(range*directionX, range*directionY);
-
-            //Cooldown de l'attaque
-            if(SDL_GetTicks() - cdAttack > 300 ){
-                state = 0;
-            }
+            cdAttack = 300;
             break;
             
         case 5 :
             std::cout << "Combo llh!" << std::endl;
-
-            this->setOnScreen(true);
             attackDamage = 30 * attackMultiplier;
-            range = 60;
-
-            //Met à jour l'attaque
-            updateHitBox(range*directionX, range*directionY);
-
-            //Cooldown de l'attaque
-            if(SDL_GetTicks() - cdAttack > 100 ){
-                state = 0;
-                combo = "";
-            }
+            range = 20;
+            cdAttack = 100; 
             break;
         
         default :
             break;
     }
+
+    if(state != 0){
+        //Met à jour l'attaque
+        this->setOnScreen(true);
+        updateHitBox(range*directionX, range*directionY);
+    }
+
 }
 
 void Attacks::updatePlayerCoord(){
@@ -141,36 +108,83 @@ void Attacks::updateHitBox(float attackRangeX, float attackRangeY){
 void Attacks::updateAttack(int attack){
 
     if(state == 0){
-        switch(attack){
-            case 0 :
-                //Aucune attaque
-                break;
+        if(attack !=0){
+            switch(attack){
+                case 1 :
+                    //light attaque
+                    //std::cout << "Light" << std::endl;
+                    combo += "l";
+                    break;
 
-            case 1 :
-                //light attaque
-                //std::cout << "Light" << std::endl;
-                combo += "l";
-                state = 1;
-                cdAttack = SDL_GetTicks();
-                break;
+                case 2 :
+                    //heavy attaque
+                    //std::cout << "Heavy" << std::endl;
+                    combo += "h";
+                    break;
 
-            case 2 :
-                //heavy attaque
-                //std::cout << "Heavy" << std::endl;
-                combo += "h";
-                state = 2;
-                cdAttack = SDL_GetTicks();
-                break;
-
-            default : 
-                std::cout << "Erreur nb attaque non reconnue" << std::endl;
-                break;
+                default : 
+                    std::cout << "Erreur nb attaque non reconnue" << std::endl;
+                    break;
+            }
+            startCdAttack = SDL_GetTicks();
+            findCombo();
+            // std::cout << "Attack combo is : "<< combo << std::endl; 
         }
-    }else{
+    }
+    else{
         std::cout << "Cooldown d'attaque en cours" << std::endl;
     }
 }
 
 void Attacks::setAttackMultiplier(int x){
     attackMultiplier = x;
+}
+
+void Attacks::findCombo(){
+    //C'est pas trés propre mais je n'ai rien de mieux avec des std::string
+    //Peut etre une récursive avec les états en impair et pair ?
+    if(combo == "l"){
+        state = 1;
+        std::cout << "Combo l!" << std::endl;
+    }
+    else if(combo == "h"){
+        state = 2;
+        std::cout << "Combo h!" << std::endl;
+        needToClearCombo = true;
+    }
+    else if(combo == "lh"){
+        state = 2;
+        std::cout << "Combo lh!" << std::endl;
+        needToClearCombo = true;
+    }
+    else if(combo == "ll"){
+        state = 1;
+        std::cout << "Combo ll!" << std::endl;
+    }
+    else if(combo == "llh"){
+        state = 5;
+        needToClearCombo = true;
+    }
+}
+
+void Attacks::findDirection(int pushForceH, int pushForceB, int pushForceG, int pushForceD){
+    if(pushForceH == 1){
+        directionY =-1;
+    }
+    else if(pushForceB == 1){
+        directionY =1;
+    }
+    else{
+        directionY =0;
+    }
+
+    if(pushForceG == 1){
+        directionX =-1;
+    }
+    else if(pushForceD == 1){
+        directionX =1;
+    }
+    else{
+        directionX =0;
+    }
 }

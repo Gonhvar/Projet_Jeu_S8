@@ -72,17 +72,17 @@ public:
     float getY();
     float getSpriteX();
     float getSpriteY();
+    float& getLargeur();
+    float& getHauteur();
+    bool getOnScreen();
 
     void setCoord(float x, float y, float theta = 0.);
     void setCoord(float* coord);
-
-    float& getLargeur();
     void setLargeur(float L);
-    float& getHauteur();
     void setHauteur(float H);
-
-    bool getOnScreen();
     void setOnScreen(bool toBe);
+
+
 
     void addSprite(std::string className);
     SDL_Texture* getTexture();
