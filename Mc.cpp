@@ -213,3 +213,35 @@ Attacks* Mc::getAttacks(){
 int& Mc::getColor(){
     return color;
 }
+
+
+
+// Fonctions de sauvegarde de l'objet
+std::string Mc::serialize(std::string& toWrite) {
+	std::cout << "Serialisation" << std::endl;
+	Entite::serialize(toWrite);
+	// On n'enregistre que les paramètres nécessaires. Certains constructeur renseignent déjà les autres 
+    // Ces paramètres nécessaires sont en fait les paramètres contextuels (susceptibles de changer à chaque instant)
+	std::ostringstream oss;
+    oss << dashValue << "|" << dashOn << "|" << color << "|";
+	std::cout << "parsed" << std::endl;
+	std::cout << "oss : " << oss.str() <<std::endl; 
+    toWrite += oss.str();
+    return "Mc";
+}
+
+void Mc::deSerialize(std::string& toRead) {
+	Sprite::deSerialize(toRead);
+    std::istringstream iss(toRead);
+    std::string token;
+    if (std::getline(iss, token, '|')) {
+        dashValue = std::stof(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        dashOn = readBool(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        color = std::stoi(token);
+    }
+    std::cout << "fin deSerialize : ";
+}

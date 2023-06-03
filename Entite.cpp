@@ -349,3 +349,75 @@ void Entite::printSelf() {
 	std::cout << "\t isRect = " << isRect << std::endl;
 	std::cout << "\t faction = " << faction << std::endl;
 }
+
+std::string Entite::serialize(std::string& toWrite) {
+	std::cout << "Serialisation" << std::endl;
+	Sprite::serialize(toWrite);
+	// On n'enregistre que les paramètres nécessaires. Certains constructeur renseignent déjà les autres 
+    // Ces paramètres nécessaires sont en fait les paramètres contextuels (susceptibles de changer à chaque instant)
+	std::ostringstream oss;
+    oss << PV << "|" << PVMax << "|" << attackDamage << "|" <<
+	hitBox[0][0] << "|" << hitBox[0][1] << "|" << hitBox[1][0] << "|" << hitBox[1][1] << "|" <<
+	rayon << "|" << depForce << "|" << masse << "|" << frottements << "|" <<
+	speed.x << "|" << speed.y << "|" <<
+	isRect << "|" << isCirc << "|" << faction << "|";
+	std::cout << "parsed" << std::endl;
+	std::cout << "oss : " << oss.str() <<std::endl; 
+    toWrite += oss.str();
+    return "Entite";
+}
+
+void Entite::deSerialize(std::string& toRead) {
+	Sprite::deSerialize(toRead);
+    std::istringstream iss(toRead);
+    std::string token;
+    if (std::getline(iss, token, '|')) {
+        PV = std::stoi(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        PVMax = std::stoi(token);
+    }
+    if (std::getline(iss, token, '|')) {
+       attackDamage = std::stoi(token);
+    }
+    if (std::getline(iss, token, '|')) {
+       hitBox[0][0] = std::stof(token);
+    }
+    if (std::getline(iss, token, '|')) {
+       hitBox[0][1] = std::stof(token);
+    }
+    if (std::getline(iss, token, '|')) {
+       hitBox[1][0] = std::stof(token);
+    }
+    if (std::getline(iss, token, '|')) {
+       hitBox[1][1] = std::stof(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        rayon = std::stof(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        depForce = std::stof(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        masse = std::stof(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        frottements = std::stof(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        speed.x = std::stof(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        speed.y = std::stof(token);
+    }
+	speed.redef(speed.x, speed.y);
+    if (std::getline(iss, token, '|')) {
+        isRect = readBool(token);
+    }
+	speed.redef(speed.x, speed.y);
+    if (std::getline(iss, token, '|')) {
+        isCirc = readBool(token);
+    }
+    
+    std::cout << "fin deSerialize : ";
+}

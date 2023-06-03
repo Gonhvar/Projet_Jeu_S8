@@ -210,3 +210,26 @@ int Stockeur::getMode() {
 }
 
 
+void Stockeur::saveGame() {
+    std::string savedState = "";
+    std::string serialized = "";
+    std::string className = "";
+    if (mc!= nullptr) {
+        className = mc->serialize(serialized);
+        savedState += className;
+        savedState += serialized;
+        savedState += "\n*\n";
+    }
+
+
+    std::string pathComplet = PATH_TO_SAVE;
+    pathComplet += "game.txt";
+    std::fstream file(pathComplet, std::ios::out | std::ios::trunc);
+    if (file.is_open()) {
+		file << savedState;
+        file.close();
+        std::cout << "Enregistrement terminé." << std::endl;
+    } else {
+        std::cout << "Impossible d'ouvrir le fichier." << std::endl;
+    }
+}

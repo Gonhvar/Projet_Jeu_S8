@@ -52,35 +52,35 @@ void Vector2D::printSelf() {
     std::cout << "x=" << x << ", y=" << y << ", norme=" << norme << std::endl;
 }
 
-std::string& Vector2D::serialize(std::string& toWrite) {
-    std::ostringstream oss;
-    oss << x << "|" << y << "|" << norme << std::endl;
-    toWrite += oss.str();
-    return toWrite;
-}
+// std::string Vector2D::serialize(std::string& toWrite) {
+//     std::ostringstream oss;
+//     oss << x << "|" << y << "|" << norme << std::endl;
+//     toWrite += oss.str();
+//     return "Vector2D";
+// }
 
-void Vector2D::deSerialize(std::string& toRead) {
-    std::vector<std::string> tokens;
+// void Vector2D::deSerialize(std::string& toRead) {
+//     std::vector<std::string> tokens;
     
-    std::istringstream iss(toRead);
-    std::string token;
-    int i=0;
-    if (std::getline(iss, token, '|')) {
-        tokens.push_back(token);
-        x = std::stof(tokens[i]);
-        i++;
-    }
-    if (std::getline(iss, token, '|')) {
-        tokens.push_back(token);
-        y = std::stof(tokens[i]);
-        i++;
-    }
-    if (std::getline(iss, token, '|')) {
-        tokens.push_back(token);
-        norme = std::stof(tokens[i]);
-        i++;
-    }
+//     std::istringstream iss(toRead);
+//     std::string token;
+//     int i=0;
+//     if (std::getline(iss, token, '|')) {
+//         tokens.push_back(token);
+//         x = std::stof(tokens[i]);
+//         i++;
+//     }
+//     if (std::getline(iss, token, '|')) {
+//         tokens.push_back(token);
+//         y = std::stof(tokens[i]);
+//         i++;
+//     }
+//     if (std::getline(iss, token, '|')) {
+//         tokens.push_back(token);
+//         norme = std::stof(tokens[i]);
+//         i++;
+//     }
     
-    std::cout << "fin deSerialize : ";
-    printSelf();
-}
+//     std::cout << "fin deSerialize : ";
+//     printSelf();
+// }

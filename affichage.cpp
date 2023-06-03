@@ -172,3 +172,10 @@ int Affichage::getCameraY() {
 float Affichage::getZoom() {
 	return zoom;
 }
+
+void Affichage::zoomPlus() {
+	zoom *= 1.1;
+}
+void Affichage::zoomMoins() {
+	zoom /= 1.1;
+}

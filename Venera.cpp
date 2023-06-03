@@ -150,8 +150,7 @@ void Venera::update() {
 					}
 				}
 
-				// Le reste est affiché
-				afficheur->update();
+				
 				break;
 
 			case MODE_MAP :
@@ -163,8 +162,10 @@ void Venera::update() {
 		}
 	}
 	else { // Mode menu
-		std::cout << "Mode Menu" <<	std::endl;
+		
 	}
+	// Le reste est affiché
+	afficheur->update();
 }
 
 int main(){
@@ -237,4 +238,11 @@ int main(){
     //     std::cout << "Impossible d'ouvrir le fichier." << std::endl;
     // }
 
+	// std::string writing = "";
+	// std::cout << "Mc : " << Sprite::stockeur->getMc()->serialize(writing) << std::endl;;
+	// std::cout << "a ecrit :" << writing;
+
+	// Sprite::stockeur->getMc()->setCoord(0, 1, 2);
+	// Sprite::stockeur->getMc()->deSerialize(writing);
+	// std::cout << "a lu : " << Sprite::stockeur->getMc()->getX() << ", " << Sprite::stockeur->getMc()->getY() << ", " << Sprite::stockeur->getMc()->getCoord()[2] << std::endl;
 }

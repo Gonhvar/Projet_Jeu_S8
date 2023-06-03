@@ -70,6 +70,10 @@ public :
 
 	Attacks* getAttacks();
 	int& getColor();
+
+    // Fonctions de sauvegarde de l'objet
+    virtual std::string serialize(std::string& toWrite);
+    virtual void deSerialize(std::string& toRead);
 };
 
 #endif

@@ -4,6 +4,7 @@
 #include "Inc.hpp"
 #include "Map.hpp"
 #include "Stockeur.hpp"
+#include "Serializable.hpp"
 
 
 class Affichage;
@@ -18,7 +19,7 @@ typedef struct States_t{ // sert à décrire les états qu'un Sprite peut avoir,
 } States;
 
 
-class Sprite {
+class Sprite : public Serializable {
 protected :
     
     float _coord[3] = { 0, 0, 0 }; // Coordonnées au centre du rectangle x, y, theta
@@ -93,6 +94,11 @@ public:
     void setEtat(uint8_t toBe);
     bool getFlip();
     const std::string getName();
+
+    // Fonctions de sauvegarde de l'objet
+    virtual std::string serialize(std::string& toWrite);
+    virtual void deSerialize(std::string& toRead);
+    bool readBool(std::string& toRead);
 };
 
 #endif

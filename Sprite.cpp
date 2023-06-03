@@ -136,3 +136,42 @@ bool Sprite::getFlip() {
 const std::string Sprite::getName(){
 	return states->spriteName;
 }
+
+
+// Fonctions de sauvegarde de l'objet
+
+std::string Sprite::serialize(std::string& toWrite) {
+	std::cout << "Serialisation" << std::endl;
+	// On n'enregistre que les paramètres nécessaires. Certains constructeur renseignent déjà les autres 
+    // Ces paramètres nécessaires sont en fait les paramètres contextuels (susceptibles de changer à chaque instant)
+	std::ostringstream oss;
+    oss << _coord[0] << "|" << _coord[1] << "|" << _coord[2] << "|" << onScreen << "|" <<
+	etat << "|" << frame << "|" << flip << "|";
+	std::cout << "parsed" << std::endl;
+	std::cout << "oss : " << oss.str() <<std::endl; 
+    toWrite += oss.str();
+    return "Sprite";
+}
+
+void Sprite::deSerialize(std::string& toRead) {
+    std::istringstream iss(toRead);
+    std::string token;
+    if (std::getline(iss, token, '|')) {
+        _coord[0] = std::stof(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        _coord[1] = std::stof(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        _coord[2] = std::stof(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        onScreen = readBool(token);
+    }
+    
+    std::cout << "fin deSerialize : ";
+}
+
+bool Sprite::readBool(std::string& toRead) {
+	return toRead == "1";
+}

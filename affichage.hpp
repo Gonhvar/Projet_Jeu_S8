@@ -49,6 +49,9 @@ public :
     int getCameraX();
     int getCameraY();
     float getZoom();
+
+    void zoomPlus();
+    void zoomMoins();
 };
 
 #endif

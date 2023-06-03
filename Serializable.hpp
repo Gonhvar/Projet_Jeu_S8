@@ -5,8 +5,8 @@
 
 class Serializable {
 public:
-	virtual std::string& serialize(std::string& toWrite) {return toWrite;};
-    virtual void deSerialize(std::string& toRead) {};
+	virtual std::string serialize(std::string& toWrite) = 0;
+    virtual void deSerialize(std::string& toRead) = 0;
 };
 
 #endif

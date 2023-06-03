@@ -99,6 +99,12 @@ void Input::doKeyDown(SDL_KeyboardEvent &event)
             case SDLK_a :
                 std::cout << "menu swap" << std::endl;
                 stockeur->swapMenuOff();
+                break;
+
+            case SDLK_w :
+                std::cout << "menu swap" << std::endl;
+                stockeur->saveGame();
+                break;
             
             case SDLK_SPACE :
                 if( !(stockeur->getMc()->getDashOn())){
@@ -131,6 +137,14 @@ void Input::doKeyDown(SDL_KeyboardEvent &event)
             case SDLK_n :
                 stockeur->deleteAllEnemies();
 				break;
+
+            case SDLK_EQUALS : // Zoom de 10% sur l'image
+                Sprite::afficheur->zoomPlus();
+                break;
+
+            case SDLK_RIGHTPAREN : // Dezoom de 10% sur l'image
+                Sprite::afficheur->zoomMoins();
+                break;
 
         }
     }

@@ -2,10 +2,9 @@
 #define VECTOR2D_HPP
 
 #include "Inc.hpp"
-#include "Serializable.hpp"
 
 
-class Vector2D : public Serializable{
+class Vector2D {
 public :
     float x;
     float y;
@@ -23,8 +22,8 @@ public :
     void printSelf();
 
     // Option de serialization
-    virtual std::string& serialize(std::string& toWrite);
-    virtual void deSerialize(std::string& toRead);
+    // virtual std::string serialize(std::string& toWrite);
+    // virtual void deSerialize(std::string& toRead);
 };
 
 #endif

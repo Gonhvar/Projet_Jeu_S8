@@ -17,6 +17,8 @@ class Bullets;
 #define MODE_MAP 1
 #define MODE_MAXNUM 2
 
+#define PATH_TO_SAVE "save/"
+
 class Stockeur {
 protected:
     std::vector<Sprite*> sprites;
@@ -79,6 +81,7 @@ public:
     void setMode(int toBe);
     int getMode();
 
+    void saveGame();
 };
 
 #endif
