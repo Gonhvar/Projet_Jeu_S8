@@ -168,10 +168,13 @@ bool Mc::getDashOn(){
     return dashOn;
 }
 
-Attacks* Mc::getAttack(){
+Attacks* Mc::getAttacks(){
     return attack;
 }
 
+int& Mc::getColor(){
+    return color;
+}
 
 
 
@@ -208,13 +211,7 @@ void Mc::spaceDown() {
     }
 }
 
-Attacks* Mc::getAttacks(){
-    return attack;
-}
 
-int& Mc::getColor(){
-    return color;
-}
 
 
 
