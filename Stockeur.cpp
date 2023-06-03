@@ -216,6 +216,7 @@ void Stockeur::saveGame() {
     std::string className = "";
     if (mc!= nullptr) {
         className = mc->serialize(serialized);
+        className += "|";
         savedState += className;
         savedState += serialized;
         savedState += "\n*\n";
@@ -232,4 +233,11 @@ void Stockeur::saveGame() {
     } else {
         std::cout << "Impossible d'ouvrir le fichier." << std::endl;
     }
+}
+
+
+void Stockeur::loadGame() {
+    delete mc;
+    mc = new Mc();
+    // mc.deSerialize()
 }

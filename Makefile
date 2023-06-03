@@ -1,5 +1,5 @@
 prog: Sprite.o affichage.o Vector2D.o Entite.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o Attacks.o Map.o Stockeur.o Joueur2.o Bullets.o Input.o AudioManager.o SkeletonShooter.o
-	g++ -std=c++11 -o prog Sprite.o affichage.o Vector2D.o Entite.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o Attacks.o Map.o Stockeur.o Joueur2.o Bullets.o Input.o AudioManager.o SkeletonShooter.o -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+	g++ -std=c++11 -g -o prog Sprite.o affichage.o Vector2D.o Entite.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o Attacks.o Map.o Stockeur.o Joueur2.o Bullets.o Input.o AudioManager.o SkeletonShooter.o -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 
 Stockeur.o : Stockeur.cpp Stockeur.hpp Inc.hpp
 	g++ -std=c++11 -Wall Stockeur.cpp -c

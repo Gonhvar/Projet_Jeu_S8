@@ -2,10 +2,14 @@
 
 
 Attacks::Attacks(){
+    std::cout << "new Attacks" << std::endl;
     faction = MC_FACTION;
     
     _hauteur = 64;
     _largeur = 48;
+
+	directionX = 0;
+    directionY = 0;
 
     setCoord(0,0,0);
     setOnScreen(false);
@@ -26,15 +30,20 @@ Attacks::Attacks(){
 		states = newStates;
 		addSprite("Attacks");
 
-        attackMultiplier = 1;
-        startCdAttack = SDL_GetTicks();
-        needToClearCombo = false;
+    attackMultiplier = 1;
+    startCdAttack = SDL_GetTicks();
+    needToClearCombo = false;
 }
 
 
 void Attacks::update(int pushForceH, int pushForceB, int pushForceG, int pushForceD){
-
-    findDirection(pushForceH, pushForceB, pushForceG, pushForceD);
+    if (Sprite::stockeur->printEverything) {
+        std::cout << "Attacks::update()" << std::endl;
+    }
+    std::cout << pushForceH << ", " << pushForceB << ", " << pushForceG << ", " << pushForceD <<std::endl;
+    std::cout << "0.5" << std::endl;
+    // findDirection(pushForceH, pushForceB, pushForceG, pushForceD);
+    std::cout << "1" << std::endl;
 
     if(SDL_GetTicks()-startCdAttack > cdAttack){
         state = 0;
@@ -43,12 +52,16 @@ void Attacks::update(int pushForceH, int pushForceB, int pushForceG, int pushFor
             combo.clear();
             needToClearCombo = false;
         }
+        std::cout << "2" << std::endl;
     }
     else{
         //Bloquer le joueur ici si on veut
+            std::cout << "3" << std::endl;
+
     }
     
     updatePlayerCoord();
+    std::cout << "4" << std::endl;
 
     //std::cout << "etat : " << state << std::endl;
     switch(state){
@@ -81,12 +94,16 @@ void Attacks::update(int pushForceH, int pushForceB, int pushForceG, int pushFor
         default :
             break;
     }
+    std::cout << "5" << std::endl;
+
 
     if(state != 0){
         //Met à jour l'attaque
         this->setOnScreen(true);
         updateHitBox(range*directionX, range*directionY);
     }
+    std::cout << "6 : fin attacks" << std::endl;
+
 
 }
 
@@ -168,6 +185,8 @@ void Attacks::findCombo(){
 }
 
 void Attacks::findDirection(int pushForceH, int pushForceB, int pushForceG, int pushForceD){
+   std::cout << "first why?????" << std::endl;
+    // std::cout << "directionY :" << directionY <<  std::endl;
     if(pushForceH == 1){
         directionY =-1;
     }
@@ -187,4 +206,5 @@ void Attacks::findDirection(int pushForceH, int pushForceB, int pushForceG, int 
     else{
         directionX =0;
     }
+    std::cout << "why?????" << std::endl;
 }

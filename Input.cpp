@@ -102,8 +102,15 @@ void Input::doKeyDown(SDL_KeyboardEvent &event)
                 break;
 
             case SDLK_w :
-                std::cout << "menu swap" << std::endl;
-                stockeur->saveGame();
+                if (!stockeur->getMenuOff()) { // le jeu est en pause
+                    stockeur->saveGame();
+                }
+                break;
+
+            case SDLK_l :
+                if (!stockeur->getMenuOff()) { // le jeu est en pause
+                    stockeur->loadGame();
+                }
                 break;
             
             case SDLK_SPACE :

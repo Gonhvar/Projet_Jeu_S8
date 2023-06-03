@@ -10,6 +10,7 @@ uint8_t tabState[3][3][2] = { // Représente l'état et le flip en fonction de l
 
 //Constructeur spécial pour le MC (renseigne Sprite::joueur)
 Mc::Mc() {
+    std::cout << "new Mc" << std::endl;
     faction = MC_FACTION;
     
     PV = 20;
@@ -58,8 +59,6 @@ Mc::Mc() {
     stateRect.w = 32;
     stateRect.h = 32;
 
-    std::cout <<"Mc rect : " << getRightRectangle()->x << ", " << getRightRectangle()->y << std::endl;
-
     autoSetHitBox();
     hitBoxType(1, 0);
     
@@ -85,17 +84,24 @@ void Mc::update() {
     // std::cout << "Checkpoint2" << std::endl;
     if(dashOn){
         //Regarde si le temps de dash est fini (bloque les autres mouvement)
+        std::cout << "1" << std::endl;
         actualDashTime = SDL_GetTicks() - startDashTime;
-        //std::cout << actualDashTime << std::endl;
+        std::cout << "1.5" << std::endl;
         if(actualDashTime > 1000/dashValue){
             dashOn = false;
             depForce = dashValue ? depForce/dashValue : BASICSPEED;
             //Faire un CD entre plusieurs dash ici
         }
     }
+    std::cout << "2" << std::endl;
 
     //faire test de direction ici;
-    attack->update(pushForceH, pushForceB, pushForceG, pushForceD);
+    pushForceH = 1;
+    std::cout << "Mc : " << this << std::endl;
+    std::cout << pushForceH << ", " << pushForceB << ", " << pushForceG << ", " << pushForceD <<std::endl;
+    std::cout << "attack : " << this->attack << std::endl;
+    this->attack->update(pushForceH, pushForceB, pushForceG, pushForceD);
+    std::cout << "3" << std::endl;
 
     //Décision de l'état
     int newEtat;
@@ -126,13 +132,17 @@ void Mc::update() {
         setEtat(newEtat);
     }
 
+        std::cout << "4" << std::endl;
 
     //Calcul de la force que le MC veut rajouter
     Vector2D v(pushForceD - pushForceG, pushForceB - pushForceH);
     move(v);
+    std::cout << "5" << std::endl;
 
     // On pousse
     addForce(v);
+    std::cout << "5" << std::endl;
+
 }
 
 

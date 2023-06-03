@@ -102,7 +102,7 @@ void Venera::update() {
 				//Solution possible : Mettre une variable dans stockeur de la position du MC qu'on mettrait à jour 
 				if(Sprite::stockeur->getMc() != nullptr){
 					
-					mc->update(); 
+					mc->update();
 					j2->update();
 
 					// Les Enemies prennent leur décisions

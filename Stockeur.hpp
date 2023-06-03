@@ -38,7 +38,7 @@ protected:
 
 public:
 
-    bool printEverything = 0; // Sert au debug X(
+    bool printEverything = 1; // Sert au debug X(
 
     Stockeur();
 
@@ -82,6 +82,7 @@ public:
     int getMode();
 
     void saveGame();
+    void loadGame();
 };
 
 #endif
