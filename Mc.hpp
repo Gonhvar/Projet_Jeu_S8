@@ -15,7 +15,6 @@ class Attacks;
 #define GREEN 2
 #define BLUE 3
 
-
 class Mc : public Entite, public Controle {
 protected :
 	
@@ -44,6 +43,12 @@ public :
 	void update();
 
 	Attacks* getAttack();
+	bool getDashOn();
+	float& getDashValue();
+	Attacks* getAttacks();
+	int& getColor();
+	
+
 	
 	void setPushForceH(int n);
 	void setPushForceB(int n);
@@ -53,8 +58,6 @@ public :
 
 	void setDashOn(bool n);
 	
-	bool getDashOn();
-	float& getDashValue();
 
 	// Inplementer l'interface Controle pour pouvoir gérer les appels de Input
 	virtual void zDown();

@@ -19,12 +19,18 @@ protected:
 
 	int state;
 	int range;
+	uint32_t startCdAttack;
 	uint32_t cdAttack;
 	std::string combo;
+
+	int directionX = 0;
+    int directionY = 0;
 
 	int attackMultiplier;
 
 	float playerCoord[2];
+
+	bool needToClearCombo;
 
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
@@ -38,6 +44,9 @@ public:
 	void update(int pushForceH, int pushForceB, int pushForceG, int pushForceD);
 
 	void setAttackMultiplier(int x);
+
+	void findCombo();
+	void findDirection(int pushForceH, int pushForceB, int pushForceG, int pushForceD);
 };
 
 #endif

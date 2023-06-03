@@ -173,6 +173,8 @@ Attacks* Mc::getAttack(){
 }
 
 
+
+
 // Inplementer l'interface Controle pour pouvoir gérer les appels de Input
 void Mc::zDown() {
     stockeur->getMc()->setPushForceH(1);
