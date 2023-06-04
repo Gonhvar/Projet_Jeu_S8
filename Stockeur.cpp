@@ -233,8 +233,9 @@ Input* Stockeur::getInput(){
 
 void Stockeur::deleteAllEnemies(){
     std::cout << "enemies.size : " << enemies.size() << std::endl;
-    for(Enemies* en : enemies){
-        delete en;
+    for (unsigned int s=0; s < enemies.size(); s++) {
+        delete(enemies[s]);
+        s--;
     }
     enemies.clear();
 }

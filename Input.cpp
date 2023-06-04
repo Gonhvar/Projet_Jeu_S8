@@ -212,8 +212,6 @@ void Input::doPauseKeyDown(SDL_KeyboardEvent &event){
                 break;
         }
     }
-    this->mouseX += 1;
-    std::cout << "fin doPauseKeyDown Input :" << this->mouseX << std::endl;
 }
 
 void Input::addMe(Controle* toAdd) {

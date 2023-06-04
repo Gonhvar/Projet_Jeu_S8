@@ -75,23 +75,12 @@ void Menu::select() {
             etat = 0;
 			break;
         case 3 : // charger
-            Sprite::mode = MODE_LOADING;
-            // std::cout << "Mode loading-----------------------------------------------------------------" <<	std::endl;
-			// // On doit tout supprimer :
-			// Sprite::stockeur->deleteAll(); // ne delete pas le menu B)
-			// std::cout << "All deleted" << std::endl;
-			// // Puis on recréer les objets grâce à la sauvegarde.
-			// Sprite::stockeur->loadSave();
-			// Sprite::stockeur->addInput(new Input()); // Input a été supprimé parce que c'est un Sprite mais ça ne coût pas cher de le recréer.
-			// std::cout << "All loaded" << std::endl;
-			// Sprite::mode = MODE_PAUSE;
+            // Sprite::mode = MODE_LOADING;
+            std::cout << "MODE_LOADING abandonné faute de temps" << std::endl;
 			break;
         case 4 : // quitter
             exit(0);
     }
-
-
-    std::cout << "fin Menu select" << std::endl;
 }
 
 

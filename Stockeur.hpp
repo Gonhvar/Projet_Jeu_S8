@@ -53,7 +53,7 @@ protected:
 
 public:
 
-    bool printEverything = 1; // Sert au debug X(
+    bool printEverything = 0; // Sert au debug X(
 
     Stockeur();
 
