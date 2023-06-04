@@ -8,12 +8,18 @@ Attacks::Attacks(){
     faction = MC_FACTION;
     
     _hauteur = 64;
-    _largeur = 48;
+    _largeur = 64;
     autoSetHitBox();
     hitBoxType(1, 0);
 
 	directionX = 0;
     directionY = 0;
+
+    depForce = BASICSPEED;
+
+    rayon = 30;
+    masse = 100;
+
 
     setCoord(0,0,0);
     setOnScreen(false);
@@ -42,12 +48,17 @@ void Attacks::initialisation() {
 	Attacks::etatsAttacks = newStates;
 }
 
+void Attacks::updateDirection(int pushForceH, int pushForceB, int pushForceG, int pushForceD){
+    this->pushForceH = pushForceH;
+    this->pushForceB = pushForceB;
+    this->pushForceG = pushForceG;
+    this->pushForceD = pushForceD;
+}
 
-void Attacks::update(int pushForceH, int pushForceB, int pushForceG, int pushForceD){
+void Attacks::update(){
     if (Sprite::stockeur->printEverything) {
         std::cout << "Attacks::update()" << std::endl;
     }
-    findDirection(pushForceH, pushForceB, pushForceG, pushForceD);
 
     if(stockeur->getGameTime()-startCdAttack > cdAttack){
         state = 0;
@@ -57,9 +68,13 @@ void Attacks::update(int pushForceH, int pushForceB, int pushForceG, int pushFor
             combo.clear();
             needToClearCombo = false;
         }
+        _coord[0] = playerCoord[0];
+        _coord[1] = playerCoord[1]; 
     }
     else{
-        //Bloquer le joueur ici si on veut
+        Vector2D v(directionX, directionY);
+        move(v);
+        addForce(v);
     }
     
     updatePlayerCoord();
@@ -132,23 +147,23 @@ void Attacks::applyCombo(){
         case 1 :
             //std::cout << "Attaque simple" << std::endl;
             //std::cout << "directionX :" << directionX << " directionY :" << directionY << std::endl;
-            attackDamage = 1 * attackMultiplier;
+            attackDamage = 5 * attackMultiplier;
             range = 60;
             cdAttack = 400;
             break;
         
         case 2 : 
             //std::cout << "Attaque lourde" << std::endl;
-            attackDamage = 5 *attackMultiplier;
-            range = 30;
-            cdAttack = 600;
+            attackDamage = 10 *attackMultiplier;
+            range = 40;
+            cdAttack = 400;
             break;
             
         case 5 :
             // std::cout << "Combo llh!" << std::endl;
             attackDamage = 10 * attackMultiplier;
-            range = 20;
-            cdAttack = 100; 
+            range = 30;
+            cdAttack = 200; 
             break;
         
         default :
@@ -203,6 +218,7 @@ void Attacks::updateAttack(int attack){
             startCdAttack = stockeur->getGameTime();
             findCombo();
             applyCombo();
+            findDirection(pushForceH, pushForceB, pushForceG, pushForceD);
             this->setOnScreen(true);
             // std::cout << "Attack combo is : "<< combo << std::endl; 
         }

@@ -123,18 +123,6 @@ void Input::doKeyDown(SDL_KeyboardEvent &event){
                 Sprite::mode = MODE_PAUSE;
                 break;
 
-            case SDLK_w :
-                if (Sprite::mode == MODE_PAUSE) { // le jeu est en pause
-                    stockeur->saveGame();
-                }
-                break;
-
-            case SDLK_l :
-                if (Sprite::mode == MODE_PAUSE) { // le jeu est en pause
-                    Sprite::mode = MODE_LOADING;
-                }
-                break;
-            
             case SDLK_SPACE :
                 if( !(stockeur->getMc()->getDashOn())){
                     stockeur->getAudioManager()->playSound("dash_sound");
@@ -263,6 +251,13 @@ void Input::doPauseKeyDown(SDL_KeyboardEvent &event){
 
             case SDLK_s :
                 stockeur->getMenu()->addToEtat(-1);
+                break;
+
+            case SDLK_l :
+                Sprite::mode = MODE_LOADING;
+                break;
+            case SDLK_w :
+                stockeur->saveGame();
                 break;
 
         }

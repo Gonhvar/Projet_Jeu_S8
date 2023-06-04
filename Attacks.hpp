@@ -32,6 +32,12 @@ protected:
 	float playerCoord[2];
 
 	bool needToClearCombo;
+	
+	int pushForceH; 
+	int pushForceB; 
+	int pushForceG; 
+	int pushForceD;
+
 
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
@@ -43,7 +49,8 @@ public:
 	void updatePlayerCoord();
 	void updateHitBox(float attackRangeX, float attackRangeY);
 	void updateAttack(int attack);
-	void update(int pushForceH, int pushForceB, int pushForceG, int pushForceD);
+	void update();
+	void updateDirection(int pushForceH, int pushForceB, int pushForceG, int pushForceD);
 
 	void setAttackMultiplier(int x);
 

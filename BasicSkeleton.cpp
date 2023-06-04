@@ -95,6 +95,7 @@ void BasicSkeleton::takingDamage(Entite* other){
         if(!currentlyTakingDmg){
             //std::cout << "il se prend des dmg" << std::endl;
             changePV(other->getAttackDmg());
+            std::cout << "Attack Dmg" << other->getAttackDmg() << std::endl;
             currentlyTakingDmg = true;
             depForce *= knockback;
             invicibilityTimeStart = stockeur->getGameTime();

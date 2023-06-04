@@ -98,7 +98,8 @@ void Mc::update() {
     }
 
     //faire test de direction ici;
-    this->attack->update(pushForceH, pushForceB, pushForceG, pushForceD);
+    this->attack->updateDirection(pushForceH, pushForceB, pushForceG, pushForceD);
+    this->attack->update();
 
     //Décision de l'état
     int newEtat;
