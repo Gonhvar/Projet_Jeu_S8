@@ -17,12 +17,12 @@ class Attacks;
 
 class Mc : public Entite, public Controle {
 protected :
-	
+	static const States* etatsMc;
+
 	//Multiplicateur de depForce
 	float dashValue = 1;
 
 	uint32_t startDashTime;
-	uint32_t actualDashTime;
 
 	bool dashOn = false;
 	
@@ -40,6 +40,8 @@ public :
 	Mc();
 	virtual ~Mc() override;
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+	static void initialisation();
+
 	void update();
 
 	bool getDashOn();

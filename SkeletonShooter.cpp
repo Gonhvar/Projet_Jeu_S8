@@ -1,18 +1,22 @@
 #include "SkeletonShooter.hpp"
 
+const States* SkeletonShooter::etatsSkeletonShooter;
 
+/* CONSTRUCTEURS ET DESTRUCTEURS */
 SkeletonShooter::SkeletonShooter() {
-    States* newStates = new States(); // newStates est un pointeur temporaire
-    newStates->spriteName = "SkeletonShooter"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
-    newStates->nbEtats = 0;
-    newStates->nbFrameParEtat[0] = 1;
-
-    states = newStates;
+    states = SkeletonShooter::etatsSkeletonShooter;
     
-    addSprite("BasicSkeleton");
+    stateRectIn.w = 32;
+    stateRectIn.h = 32;
+    stateRectIn.x = 0;
+    stateRectIn.y = 0;
+    stateRect.w = 32;
+    stateRect.h = 32;
+
+    addSprite("SkeletonShooter");
 }
 
-SkeletonShooter::SkeletonShooter(float _x, float _y) {
+SkeletonShooter::SkeletonShooter(float _x, float _y) : SkeletonShooter() {
     faction = ENEMY_FACTION;
     PV = 5;
     attackDamage = 2;
@@ -32,37 +36,29 @@ SkeletonShooter::SkeletonShooter(float _x, float _y) {
 
     this->setCoord(_x,_y,0);
     onScreen = true;
-
-    //states = &(etatsDesBasicSkeleton);
-		States* newStates = new States(); // newStates est un pointeur temporaire
-		newStates->spriteName = "SkeletonShooter"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
-		newStates->nbEtats = 0;
-		newStates->nbFrameParEtat[0] = 1;
-
-		states = newStates;
     maxDelay = 7; // Change de frame tous les 20 ticks
-
-
-    stateRectIn.w = 32;
-    stateRectIn.h = 32;
-    stateRectIn.x = 0;
-    stateRectIn.y = 0;
-    stateRect.w = 32;
-    stateRect.h = 32;
-
-    // stateRect.w = 32;
-    // stateRect.h = 32;
 
     std::cout << "Création de SkeletonShooter : " << states->spriteName << std::endl;
 
     autoSetHitBox();
-    addSprite("SkeletonShooter");
+    // addSprite("SkeletonShooter");
 }
 
 SkeletonShooter::~SkeletonShooter(){
     std::cout << "Delete SkeletonShooter" << std::endl;
-    // new Drop(items, taux, _coord[0], _coord[1]);
+    new Drop(items, taux, _coord[0], _coord[1]);
 }
+/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+
+void SkeletonShooter::initialisation() {
+	States* newStates = new States(); // newStates est un pointeur temporaire
+    newStates->spriteName = "SkeletonShooter"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
+    newStates->nbEtats = 0;
+    newStates->nbFrameParEtat[0] = 1;
+	SkeletonShooter::etatsSkeletonShooter = newStates;
+}
+
+
 
 Vector2D SkeletonShooter::deplacementBehaviour(){
 
@@ -94,7 +90,6 @@ Vector2D SkeletonShooter::deplacementBehaviour(){
 }
 
 void SkeletonShooter::attackBehaviour(){
-
     if(stockeur->getGameTime() - startShooting > cooldown){
         std::cout << "Creation bullet SkeletonShooter" << std::endl;
         stockeur->addBullets(new Bullets(0, stockeur->getMc()->getX(), stockeur->getMc()->getY(), this, ENEMY_BULLET_FACTION));
@@ -129,7 +124,7 @@ void SkeletonShooter::reactionContact(Entite* other) {
 
 // Fonctions de sauvegarde de l'objet
 std::string SkeletonShooter::serialize(std::string& toWrite) {
-	Entite::serialize(toWrite);
+	Enemies::serialize(toWrite);
 	// On n'enregistre que les paramètres nécessaires. Certains constructeur renseignent déjà les autres 
     // Ces paramètres nécessaires sont en fait les paramètres contextuels (susceptibles de changer à chaque instant)
 	std::ostringstream oss;
@@ -139,16 +134,16 @@ std::string SkeletonShooter::serialize(std::string& toWrite) {
 }
 
 std::istringstream& SkeletonShooter::deSerialize(std::istringstream& iss) {
-    Entite::deSerialize(iss);
+    Enemies::deSerialize(iss);
     std::string token;
     if (std::getline(iss, token, '|')) {
         knockback = std::stof(token);
     }
     if (std::getline(iss, token, '|')) {
-        cooldown = std::strtoul(iss.str().c_str(), nullptr, 10);
+        cooldown = std::stoul(token);
     }
     if (std::getline(iss, token, '|')) {
-        startShooting = std::strtoul(iss.str().c_str(), nullptr, 10);
+        startShooting = std::stoul(token);
     }
 	return iss;
 }

@@ -16,6 +16,7 @@ const States etatAttacks = {
 
 class Attacks : public Entite {
 protected:
+	static const States* etatsAttacks;
 
 	int state;
 	int range;
@@ -37,6 +38,7 @@ public:
 	Attacks();
 	virtual ~Attacks() override {};
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+	static void initialisation();
 
 	void updatePlayerCoord();
 	void updateHitBox(float attackRangeX, float attackRangeY);
@@ -48,6 +50,10 @@ public:
 	void findCombo();
 	void applyCombo();
 	void findDirection(int pushForceH, int pushForceB, int pushForceG, int pushForceD);
+
+    // Fonctions de sauvegarde de l'objet
+    virtual std::string serialize(std::string& toWrite);
+    virtual std::istringstream& deSerialize(std::istringstream& iss);
 };
 
 #endif

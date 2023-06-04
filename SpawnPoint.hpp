@@ -16,6 +16,7 @@ const States etatsDesSpawnPoint = {
 class SpawnPoint : public Entite {
 
 protected :
+    static const States* etatsSpawnPoint;
     int i;
     int phase;
     int wave;
@@ -26,13 +27,17 @@ public :
     SpawnPoint();
     SpawnPoint(float x, float y,  int wave);
 
-    virtual ~SpawnPoint() override {};
+    virtual ~SpawnPoint();
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+	static void initialisation();
 
     void spawn(int number, int select, float timing);
     void spawnWave(int selectWave);
     void update();
 
+    // Fonctions de sauvegarde de l'objet
+    virtual std::string serialize(std::string& toWrite);
+    virtual std::istringstream& deSerialize(std::istringstream& iss);
 };
 
 #endif

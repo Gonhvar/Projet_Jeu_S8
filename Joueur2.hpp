@@ -15,8 +15,9 @@ const States etatsDeJoueur2 = {
 };
 */
 
-class Joueur2 : public Entite {
+class Joueur2 : public Sprite {
 protected:
+	static const States* etatsJoueur2;
 	int mouseX;
 	int mouseY;
 	float k = 0.025;
@@ -28,6 +29,7 @@ public:
 	Joueur2();
 	virtual ~Joueur2();
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+	static void initialisation();
 
 	void update();
 

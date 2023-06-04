@@ -15,6 +15,7 @@ const States etatsDesBasicSkeleton = {
 
 class BasicSkeleton : public virtual Enemies {
 protected:
+	static const States* etatsBasicSkeleton;
 	float knockback = 3.0;
 
 public:
@@ -23,6 +24,7 @@ public:
 	BasicSkeleton(float _x, float _y);
 	virtual ~BasicSkeleton() override;
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+	static void initialisation();
 
 
 	Vector2D deplacementBehaviour();

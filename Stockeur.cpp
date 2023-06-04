@@ -1,7 +1,8 @@
 #include "Stockeur.hpp"
-#include "Enemies.hpp"
+// #include "Enemies.hpp"
 #include "SkeletonShooter.hpp"
 #include "BasicSkeleton.hpp"
+#include "SpawnPoint.hpp"
 
 
 Stockeur::Stockeur(){}
@@ -41,18 +42,28 @@ void Stockeur::addEnemies(Enemies* en){
     enemies.push_back(en);
 }
 
-
-void Stockeur::addBullets(Bullets* bul){
-    bullets.push_back(bul);
-}
-
-
 void Stockeur::addItem(Drop* dr){
     if (printEverything) {
         std::cout << "added items" << std::endl;
         std::cout << "taille de items : " << items.size()+1 << std::endl;
     }
     items.push_back(dr);
+}
+
+void Stockeur::addBullets(Bullets* bul){
+    if (printEverything) {
+        std::cout << "added bullets" << std::endl;
+        std::cout << "taille de bullets : " << bullets.size()+1 << std::endl;
+    }
+    bullets.push_back(bul);
+}
+
+void Stockeur::addSpawn(SpawnPoint* sp){
+    if (printEverything) {
+        std::cout << "added spawnPoints" << std::endl;
+        std::cout << "taille de spawnPoints : " << spawnPoints.size()+1 << std::endl;
+    }
+    spawnPoints.push_back(sp);
 }
 
 void Stockeur::addMc(Mc* j){
@@ -122,24 +133,35 @@ void Stockeur::removeEnemies(Enemies* en){
 }
 
 void Stockeur::removeItem(Drop* dr){
-
-    if(printEverything) {
-        std::cout << "removed enemies" << std::endl;
-        std::cout << "taille de enemies : " << enemies.size()-1 << std::endl;
+    if (printEverything) {
+        std::cout << "removed items" << std::endl;
+        std::cout << "taille de items : " << items.size()-1 << std::endl;
     }
     auto it = std::find(items.begin(), items.end(), dr);
     if (it != items.end()) {
-        std::cout << "Erase en cours de l'item" << std::endl;
         items.erase(it); 
     }
-    std::cout << "Checkpoint" << std::endl;
 }
 
-
-void Stockeur::removeBullet(Bullets* bullet) {
-    auto it = std::find(bullets.begin(), bullets.end(), bullet);
+void Stockeur::removeBullet(Bullets* bul) {
+    if (printEverything) {
+        std::cout << "removed bullets" << std::endl;
+        std::cout << "taille de bullets : " << bullets.size()-1 << std::endl;
+    }
+    auto it = std::find(bullets.begin(), bullets.end(), bul);
     if (it != bullets.end()) {
         bullets.erase(it); 
+    }
+}
+
+void Stockeur::removeSpawn(SpawnPoint* sp) {
+    if (printEverything) {
+        std::cout << "removed spawnPoints" << std::endl;
+        std::cout << "taille de spawnPoints : " << spawnPoints.size()-1 << std::endl;
+    }
+    auto it = std::find(spawnPoints.begin(), spawnPoints.end(), sp);
+    if (it != spawnPoints.end()) {
+        spawnPoints.erase(it); 
     }
 }
 
@@ -152,6 +174,10 @@ Mc* Stockeur::getMc() {
 
 Joueur2* Stockeur::getJ2(){
     return j2;
+}
+
+AudioManager* Stockeur::getAudioManager(){
+    return audioManager;
 }
 
 std::vector<Sprite*>* Stockeur::getSpriteVector(){
@@ -178,9 +204,16 @@ std::vector<Bullets*>* Stockeur::getBulletsVector(){
     return &bullets;
 }
 
-AudioManager* Stockeur::getAudioManager(){
-    return audioManager;
+std::vector<SpawnPoint*>* Stockeur::getSpawnVector(){
+    return &spawnPoints;
 }
+
+
+
+void Stockeur::setInputLoaded(bool toBe) {
+    inputLoaded = toBe;
+}
+
 
 
 void Stockeur::deleteAllEnemies(){
@@ -193,54 +226,25 @@ void Stockeur::deleteAllEnemies(){
 
 
 void Stockeur::deleteAll() {
-    
-    std::cout << "deleting all enemies (" << enemies.size() << ")" << std::endl;
-    for(Enemies* en : enemies){
-        delete en;
-    }
-    enemies.clear();
+    // Supprime tous les objets de la carte (mais pas d'AudioManager)
 
-    // std::cout << "deleting all sprites (" << sprites.size() << ")" << std::endl;
-    // for(Sprite* sp : sprites){
-    //     delete sp;
-    // }
-    // sprites.clear();
+    // On supprime d(abord les enemies comme ça ils font spawner leur Drop sans géner la suppression
+    deleteAllEnemies();
 
-    std::cout << "deleting all circEntities (" << circEntities.size() << ")" << std::endl;
-    for(Entite* en : circEntities){
-        delete en;
+    // Ensuite on peut supprimer tout le reste
+    std::cout << "deleting all sprites (" << sprites.size() << ")" << std::endl;
+    for (unsigned int s=0; s < sprites.size(); s++) {
+        std::cout << "Deleting (" << sprites[s]->getStates()->spriteName << ")" << std::endl;
+        delete(sprites[s]);
+        s--;
     }
+    sprites.clear();
     circEntities.clear();
-
-    std::cout << "deleting all rectEntities (" << rectEntities.size() << ")" << std::endl;
-    for(Entite* en : rectEntities){
-        delete en;
-    }
     rectEntities.clear();
-    
-    std::cout << "deleting all items (" << items.size() << ")" << std::endl;
-    for(Drop* dp : items){
-        delete dp;
-    }
     items.clear();
-
-    std::cout << "deleting all bullets (" << bullets.size() << ")" << std::endl;
-    for(Bullets* bu : bullets){
-        delete bu;
-    }
     bullets.clear();
-    
-    // std::cout << "deleting mc" << std::endl;
-    // if (mc != nullptr) delete mc;
-    std::cout << "deleting j2" << std::endl;
-    if (j2 != nullptr) delete j2;
-    std::cout << "success" << std::endl;
-    
-
-    // for (unsigned int s=0; s < sprites.size(); s++) {
-    //     delete(sprites[s]);
-    //     s--;
-    // }
+    mc = nullptr;
+    j2 = nullptr;
 }
 
 void Stockeur::setMenuOff(bool toBe) {
@@ -272,23 +276,19 @@ void Stockeur::saveGame() {
     std::string savedState = "";
     std::string serialized = "";
     std::string className = "";
-    if (mc!= nullptr) {
-        className = mc->serialize(serialized);
-        className += CLASSNAME_SEPARATOR;
-        savedState += className;
-        savedState += serialized;
-        savedState += "\n";
-        savedState += OBJECT_SEPARATOR;
-        
-    }
-    serialized = "";
-    if (j2!= nullptr) {
-        className = j2->serialize(serialized);
-        className += CLASSNAME_SEPARATOR;
-        savedState += className;
-        savedState += serialized;
-        savedState += "\n";
-        savedState += OBJECT_SEPARATOR;
+
+    for (Sprite* s : sprites) { // On assume que tout ce qui doit être sauvegardé est dans la liste sprite
+                                // Notamment parce que tous les objets des autres liste descendent de Sprite
+        className = s->serialize(serialized);
+        if (className != DONT_SERIALIZE_ME) {
+            className += CLASSNAME_SEPARATOR;
+            savedState += className;
+            savedState += serialized;
+            savedState += "\n";
+            savedState += OBJECT_SEPARATOR;
+
+            serialized = "";
+        }
     }
 
 
@@ -307,7 +307,6 @@ void Stockeur::saveGame() {
 
 
 void Stockeur::loadSave(std::string path) {
-    // deleteAll();
     std::cout << "LOADING ------------------------" << std::endl;
     std::string pathComplet = PATH_TO_SAVE + path;
     std::ifstream inputFile(pathComplet);
@@ -370,7 +369,7 @@ void Stockeur::loadSave(std::string path) {
 
                         std::istringstream iss(classToken);
                         e->deSerialize(iss);
-                        e->hitBoxType(e->getIsCirc(), e->getIsRect());
+                        // e->hitBoxType(e->getIsCirc(), e->getIsRect());
                         e->addSprite("Drop");
                     }
                 }
@@ -400,6 +399,18 @@ void Stockeur::loadSave(std::string path) {
                         std::istringstream iss(classToken);
                         e->deSerialize(iss);
                     }
+                }
+                
+                else if (classToken == "SpawnPoint") {
+                    if (std::getline(iss, classToken, CLASSNAME_SEPARATOR)) {
+                        SpawnPoint* s = new SpawnPoint(); // S'ajoute tout seul aux listes appropriées
+
+                        std::istringstream iss(classToken);
+                        s->deSerialize(iss);
+                    }
+                }
+                else {
+                    std::cout << "Nom de classe non reconnu durant le chargement : " << classToken << std::endl;
                 }
             }
         }

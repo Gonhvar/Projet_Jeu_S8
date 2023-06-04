@@ -27,7 +27,6 @@ private :
 	Affichage* afficheur;
 
 	//Map map;
-	std::vector<SpawnPoint*> spawnPoints;
 	
 public :
 	Venera();

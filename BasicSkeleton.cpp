@@ -1,27 +1,22 @@
 #include "BasicSkeleton.hpp"
 
+const States* BasicSkeleton::etatsBasicSkeleton;
 
-BasicSkeleton::BasicSkeleton() {
-    States* newStates = new States(); // newStates est un pointeur temporaire
-    newStates->spriteName = "BasicSkeleton"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
-    newStates->nbEtats = 4;
-    newStates->nbFrameParEtat[0] = 2;
-    newStates->nbFrameParEtat[1] = 2;
-    newStates->nbFrameParEtat[2] = 2;
-    newStates->nbFrameParEtat[3] = 2;
-    newStates->nbFrameParEtat[4] = 0;
-    newStates->nbFrameParEtat[5] = 0;
-    newStates->nbFrameParEtat[6] = 0;
-    newStates->nbFrameParEtat[7] = 0;
-    newStates->nbFrameParEtat[8] = 0;
-    newStates->nbFrameParEtat[9] = 0;
+/* CONSTRUCTEURS ET DESTRUCTEURS */
+BasicSkeleton::BasicSkeleton() {    
+    states = etatsBasicSkeleton;
 
-    states = newStates;
+    stateRectIn.w = 32;
+    stateRectIn.h = 32;
+    stateRectIn.x = 0;
+    stateRectIn.y = 0;
+    stateRect.w = 32;
+    stateRect.h = 32;
 
     addSprite("BasicSkeleton");
 }
 
-BasicSkeleton::BasicSkeleton(float _x, float _y) {
+BasicSkeleton::BasicSkeleton(float _x, float _y) : BasicSkeleton() {
     faction = ENEMY_FACTION;
     PV = 10;
     attackDamage = 5;
@@ -42,45 +37,36 @@ BasicSkeleton::BasicSkeleton(float _x, float _y) {
     this->setCoord(_x,_y,0);
     onScreen = true;
 
-    //states = &(etatsDesBasicSkeleton);
-		States* newStates = new States(); // newStates est un pointeur temporaire
-		newStates->spriteName = "BasicSkeleton"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
-		newStates->nbEtats = 4;
-		newStates->nbFrameParEtat[0] = 2;
-		newStates->nbFrameParEtat[1] = 2;
-		newStates->nbFrameParEtat[2] = 2;
-		newStates->nbFrameParEtat[3] = 2;
-		newStates->nbFrameParEtat[4] = 0;
-		newStates->nbFrameParEtat[5] = 0;
-		newStates->nbFrameParEtat[6] = 0;
-		newStates->nbFrameParEtat[7] = 0;
-		newStates->nbFrameParEtat[8] = 0;
-		newStates->nbFrameParEtat[9] = 0;
-
-		states = newStates;
     maxDelay = 7; // Change de frame tous les 20 ticks
-
-
-    stateRectIn.w = 32;
-    stateRectIn.h = 32;
-    stateRectIn.x = 0;
-    stateRectIn.y = 0;
-    stateRect.w = 32;
-    stateRect.h = 32;
-
-    // stateRect.w = 32;
-    // stateRect.h = 32;
 
     std::cout << "Création de BasicSkeleton : " << states->spriteName << std::endl;
 
     autoSetHitBox();
-    addSprite("BasicSkeleton");
 }
 
 BasicSkeleton::~BasicSkeleton(){
     std::cout << "Delete BasicSkeleton" << std::endl;
     new Drop(items, taux, _coord[0], _coord[1]);
 }
+/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+
+void BasicSkeleton::initialisation() {
+	States* newStates = new States(); // newStates est un pointeur temporaire
+    newStates->spriteName = "BasicSkeleton"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
+    newStates->nbEtats = 4;
+    newStates->nbFrameParEtat[0] = 2;
+    newStates->nbFrameParEtat[1] = 2;
+    newStates->nbFrameParEtat[2] = 2;
+    newStates->nbFrameParEtat[3] = 2;
+    newStates->nbFrameParEtat[4] = 0;
+    newStates->nbFrameParEtat[5] = 0;
+    newStates->nbFrameParEtat[6] = 0;
+    newStates->nbFrameParEtat[7] = 0;
+    newStates->nbFrameParEtat[8] = 0;
+    newStates->nbFrameParEtat[9] = 0;
+	BasicSkeleton::etatsBasicSkeleton = newStates;
+}
+
 
 Vector2D BasicSkeleton::deplacementBehaviour(){
 
@@ -131,7 +117,7 @@ void BasicSkeleton::reactionContact(Entite* other) {
 
 // Fonctions de sauvegarde de l'objet
 std::string BasicSkeleton::serialize(std::string& toWrite) {
-	Entite::serialize(toWrite);
+	Enemies::serialize(toWrite);
 	// On n'enregistre que les paramètres nécessaires. Certains constructeur renseignent déjà les autres 
     // Ces paramètres nécessaires sont en fait les paramètres contextuels (susceptibles de changer à chaque instant)
 	std::ostringstream oss;
@@ -141,7 +127,7 @@ std::string BasicSkeleton::serialize(std::string& toWrite) {
 }
 
 std::istringstream& BasicSkeleton::deSerialize(std::istringstream& iss) {
-    Entite::deSerialize(iss);
+    Enemies::deSerialize(iss);
     std::string token;
     if (std::getline(iss, token, '|')) {
         knockback = std::stof(token);

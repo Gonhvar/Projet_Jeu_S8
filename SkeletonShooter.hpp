@@ -7,7 +7,8 @@
 
 class SkeletonShooter : public virtual Enemies {
 protected:
-	
+	static const States* etatsSkeletonShooter;
+
 	float knockback = 3.0;
 	uint32_t cooldown = 1000;
 	uint32_t startShooting;
@@ -18,6 +19,7 @@ public:
 	SkeletonShooter(float _x, float _y);
 	virtual ~SkeletonShooter() override;
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+	static void initialisation();
 
 
 	Vector2D deplacementBehaviour();

@@ -31,7 +31,6 @@ Sprite::Sprite(std::string sName, uint8_t nbE, uint8_t nbFPE[MAX_FPE]) {
 
 Sprite::~Sprite() {
     std::cout << "Delete Sprite" << std::endl;
-	delete states;
 	Sprite::stockeur->removeSprites(this);
 }
 
@@ -145,8 +144,9 @@ std::string Sprite::serialize(std::string& toWrite) {
 	// On n'enregistre que les paramètres nécessaires. Certains constructeur renseignent déjà les autres 
     // Ces paramètres nécessaires sont en fait les paramètres contextuels (susceptibles de changer à chaque instant)
 	std::ostringstream oss;
-    oss << _coord[0] << "|" << _coord[1] << "|" << _coord[2] << "|" << onScreen << "|" <<
-	etat << "|" << frame << "|" << flip << "|";
+    oss << _coord[0] << "|" << _coord[1] << "|" << _coord[2] << "|" << 
+	onScreen << "|" << _largeur << "|" << _hauteur << "|" <<
+	(int)maxDelay << "|" << (int)delay << "|" << etat << "|" << frame << "|" << flip << "|";
 	std::cout << "parsed" << std::endl;
 	std::cout << "oss : " << oss.str() <<std::endl; 
     toWrite += oss.str();
@@ -167,6 +167,18 @@ std::istringstream& Sprite::deSerialize(std::istringstream& iss) {
     }
     if (std::getline(iss, token, '|')) {
         onScreen = readBool(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        _largeur = std::stof(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        _hauteur = std::stof(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        maxDelay = std::stoi(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        delay = std::stoi(token);
     }
     if (std::getline(iss, token, '|')) {
         etat = std::stoi(token);

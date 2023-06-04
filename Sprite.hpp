@@ -39,7 +39,7 @@ protected :
     
     SDL_Texture* texture = nullptr; // Sprite sheet
 
-    uint8_t maxDelay = 0; // Temps entre chaque texture
+    uint8_t maxDelay = 1; // Temps entre chaque texture
     uint8_t delay = 0; // Temps entre chaque texture
     int etat = 0; // état dans lequel est le Sprite;
     int frame = 0; // 0 est l'état par défaut

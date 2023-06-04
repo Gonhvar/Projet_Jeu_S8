@@ -1,6 +1,8 @@
 #include "Attacks.hpp"
 
 
+const States* Attacks::etatsAttacks;
+
 Attacks::Attacks(){
     std::cout << "new Attacks" << std::endl;
     faction = MC_FACTION;
@@ -14,26 +16,28 @@ Attacks::Attacks(){
     setCoord(0,0,0);
     setOnScreen(false);
 
-    //states = &etatAttacks;
-		States* newStates = new States(); // newStates est un pointeur temporaire
-		newStates->spriteName = "Attacks"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
-		newStates->nbEtats = 1;
-		newStates->nbFrameParEtat[0] = 1;
-		for (int i=1; i<newStates->nbEtats; i++) {
-			newStates->nbFrameParEtat[i] = 0;
-		}
+    // Pas encore de SpriteSheet pour Attack : retour au 32x32 de noTexture
+    // stateRect.w = 32;
+    // stateRect.h = 32;
 
-        // Pas encore de SpriteSheet pour Attack : retour au 32x32 de noTexture
-        // stateRect.w = 32;
-        // stateRect.h = 32;
-
-		states = newStates;
-		addSprite("Attacks");
+    states = Attacks::etatsAttacks;
+    addSprite("Attacks");
 
     state = 0;
     attackMultiplier = 1;
     startCdAttack = SDL_GetTicks();
     needToClearCombo = false;
+}
+
+void Attacks::initialisation() {
+	States* newStates = new States(); // newStates est un pointeur temporaire
+    newStates->spriteName = "Attacks"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
+    newStates->nbEtats = 1;
+    newStates->nbFrameParEtat[0] = 1;
+    for (int i=1; i<newStates->nbEtats; i++) {
+        newStates->nbFrameParEtat[i] = 0;
+    }
+	Attacks::etatsAttacks = newStates;
 }
 
 
@@ -204,4 +208,17 @@ void Attacks::updateAttack(int attack){
     else{
         std::cout << "Cooldown d'attaque en cours" << std::endl;
     }
+}
+
+
+
+
+
+// Fonctions de sauvegarde de l'objet (l'objet ne doit pas être enregistré)
+std::string Attacks::serialize(std::string& toWrite) {
+    return DONT_SERIALIZE_ME;
+}
+
+std::istringstream& Attacks::deSerialize(std::istringstream& iss) {
+	return iss;
 }

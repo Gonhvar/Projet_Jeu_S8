@@ -43,44 +43,44 @@ Venera::Venera() {
 void Venera::initialisation() {
 	// enemies.push_back(new BasicSkeleton(100, 100));
 	// spawnPoints.push_back(new SpawnPoint(50, 50, 0));
-	spawnPoints.push_back(new SpawnPoint(50, 50, 1));
+	new SpawnPoint(50, 50, 1);
 	
 
 	// ça c'est juste un exemple de bordure de map pour voir si ça marche un peu
-	uint8_t liste[MAX_FPE] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-	std::cout << "création de la bordure" << std::endl;
-	Entite* bord0 = new Entite("Bord0", 1, liste);
-	bord0->setLargeur(600);
-	bord0->setHauteur(50);
-	bord0->setCoord(300, -25, 0);
-	bord0->setOnScreen(true);
-	bord0->autoSetHitBox();
-	bord0->hitBoxType(0, 1);
+	// uint8_t liste[MAX_FPE] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	// std::cout << "création de la bordure" << std::endl;
+	// Entite* bord0 = new Entite("Bord0", 1, liste);
+	// bord0->setLargeur(600);
+	// bord0->setHauteur(50);
+	// bord0->setCoord(300, -25, 0);
+	// bord0->setOnScreen(true);
+	// bord0->autoSetHitBox();
+	// bord0->hitBoxType(0, 1);
 
-	Entite* bord1 = new Entite("Bord1", 1, liste);
-	bord1->setLargeur(50);
-	bord1->setHauteur(600);
-	bord1->setCoord(625, 300, 0);
-	bord1->setOnScreen(true);
-	bord1->autoSetHitBox();
-	bord1->hitBoxType(0, 1);
+	// Entite* bord1 = new Entite("Bord1", 1, liste);
+	// bord1->setLargeur(50);
+	// bord1->setHauteur(600);
+	// bord1->setCoord(625, 300, 0);
+	// bord1->setOnScreen(true);
+	// bord1->autoSetHitBox();
+	// bord1->hitBoxType(0, 1);
 
 
-	Entite* bord2 = new Entite("Bord2", 1, liste);
-	bord2->setLargeur(600);
-	bord2->setHauteur(50);
-	bord2->setCoord(300, 625, 0);
-	bord2->setOnScreen(true);
-	bord2->autoSetHitBox();
-	bord2->hitBoxType(0, 1);
+	// Entite* bord2 = new Entite("Bord2", 1, liste);
+	// bord2->setLargeur(600);
+	// bord2->setHauteur(50);
+	// bord2->setCoord(300, 625, 0);
+	// bord2->setOnScreen(true);
+	// bord2->autoSetHitBox();
+	// bord2->hitBoxType(0, 1);
 
-	Entite* bord3 = new Entite("Bord3", 1, liste);
-	bord3->setLargeur(50);
-	bord3->setHauteur(600);
-	bord3->setCoord(-25, 300, 0);
-	bord3->setOnScreen(true);
-	bord3->autoSetHitBox();
-	bord3->hitBoxType(0, 1);
+	// Entite* bord3 = new Entite("Bord3", 1, liste);
+	// bord3->setLargeur(50);
+	// bord3->setHauteur(600);
+	// bord3->setCoord(-25, 300, 0);
+	// bord3->setOnScreen(true);
+	// bord3->autoSetHitBox();
+	// bord3->hitBoxType(0, 1);
 
 	//A REMETTRE A LA FIN POUR AVOIR LA MUSIQUE 
 	// stockeur->getAudioManager()->playMusic("Music_01");
@@ -125,7 +125,7 @@ void Venera::update() {
 					}
 
 					// Les SpawnPoints font spawner
-					for (SpawnPoint* sp : spawnPoints) {
+					for (SpawnPoint* sp : *(stockeur->getSpawnVector())) {
 						sp->update();
 					}
 
@@ -162,6 +162,20 @@ void Venera::update() {
 			case MODE_MAP :
 				std::cout << "Mode Map" <<	std::endl;
 				break;
+			
+			case MODE_LOADING :
+				std::cout << "Mode loading" <<	std::endl;
+				// On doit tout supprimer :
+				Sprite::stockeur->deleteAll();
+				std::cout << "All deleted" << std::endl;
+				// Puis on recréer les objets grâce à la sauvegarde.
+				Sprite::stockeur->loadSave();
+				input = new Input(); // Input a été supprimé parce que c'est un Sprite mais ça ne coût pas cher de le recréer.
+				input->addMe(Sprite::stockeur->getMc());
+
+				std::cout << "All loaded" << std::endl;
+				stockeur->setMode(MODE_JEU);
+				break;
 			default : 
 				std::cout << "Mode noMode :(" <<	std::endl;
 				break; 
@@ -176,6 +190,18 @@ void Venera::update() {
 
 int main(){
 	std::cout << "main start" << std::endl;
+
+	// Initialisation des classes : C'est IMPORTANT
+	Bullets::initialisation();
+	Attacks::initialisation();
+	Joueur2::initialisation();
+	Mc::initialisation();
+	BasicSkeleton::initialisation();
+	SkeletonShooter::initialisation();
+	SpawnPoint::initialisation();
+	Drop::initialisation();
+	Input::initialisation();
+
 	Venera venera;
 
 	Uint32 FrameStartTimeMs;
@@ -189,8 +215,6 @@ int main(){
 	
 	while(true){
 	    // if (Sprite::stockeur->printEverything) std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << std::endl;
-
-
 
 		//On récupére le temps actuel
 		FrameStartTimeMs = SDL_GetTicks();
@@ -216,47 +240,4 @@ int main(){
 
 	Mix_Quit();
 	SDL_Quit();
-
-	// delete Sprite::stockeur->getMc();
-	// std::cout << "DELETED MC : " << Sprite::stockeur->getMc() << std::endl;
-	// Mc* mc = new Mc();
-	// Sprite::stockeur->addMc(mc);
-	// std::cout << "REMADE MC : " << Sprite::stockeur->getMc() << std::endl;
-	// std::cout << Sprite::stockeur->getMc()->getAttacks() << std::endl;
-	// Sprite::stockeur->getMc()->getAttacks()->update(2, 0, 0, 0);
-
-	// std::fstream file("data.txt", std::ios::out | std::ios::trunc);
-
-    // if (file.is_open()) {
-    //     std::string myString = "";
-	// 	Vector2D v(1, 2);
-	// 	v.serialize(myString);
-	// 	file << myString;
-    //     file.close();
-    //     std::cout << "Enregistrement terminé." << std::endl;
-    // } else {
-    //     std::cout << "Impossible d'ouvrir le fichier." << std::endl;
-    // }
-
-	// std::ifstream inputFile("data.txt"); 
-	
-    // if (inputFile.is_open()) {
-    //     std::string content((std::istreambuf_iterator<char>(inputFile)),
-    //                         (std::istreambuf_iterator<char>()));
-        
-    //     std::cout << "Contenu du fichier :\n" << content << std::endl;
-	// 	Vector2D v(0, 0);
-	// 	v.deSerialize(content);
-    //     inputFile.close();
-    // } else {
-    //     std::cout << "Impossible d'ouvrir le fichier." << std::endl;
-    // }
-
-	// std::string writing = "";
-	// std::cout << "Mc : " << Sprite::stockeur->getMc()->serialize(writing) << std::endl;;
-	// std::cout << "a ecrit :" << writing;
-
-	// Sprite::stockeur->getMc()->setCoord(0, 1, 2);
-	// Sprite::stockeur->getMc()->deSerialize(writing);
-	// std::cout << "a lu : " << Sprite::stockeur->getMc()->getX() << ", " << Sprite::stockeur->getMc()->getY() << ", " << Sprite::stockeur->getMc()->getCoord()[2] << std::endl;
 }

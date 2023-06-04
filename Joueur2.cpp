@@ -1,6 +1,8 @@
 #include "Joueur2.hpp"
 #include "Mc.hpp"
 
+const States* Joueur2::etatsJoueur2;
+
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 Joueur2::Joueur2(){
 
@@ -13,16 +15,8 @@ Joueur2::Joueur2(){
 
     setOnScreen(true);
 
-    //states = &(etatsDeJoueur2);
-		States* newStates = new States(); // newStates est un pointeur temporaire
-		newStates->spriteName = "Drone"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
-		newStates->nbEtats = 1;
-		newStates->nbFrameParEtat[0] = 1;
-		for (int i=1; i<newStates->nbEtats; i++) {
-			newStates->nbFrameParEtat[i] = 0;
-		}
-		states = newStates;
-    	addSprite("Joueur2");
+    states = Joueur2::etatsJoueur2;
+    addSprite("Joueur2");
 
     stateRectIn.w = 16;
     stateRectIn.h = 16;
@@ -46,6 +40,17 @@ Joueur2::~Joueur2() {
     stockeur->addJoueur2(nullptr);
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+
+void Joueur2::initialisation() {
+	States* newStates = new States(); // newStates est un pointeur temporaire
+    newStates->spriteName = "Drone"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
+    newStates->nbEtats = 1;
+    newStates->nbFrameParEtat[0] = 1;
+    for (int i=1; i<newStates->nbEtats; i++) {
+        newStates->nbFrameParEtat[i] = 0;
+    }
+	Joueur2::etatsJoueur2 = newStates;
+}
 
 
 void Joueur2::update(){

@@ -6,6 +6,8 @@ uint8_t tabState[3][3][2] = { // Représente l'état et le flip en fonction de l
 	{{3,1}, {4,0}, {3,0}}
 };
 
+const States* Mc::etatsMc;
+
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 
 //Constructeur spécial pour le MC (renseigne Sprite::joueur)
@@ -30,23 +32,8 @@ Mc::Mc() {
 
     this->setCoord(10,20,0);
     onScreen = true;
-    
-    //states = &(etatsDesMc);
-		States* newStates = new States(); // newStates est un pointeur temporaire
-		newStates->spriteName = "Robot"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
-		newStates->nbEtats = 9;
-		newStates->nbFrameParEtat[0] = 2;
-		newStates->nbFrameParEtat[1] = 2;
-		newStates->nbFrameParEtat[2] = 2;
-		newStates->nbFrameParEtat[3] = 2;
-		newStates->nbFrameParEtat[4] = 2;
-		newStates->nbFrameParEtat[5] = 2;
-		newStates->nbFrameParEtat[6] = 2;
-		newStates->nbFrameParEtat[7] = 2;
-		newStates->nbFrameParEtat[8] = 2;
-		newStates->nbFrameParEtat[9] = 0;
 
-		states = newStates;
+    states = Mc::etatsMc;
     addSprite("Mc");
         
     maxDelay = 7; // Change de frame tous les 4 ticks
@@ -76,6 +63,23 @@ Mc::~Mc() {
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
+void Mc::initialisation() {
+	States* newStates = new States(); // newStates est un pointeur temporaire
+    newStates->spriteName = "Robot"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
+    newStates->nbEtats = 9;
+    newStates->nbFrameParEtat[0] = 2;
+    newStates->nbFrameParEtat[1] = 2;
+    newStates->nbFrameParEtat[2] = 2;
+    newStates->nbFrameParEtat[3] = 2;
+    newStates->nbFrameParEtat[4] = 2;
+    newStates->nbFrameParEtat[5] = 2;
+    newStates->nbFrameParEtat[6] = 2;
+    newStates->nbFrameParEtat[7] = 2;
+    newStates->nbFrameParEtat[8] = 2;
+    newStates->nbFrameParEtat[9] = 0;
+	Mc::etatsMc = newStates;
+}
+
 void Mc::update() {
     // std::cout << "Checkpoint" << std::endl;
     if (Sprite::stockeur->printEverything) {
@@ -84,8 +88,7 @@ void Mc::update() {
     // std::cout << "Checkpoint2" << std::endl;
     if(dashOn){
         //Regarde si le temps de dash est fini (bloque les autres mouvement)
-        actualDashTime = stockeur->getGameTime() - startDashTime;
-        if(actualDashTime > 1000/dashValue){
+        if(stockeur->getGameTime() - startDashTime > 1000/dashValue){
             dashOn = false;
             depForce = dashValue ? depForce/dashValue : BASICSPEED;
             //Faire un CD entre plusieurs dash ici

@@ -1,14 +1,28 @@
 #include "Drop.hpp"
 #include "Mc.hpp"
 
+
+const std::vector<States*>* Drop::etatsDrop;
+
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 Drop::Drop() {
+    states = (*Drop::etatsDrop)[0];
+    stateRectIn.w = 32;
+    stateRectIn.h = 32;
+    stateRectIn.x = 0;
+    stateRectIn.y = 0;
+
+    stateRect.w = 16;
+    stateRect.h = 16;
     hitBoxType(1, 0);
     stockeur->addItem(this);
+    
+    onScreen = true;
+    addSprite("Drop");
 }
 
 
-Drop::Drop(std::vector<int> items, std::vector<int> taux, int x, int y){
+Drop::Drop(std::vector<int> items, std::vector<int> taux, int x, int y) {
     faction = MC_FRIENDLY_FACTION;
 
     std::srand(time(NULL));
@@ -27,6 +41,14 @@ Drop::Drop(std::vector<int> items, std::vector<int> taux, int x, int y){
     autoSetHitBox();
     hitBoxType(1, 0);
 
+    stateRectIn.w = 32;
+    stateRectIn.h = 32;
+    stateRectIn.x = 0;
+    stateRectIn.y = 0;
+
+    stateRect.w = 16;
+    stateRect.h = 16;
+
     // std::cout << "Random : " << random << std::endl; 
     int i = 0;
     for(int t : taux){
@@ -43,7 +65,7 @@ Drop::Drop(std::vector<int> items, std::vector<int> taux, int x, int y){
     stockeur->addItem(this);
 
     stillInUse = false;
-    
+    onScreen = true;
     addSprite("Drop");
 }
 
@@ -52,6 +74,21 @@ Drop::~Drop() {
     stockeur->removeItem(this);
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+
+void Drop::initialisation() {
+    std::vector<States*>* vect = new std::vector<States*>();
+    vect->resize(0);
+	States* newStates = new States(); // newStates est un pointeur temporaire
+    newStates->spriteName = "Bonus_degats"; 
+    newStates->nbEtats = 1;
+    newStates->nbFrameParEtat[0] = 1;
+    for (int i=1; i<newStates->nbEtats; i++) {
+        newStates->nbFrameParEtat[i] = 0;
+    }
+	vect->push_back(newStates);
+    Drop::etatsDrop = vect;
+}
+
 
 void Drop::update(){
     // std::cout << "Update Item : " << _coord[1] << std::endl;
@@ -86,8 +123,6 @@ void Drop::update(){
 
 //Charger ici les textures en fonction de l'item qui spawn
 void Drop::selectItem(){
-    
-    States* newStates = new States(); // newStates est un pointeur temporaire
     item = !item ? 1 : item;
     switch(item){
         case 0 : 
@@ -97,14 +132,7 @@ void Drop::selectItem(){
             break;
         
         case 1 : 
-            //Un item
-            // std::cout << "Creation 1" << std::endl;
-            newStates->spriteName = "Bonus_degats"; 
-            newStates->nbEtats = 1;
-            newStates->nbFrameParEtat[0] = 1;
-            for (int i=1; i<newStates->nbEtats; i++) {
-                newStates->nbFrameParEtat[i] = 0;
-            }
+            states = (*Drop::etatsDrop)[0];
             break;
 
         default :
@@ -112,20 +140,6 @@ void Drop::selectItem(){
     }
 
     stockeur->getMc()->getColor() = NONE;
-
-    stateRectIn.w = 32;
-    stateRectIn.h = 32;
-    stateRectIn.x = 0;
-    stateRectIn.y = 0;
-
-    stateRect.w = 16;
-    stateRect.h = 16;
-    
-    // stateRect.w = 32;
-    // stateRect.h = 32;
-    states = newStates;
-    onScreen = true;
-    // std::cout << "fin creation Item" << std::endl;
 }
 
 void Drop::reactionContact(Entite* other) {
@@ -191,10 +205,10 @@ std::istringstream& Drop::deSerialize(std::istringstream& iss) {
         stillInUse = readBool(token);
     }
     if (std::getline(iss, token, '|')) {
-        cd = std::strtoul(iss.str().c_str(), nullptr, 10);
+        cd = std::stoul(token);
     }
     if (std::getline(iss, token, '|')) {
-        startUse = std::strtoul(iss.str().c_str(), nullptr, 10);
+        startUse = std::stoul(token);
     }
 	return iss;
 }

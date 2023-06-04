@@ -5,6 +5,7 @@
 
 class Drop : public Entite {
 protected:
+	static const std::vector<States*>* etatsDrop;
 	int item;
 	bool stillInUse;
 	uint32_t cd;
@@ -18,6 +19,7 @@ public:
 	Drop(std::vector<int> items, std::vector<int> taux, int x, int y);
 	virtual ~Drop() override;
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+	static void initialisation();
 
 	void update();
 	void selectItem();

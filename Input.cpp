@@ -1,36 +1,46 @@
 #include "Input.hpp"
 
+const States* Input::etatsInput;
+
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 Input::Input(){
 	//std::cout <<"CREATION INPUT" << std::endl;
-
+    stockeur->setInputLoaded(true);
 	dashValue = stockeur->getMc()->getDashValue();
 
 	_hauteur = 32;
     _largeur = 32;
 
-	States* newStates = new States(); // newStates est un pointeur temporaire
-		newStates->spriteName = "Viseur"; //Mettre un viseur 
-		newStates->nbEtats = 1;
-		newStates->nbFrameParEtat[0] = 1;
-		for (int i=1; i<newStates->nbEtats; i++) {
-			newStates->nbFrameParEtat[i] = 0;
-		}
+    stateRectIn.w = 16;
+    stateRectIn.h = 16;
+    stateRectIn.x = 0;
+    stateRectIn.y = 0;
+    stateRect.w = 11;
+    stateRect.h = 11;
 
-        stateRectIn.w = 16;
-        stateRectIn.h = 16;
-        stateRectIn.x = 0;
-        stateRectIn.y = 0;
-        stateRect.w = 11;
-        stateRect.h = 11;
-
-		states = newStates;
+    states = Input::etatsInput;
 		
 	onScreen = true;
 	addSprite("Input");
     controleList.resize(1);
 }
+
+Input::~Input() {
+    stockeur->setInputLoaded(false);
+}
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+
+void Input::initialisation() {
+	States* newStates = new States(); // newStates est un pointeur temporaire
+    newStates->spriteName = "Viseur"; //Mettre un viseur 
+    newStates->nbEtats = 1;
+    newStates->nbFrameParEtat[0] = 1;
+    for (int i=1; i<newStates->nbEtats; i++) {
+        newStates->nbFrameParEtat[i] = 0;
+    }
+	Input::etatsInput = newStates;
+}
+
 
 void Input::update(){
 	
@@ -109,7 +119,7 @@ void Input::doKeyDown(SDL_KeyboardEvent &event)
 
             case SDLK_l :
                 if (!stockeur->getMenuOff()) { // le jeu est en pause
-                    stockeur->loadSave();
+                    stockeur->setMode(MODE_LOADING);
                 }
                 break;
             
@@ -204,4 +214,17 @@ void Input::doOtherKeyDown(SDL_KeyboardEvent &event){
 
 void Input::addMe(Controle* toAdd) {
     controleList.push_back(toAdd);
+}
+
+
+
+
+
+// Fonctions de sauvegarde de l'objet (l'objet ne doit pas être enregistré)
+std::string Input::serialize(std::string& toWrite) {
+    return DONT_SERIALIZE_ME;
+}
+
+std::istringstream& Input::deSerialize(std::istringstream& iss) {
+	return iss;
 }

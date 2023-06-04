@@ -1,14 +1,12 @@
 #include "SpawnPoint.hpp"
 
+const States* SpawnPoint::etatsSpawnPoint;
+
+/* CONSTRUCTEURS ET DESTRUCTEURS */
 SpawnPoint::SpawnPoint(){
-    States* newStates = new States(); // newStates est un pointeur temporaire
-    newStates->spriteName = "SpawnPoint"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
-    newStates->nbEtats = 1;
-    newStates->nbFrameParEtat[0] = 1;
-    for (int i=1; i<newStates->nbEtats; i++) {
-        newStates->nbFrameParEtat[i] = 0;
-    }
-    states = newStates;  
+    states = SpawnPoint::etatsSpawnPoint;
+
+    stockeur->addSpawn(this);
 };
 
 SpawnPoint::SpawnPoint(float x, float y, int wave) {
@@ -31,7 +29,27 @@ SpawnPoint::SpawnPoint(float x, float y, int wave) {
 		this->wave = wave;
         onScreen = true;  
 		std::cout << "Création de SpawnPoint : " << states->spriteName << std::endl;
+
+
+    stockeur->addSpawn(this);
 }
+
+SpawnPoint::~SpawnPoint() {
+    stockeur->removeSpawn(this);
+}
+/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+
+void SpawnPoint::initialisation() {
+	States* newStates = new States(); // newStates est un pointeur temporaire
+    newStates->spriteName = "SpawnPoint"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
+    newStates->nbEtats = 1;
+    newStates->nbFrameParEtat[0] = 1;
+    for (int i=1; i<newStates->nbEtats; i++) {
+        newStates->nbFrameParEtat[i] = 0;
+    }
+	SpawnPoint::etatsSpawnPoint = newStates;
+}
+
 
 void SpawnPoint::spawn(int number, int select, float timing){
     //timing -> 1000 = 1 seconde
@@ -112,3 +130,35 @@ void SpawnPoint::update(){
     spawnWave(wave);
 }
 
+
+
+
+
+// Fonctions de sauvegarde de l'objet
+std::string SpawnPoint::serialize(std::string& toWrite) {
+	Entite::serialize(toWrite);
+	// On n'enregistre que les paramètres nécessaires. Certains constructeur renseignent déjà les autres 
+    // Ces paramètres nécessaires sont en fait les paramètres contextuels (susceptibles de changer à chaque instant)
+	std::ostringstream oss;
+    oss << i << "|" << phase << "|" << wave << "|" << FrameStartTimeMs << "|" ;
+    toWrite += oss.str();
+    return "SpawnPoint";
+}
+
+std::istringstream& SpawnPoint::deSerialize(std::istringstream& iss) {
+    Entite::deSerialize(iss);
+    std::string token;
+    if (std::getline(iss, token, '|')) {
+        i = std::stoi(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        phase = std::stoi(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        wave = std::stoi(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        FrameStartTimeMs = std::stoul(token);
+    }
+	return iss;
+}

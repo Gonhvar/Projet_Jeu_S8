@@ -1,21 +1,23 @@
 #include "Bullets.hpp"
 
+const States* Bullets::etatsBullets;
+
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 Bullets::Bullets() {
-	States* newStates = new States(); // newStates est un pointeur temporaire
-	newStates->spriteName = "Glow_Bullet"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
-	newStates->nbEtats = 1;
-	newStates->nbFrameParEtat[0] = 1;
-	for (int i=1; i<newStates->nbEtats; i++) {
-		newStates->nbFrameParEtat[i] = 0;
-	}
-	states = newStates;
+	states = Bullets::etatsBullets;
+	stateRectIn.w = 256;
+    stateRectIn.h = 128;
+    stateRectIn.x = 0;
+    stateRectIn.y = 0;
+    stateRect.w = 256;
+    stateRect.h = 128;
 
+	hitBoxType(1, 0);
 	addSprite("Bullets");
 	Sprite::stockeur->addBullets(this);
 }
 
-Bullets::Bullets(int state, float directX, float directY, Entite* papa, short fact) {
+Bullets::Bullets(int state, float directX, float directY, Sprite* papa, short fact) : Bullets() {
 	//Mettre l'hitbox
     faction = fact;
 	speed.redef(directX, directY);
@@ -24,23 +26,6 @@ Bullets::Bullets(int state, float directX, float directY, Entite* papa, short fa
 	_largeur = 16;
 
 	onScreen = true;
-	//states = &(etatsDeBullets);
-		States* newStates = new States(); // newStates est un pointeur temporaire
-		newStates->spriteName = "Glow_Bullet"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
-		newStates->nbEtats = 1;
-		newStates->nbFrameParEtat[0] = 1;
-		for (int i=1; i<newStates->nbEtats; i++) {
-			newStates->nbFrameParEtat[i] = 0;
-		}
-		states = newStates;
-
-
-	stateRectIn.w = 256;
-    stateRectIn.h = 128;
-    stateRectIn.x = 0;
-    stateRectIn.y = 0;
-    stateRect.w = 256;
-    stateRect.h = 128;
 
 	masse = 1;
 	frottements = 0;
@@ -48,9 +33,6 @@ Bullets::Bullets(int state, float directX, float directY, Entite* papa, short fa
 	_coord[0] = papa->getX();
 	_coord[1] = papa->getY();
 	autoSetHitBox();
-	hitBoxType(1, 0);
-	addSprite("Bullets");
-	Sprite::stockeur->addBullets(this);
 }
 
 Bullets::~Bullets() {
@@ -58,6 +40,17 @@ Bullets::~Bullets() {
 	stockeur->removeBullet(this);
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+
+void Bullets::initialisation() {
+	States* newStates = new States(); // newStates est un pointeur temporaire
+	newStates->spriteName = "Glow_Bullet"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
+	newStates->nbEtats = 1;
+	newStates->nbFrameParEtat[0] = 1;
+	for (int i=1; i<newStates->nbEtats; i++) {
+		newStates->nbFrameParEtat[i] = 0;
+	}
+	Bullets::etatsBullets = newStates;
+}
 
 void Bullets::update(){
     if (Sprite::stockeur->printEverything) std::cout << "Bullets::update() : " << this << std::endl;
@@ -73,4 +66,19 @@ void Bullets::reactionContact(Entite* other) {
 	}
 	other->changePV(10);
 	markedForDeath = true;
+}
+
+
+
+
+
+// Fonctions de sauvegarde de l'objet
+std::string Bullets::serialize(std::string& toWrite) {
+	Entite::serialize(toWrite);
+    return "Bullets";
+}
+
+std::istringstream& Bullets::deSerialize(std::istringstream& iss) {
+    Entite::deSerialize(iss);
+	return iss;
 }

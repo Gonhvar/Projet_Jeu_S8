@@ -81,7 +81,7 @@ std::istringstream& Enemies::deSerialize(std::istringstream& iss) {
     }
    
     if (std::getline(iss, token, '|')) {
-        invicibilityTimeStart = std::strtoul(iss.str().c_str(), nullptr, 10);
+        invicibilityTimeStart = std::stoul(token);
     }
     if (std::getline(iss, token, '|')) {
         currentlyTakingDmg = readBool(token);

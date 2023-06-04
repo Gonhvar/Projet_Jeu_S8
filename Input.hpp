@@ -7,6 +7,7 @@
 
 class Input : public Sprite {
 protected:
+	static const States* etatsInput;
 	int mouseX;
 	int mouseY;
 
@@ -19,8 +20,10 @@ public:
 	/* CONSTRUCTEURS ET DESTRUCTEURS */
 	Input();
 
-	virtual ~Input() override {};
+	virtual ~Input();
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
+	static void initialisation();
+	
 	void update();
 
 	void get_keypress();
@@ -32,6 +35,10 @@ public:
 	void doOtherKeyDown(SDL_KeyboardEvent &event);
 
 	void addMe(Controle* toAdd);
+
+    // Fonctions de sauvegarde de l'objet
+    virtual std::string serialize(std::string& toWrite);
+    virtual std::istringstream& deSerialize(std::istringstream& iss);
 };
 
 #endif

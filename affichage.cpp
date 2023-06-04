@@ -139,7 +139,6 @@ void Affichage::affiche_all() const{
 	for(Sprite* s : *sprites){
 		if(s->getOnScreen()){
 			// position relative du Sprite par rapport à la caméra
-
 			float coefX = (s->getSpriteX() - camera.x) / camera.w + 1/2;
 			float coefY = (s->getSpriteY() - camera.y) / camera.h + 1/2;
 
