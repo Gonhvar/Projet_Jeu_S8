@@ -37,6 +37,7 @@ Venera::Venera() {
 		//Le stockeur gére tous les modes de jeu (en cascade)
 		Sprite::mode = MODE_JEU;
 		initialisation();
+		stockeur->saveGame();
 	}
 }
 
@@ -48,6 +49,8 @@ void Venera::initialisation() {
 	new SpawnPoint(200, 50, 0);
 	new SpawnPoint(200, 200, 0);
 	new SpawnPoint(150, 200, 0);
+
+	new SpawnPoint(150, 200, 1);
 
 	// ça c'est juste un exemple de bordure de map pour voir si ça marche un peu
 	uint8_t liste[MAX_FPE] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -87,7 +90,7 @@ void Venera::initialisation() {
 	bord3->hitBoxType(0, 1);
 
 	//A REMETTRE A LA FIN POUR AVOIR LA MUSIQUE 
-	// stockeur->getAudioManager()->playMusic("Music_01");
+	stockeur->getAudioManager()->playMusic("Music_01");
 }
 
 void Venera::update() {

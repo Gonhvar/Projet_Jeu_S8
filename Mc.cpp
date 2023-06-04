@@ -16,8 +16,7 @@ Mc::Mc() {
     // std::cout << "new Mc" << std::endl;
     faction = MC_FACTION;
 
-    
-    PV = 100;
+    PV = 200;
     PVMax = PV;
 
     depForce = BASICSPEED;

@@ -94,8 +94,10 @@ void SpawnPoint::spawnWave(int selectWave){
                     spawn(5, 0, 3000.0);
                     break;
                 case 1 :
-                    //Rien pour l'instant mais à remplir pour faire le jeu
                     spawn(10, 0, 1000.0);
+                    break;
+                case 2 : 
+                    spawn(200, 0, 1500.0);
                     break;
                 
                 default :
@@ -116,7 +118,7 @@ void SpawnPoint::spawnWave(int selectWave){
                     break;
 
                 case 2 :
-                    spawn(3, 1, 3000.0);
+                    spawn(5, 1, 3000.0);
                 
                 default :
                     phase = 0;
