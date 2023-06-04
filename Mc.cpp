@@ -17,7 +17,7 @@ Mc::Mc() {
     faction = MC_FACTION;
 
     
-    PV = 20;
+    PV = 100;
     PVMax = PV;
 
     depForce = BASICSPEED;
@@ -100,7 +100,8 @@ void Mc::update() {
     }
 
     //faire test de direction ici;
-    this->attack->update(pushForceH, pushForceB, pushForceG, pushForceD);
+    this->attack->updateDirection(pushForceH, pushForceB, pushForceG, pushForceD);
+    this->attack->update();
 
     //Décision de l'état
     int newEtat;

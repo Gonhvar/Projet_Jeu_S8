@@ -32,6 +32,7 @@ SpawnPoint::SpawnPoint(float x, float y, int wave) {
 
 
     stockeur->addSpawn(this);
+    onScreen = true;
 }
 
 SpawnPoint::~SpawnPoint() {
@@ -90,29 +91,32 @@ void SpawnPoint::spawnWave(int selectWave){
             switch(phase){
                 case 0 : 
                     //std::cout << "Phase 0" << std::endl;
-                    spawn(1, 0, 1000.0);
+                    spawn(5, 0, 3000.0);
                     break;
                 case 1 :
                     //Rien pour l'instant mais à remplir pour faire le jeu
+                    spawn(10, 0, 1000.0);
                     break;
                 
                 default :
                     phase = 0;
                     break;
             }
-            
-
             break;
 
         case 1 :
             switch(phase){
                 case 0 : 
                     //std::cout << "Phase 0" << std::endl;
-                    spawn(1, 1, 500.0);
+                    spawn(1, 1, 1000.0);
                     break;
                 case 1 :
                     //Rien pour l'instant mais à remplir pour faire le jeu
+                    spawn(5, 2, 2000.0);
                     break;
+
+                case 2 :
+                    spawn(3, 1, 3000.0);
                 
                 default :
                     phase = 0;

@@ -38,15 +38,18 @@ SkeletonShooter::SkeletonShooter(float _x, float _y) : SkeletonShooter() {
     onScreen = true;
     maxDelay = 7; // Change de frame tous les 20 ticks
 
-    std::cout << "Création de SkeletonShooter : " << states->spriteName << std::endl;
+    // std::cout << "Création de SkeletonShooter : " << states->spriteName << std::endl;
 
     autoSetHitBox();
     // addSprite("SkeletonShooter");
 }
 
 SkeletonShooter::~SkeletonShooter(){
-    std::cout << "Delete SkeletonShooter" << std::endl;
-    // new Drop(items, taux, _coord[0], _coord[1]);
+    // std::cout << "Delete SkeletonShooter" << std::endl;
+    new Drop(items, taux, _coord[0], _coord[1]);
+    stockeur->removeEnemies(this);
+    stockeur->removeCircEntite(this);
+    stockeur->removeRectEntite(this);
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 

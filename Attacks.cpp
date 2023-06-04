@@ -7,13 +7,21 @@ Attacks::Attacks(){
     std::cout << "new Attacks" << std::endl;
     faction = MC_FACTION;
     
+    PV = 1000;
+
     _hauteur = 64;
-    _largeur = 48;
+    _largeur = 64;
     autoSetHitBox();
     hitBoxType(1, 0);
 
 	directionX = 0;
     directionY = 0;
+
+    depForce = BASICSPEED;
+
+    rayon = 30;
+    masse = 100;
+
 
     setCoord(0,0,0);
     setOnScreen(false);
@@ -26,6 +34,7 @@ Attacks::Attacks(){
     addSprite("Attacks");
 
     state = 0;
+    debug = 0;
     attackMultiplier = 1;
     startCdAttack = SDL_GetTicks();
     needToClearCombo = false;
@@ -42,12 +51,17 @@ void Attacks::initialisation() {
 	Attacks::etatsAttacks = newStates;
 }
 
+void Attacks::updateDirection(int pushForceH, int pushForceB, int pushForceG, int pushForceD){
+    this->pushForceH = pushForceH;
+    this->pushForceB = pushForceB;
+    this->pushForceG = pushForceG;
+    this->pushForceD = pushForceD;
+}
 
-void Attacks::update(int pushForceH, int pushForceB, int pushForceG, int pushForceD){
+void Attacks::update(){
     if (Sprite::stockeur->printEverything) {
         std::cout << "Attacks::update()" << std::endl;
     }
-    findDirection(pushForceH, pushForceB, pushForceG, pushForceD);
 
     if(stockeur->getGameTime()-startCdAttack > cdAttack){
         state = 0;
@@ -57,9 +71,12 @@ void Attacks::update(int pushForceH, int pushForceB, int pushForceG, int pushFor
             combo.clear();
             needToClearCombo = false;
         }
+        _coord[0] = playerCoord[0];
+        _coord[1] = playerCoord[1];
+        
     }
     else{
-        //Bloquer le joueur ici si on veut
+        std::cout << "X : " << _coord[0] << " Y : " << _coord[1] << std::endl;
     }
     
     updatePlayerCoord();
@@ -68,7 +85,6 @@ void Attacks::update(int pushForceH, int pushForceB, int pushForceG, int pushFor
         //Met à jour l'attaque
         updateHitBox(range*directionX, range*directionY);
     }
-
 
 }
 
@@ -120,6 +136,10 @@ void Attacks::findCombo(){
         state = 1;
         needToClearCombo = true;
     }
+    else{
+        state = 1;
+        needToClearCombo = true;
+    }
 }
 
 void Attacks::applyCombo(){
@@ -132,23 +152,26 @@ void Attacks::applyCombo(){
         case 1 :
             //std::cout << "Attaque simple" << std::endl;
             //std::cout << "directionX :" << directionX << " directionY :" << directionY << std::endl;
-            attackDamage = 1 * attackMultiplier;
-            range = 60;
+            attackDamage = 10 * attackMultiplier;
+            depForce = BASICSPEED* 1;
+            range = 80;
             cdAttack = 400;
             break;
         
         case 2 : 
             //std::cout << "Attaque lourde" << std::endl;
-            attackDamage = 5 *attackMultiplier;
-            range = 30;
-            cdAttack = 600;
+            attackDamage = 15 *attackMultiplier;
+            depForce = BASICSPEED* 0.85;
+            range = 50;
+            cdAttack = 400;
             break;
             
         case 5 :
             // std::cout << "Combo llh!" << std::endl;
-            attackDamage = 10 * attackMultiplier;
-            range = 20;
-            cdAttack = 100; 
+            attackDamage = 20 * attackMultiplier;
+            depForce = BASICSPEED* 1.1;
+            range = 90;
+            cdAttack = 200; 
             break;
         
         default :
@@ -182,6 +205,7 @@ void Attacks::findDirection(int pushForceH, int pushForceB, int pushForceG, int 
 void Attacks::updateAttack(int attack){
 
     if(state == 0){
+        debug = 0;
         if(attack !=0){
             switch(attack){
                 case 1 :
@@ -203,12 +227,19 @@ void Attacks::updateAttack(int attack){
             startCdAttack = stockeur->getGameTime();
             findCombo();
             applyCombo();
+            findDirection(pushForceH, pushForceB, pushForceG, pushForceD);
+            PV = 1000;
             this->setOnScreen(true);
-            // std::cout << "Attack combo is : "<< combo << std::endl; 
+            std::cout << "Attack combo is : "<< combo << std::endl; 
         }
     }
     else{
         std::cout << "Cooldown d'attaque en cours" << std::endl;
+        debug++;
+        if(debug > 5){
+            state = 0;
+            debug = 0;
+        }
     }
 }
 

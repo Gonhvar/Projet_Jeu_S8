@@ -98,7 +98,7 @@ void Affichage::update(){
 				break;
 
 			default :
-				setMcColor(128, 128, 128);
+				setMcColor(255, 255, 255);
 				break;
 		}
 	}
