@@ -13,6 +13,7 @@ public:
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
 	void playSound(std::string name);
+	void playMusic(std::string name);
 };
 
 #endif
