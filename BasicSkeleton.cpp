@@ -18,7 +18,7 @@ BasicSkeleton::BasicSkeleton() {
 
 BasicSkeleton::BasicSkeleton(float _x, float _y) : BasicSkeleton() {
     faction = ENEMY_FACTION;
-    PV = 10;
+    PV = 8;
     attackDamage = 2;
 
     //Selection des drops qu'il pourrait avoir 

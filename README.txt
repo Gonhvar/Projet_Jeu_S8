@@ -15,12 +15,12 @@ Musique réalisé par Victor FAUCHER
 Tous les controles donné ici seront considéré comme vennant d'un clavier Français
 
 
--Menus-
+-Menu Pause-
 
 Déplacez vous dans les menu à l'aide des touches z et s de votre clavier.
-Validez votre choix à l'aide de la barre espace.
+Validez votre choix à l'aide de la touche e.
 
-Vous pouvez ouvrir le menu pause à tout moment à l'aide du bouton a. 
+Vous pouvez ouvrir le menu pause à tout moment à l'aide du bouton echap. 
 
 
 -Joueur 1-
@@ -57,10 +57,10 @@ Chaque ennemi à une chance de faire tomber un item qui permettra d'augmenter vo
 
 Il est possible de créer un niveau de l'enregistrer à l'aide du mode de jeu correspondant. 
 De même, il est possible de le charger afin de le jouer.
-N'hésitez pas à réaliser votre propre niveau et l'enregistrer pour pouvoir y jouer plus tard !
+N'hésitez pas à coder votre propre niveau dans Venera et l'enregistrer pour pouvoir y jouer plus tard !
 
 ================But du jeu================
 
-Le but est de survivre aux vagues d'ennemies que le jeu va vous envoyer.
+Le but est de survivre le plus longtemps possible aux vagues d'ennemies que le jeu va vous envoyer.
 
 
