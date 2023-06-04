@@ -91,8 +91,8 @@ Vector2D SkeletonShooter::deplacementBehaviour(){
 
 void SkeletonShooter::attackBehaviour(){
     if(stockeur->getGameTime() - startShooting > cooldown){
-        std::cout << "Creation bullet SkeletonShooter" << std::endl;
-        stockeur->addBullets(new Bullets(0, stockeur->getMc()->getX(), stockeur->getMc()->getY(), this, ENEMY_BULLET_FACTION));
+        // std::cout << "Creation bullet SkeletonShooter" << std::endl;
+        stockeur->addBullets(new Bullets(0, stockeur->getMc()->getX() - _coord[0], stockeur->getMc()->getY() -_coord[1], this, ENEMY_BULLET_FACTION));
         startShooting = stockeur->getGameTime();
     }
 }

@@ -60,6 +60,7 @@ Mc::~Mc() {
     delete attack;
 
     stockeur->addMc(nullptr);
+    stockeur->setMode(MODE_MENU);
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 

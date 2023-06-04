@@ -9,6 +9,7 @@
 #include "Joueur2.hpp"
 #include "Input.hpp"
 #include "AudioManager.hpp"
+#include "Menu.hpp"
 
 class SpawnPoint;
 
@@ -21,10 +22,9 @@ private :
 	// Mc* mc;
 	// Joueur2* j2;
 	AudioManager* audioM;
-	
 	Input* input;
-
 	Affichage* afficheur;
+	Menu* menu;
 
 	//Map map;
 	
