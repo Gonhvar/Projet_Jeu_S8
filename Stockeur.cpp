@@ -2,6 +2,7 @@
 #include "Enemies.hpp"
 #include "SkeletonShooter.hpp"
 #include "BasicSkeleton.hpp"
+#include "Input.hpp"
 
 
 Stockeur::Stockeur(){}
@@ -72,6 +73,14 @@ void Stockeur::addJoueur2(Joueur2* j){
 
 void Stockeur::addAudioManager(AudioManager* audioM){
     audioManager = audioM;
+}
+
+void Stockeur::addMenu(Menu* m){
+    menu = m;
+}
+
+void Stockeur::addInput(Input* in){
+    input = in;
 }
 
 // REMOVER ----------------------------------------------------------------
@@ -182,6 +191,13 @@ AudioManager* Stockeur::getAudioManager(){
     return audioManager;
 }
 
+Menu* Stockeur::getMenu(){
+    return menu;
+}
+
+Input* Stockeur::getInput(){
+    return input;
+}
 
 void Stockeur::deleteAllEnemies(){
     std::cout << "enemies.size : " << enemies.size() << std::endl;
@@ -257,6 +273,24 @@ void Stockeur::swapMenuOff() {
 
 void Stockeur::setMode(int toBe) {
     mode = toBe;
+    switch(mode){
+        case MODE_JEU :
+            input->setMode(MODE_JEU);
+            break;
+
+        case MODE_MAP :
+            input->setMode(MODE_JEU);
+            break;
+
+        case MODE_PAUSE :
+            input->setMode(MODE_PAUSE);
+            break;
+
+        case MODE_MENU :
+            input->setMode(MODE_MENU);
+            break;
+
+    }
 }
 
 int Stockeur::getMode() {

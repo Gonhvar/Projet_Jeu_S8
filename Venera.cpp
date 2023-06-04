@@ -18,23 +18,24 @@ Venera::Venera() {
 		stockeur = new Stockeur();
 		stockeur->removeSprites(nullptr);
 		Sprite::stockeur = stockeur;
-		stockeur->setMode(MODE_JEU);
 
 		afficheur = new Affichage(renderer, window, stockeur);
 		Sprite::afficheur = afficheur;
-		
 		Sprite::map = new Map();
-
+		audioM = new AudioManager();
 		stockeur->addMc(new Mc());
 
-		stockeur->addJoueur2(new Joueur2());
-		
 		input = new Input();
+		menu = new Menu();
+		
+		stockeur->addJoueur2(new Joueur2());
 		input->addMe(Sprite::stockeur->getMc());
-
-		audioM = new AudioManager();
+		stockeur->addInput(input);
+		stockeur->addMenu(menu);
 		stockeur->addAudioManager(audioM);
 
+		//Le stockeur gére tous les modes de jeu (en cascade)
+		stockeur->setMode(MODE_JEU);
 		initialisation();
 	}
 }
@@ -95,6 +96,7 @@ void Venera::update() {
 
 	// Le joueur prend une décision (appui d'une touche)
 	input->update();
+	menu->update();
 
 	if (Sprite::stockeur->getMenuOff()) { // Pas le menu
 		std::vector<Sprite*>& spriteListe = *(stockeur->getSpriteVector());
@@ -189,8 +191,6 @@ int main(){
 	
 	while(true){
 	    // if (Sprite::stockeur->printEverything) std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << std::endl;
-
-
 
 		//On récupére le temps actuel
 		FrameStartTimeMs = SDL_GetTicks();

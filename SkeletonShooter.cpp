@@ -43,15 +43,11 @@ SkeletonShooter::SkeletonShooter(float _x, float _y) {
     maxDelay = 7; // Change de frame tous les 20 ticks
 
 
-    stateRectIn.w = 32;
-    stateRectIn.h = 32;
     stateRectIn.x = 0;
     stateRectIn.y = 0;
+
     stateRect.w = 32;
     stateRect.h = 32;
-
-    // stateRect.w = 32;
-    // stateRect.h = 32;
 
     std::cout << "Création de SkeletonShooter : " << states->spriteName << std::endl;
 
@@ -96,8 +92,8 @@ Vector2D SkeletonShooter::deplacementBehaviour(){
 void SkeletonShooter::attackBehaviour(){
 
     if(stockeur->getGameTime() - startShooting > cooldown){
-        std::cout << "Creation bullet SkeletonShooter" << std::endl;
-        stockeur->addBullets(new Bullets(0, stockeur->getMc()->getX(), stockeur->getMc()->getY(), this, ENEMY_BULLET_FACTION));
+        // std::cout << "Creation bullet SkeletonShooter" << std::endl;
+        stockeur->addBullets(new Bullets(0, stockeur->getMc()->getX() - _coord[0], stockeur->getMc()->getY() -_coord[1], this, ENEMY_BULLET_FACTION));
         startShooting = stockeur->getGameTime();
     }
 }

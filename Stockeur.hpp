@@ -14,10 +14,14 @@ class AudioManager;
 class Bullets;
 class SkeletonShooter;
 class BasicSkeleton;
+class Menu;
+class Input;
 
 #define MODE_JEU 0
 #define MODE_MAP 1
 #define MODE_MAXNUM 2
+#define MODE_MENU 3
+#define MODE_PAUSE 4
 
 #define PATH_TO_SAVE "save/"
 #define OBJECT_SEPARATOR '*'
@@ -36,6 +40,8 @@ protected:
     Mc* mc;
     Joueur2* j2;
     AudioManager* audioManager;
+    Menu* menu;
+    Input* input;
 
     uint32_t gameTime;
 
@@ -58,6 +64,8 @@ public:
     void addMc(Mc* j);
     void addJoueur2(Joueur2* j);
     void addAudioManager(AudioManager* audioM);
+    void addMenu(Menu* m);
+    void addInput(Input* in);
 
     void removeSprites(Sprite* sp);
     void removeCircEntite(Entite* en);
@@ -69,6 +77,8 @@ public:
     Mc* getMc();
     Joueur2* getJ2();
     AudioManager* getAudioManager();
+    Menu* getMenu();
+    Input* getInput();
     
     std::vector<Sprite*>* getSpriteVector();
     std::vector<Entite*>* getCircEntiteVector();

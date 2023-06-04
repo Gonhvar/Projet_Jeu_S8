@@ -1,12 +1,14 @@
 #ifndef INPUT_HPP
 #define INPUT_HPP
 
-// #include "Sprite.hpp"
 #include "Mc.hpp"
 #include "affichage.hpp"
 
+
 class Input : public Sprite {
 protected:
+	int mode;
+
 	int mouseX;
 	int mouseY;
 
@@ -22,6 +24,7 @@ public:
 	virtual ~Input() override {};
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 	void update();
+	void setMode(int m);
 
 	void get_keypress();
 	void get_otherkeypress();
@@ -30,6 +33,8 @@ public:
 	void mousePress(SDL_MouseButtonEvent& b);
 
 	void doOtherKeyDown(SDL_KeyboardEvent &event);
+	void get_menuKeypress();
+	void doPauseKeyDown(SDL_KeyboardEvent &event);
 
 	void addMe(Controle* toAdd);
 };

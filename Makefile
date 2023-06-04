@@ -1,11 +1,14 @@
-prog: Sprite.o affichage.o Vector2D.o Entite.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o Attacks.o Map.o Stockeur.o Joueur2.o Bullets.o Input.o AudioManager.o SkeletonShooter.o
-	g++ -std=c++11 -g -o prog Sprite.o affichage.o Vector2D.o Entite.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o Attacks.o Map.o Stockeur.o Joueur2.o Bullets.o Input.o AudioManager.o SkeletonShooter.o -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+prog: Sprite.o affichage.o Vector2D.o Entite.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o Attacks.o Map.o Stockeur.o Joueur2.o Bullets.o Input.o AudioManager.o SkeletonShooter.o Menu.o 
+	g++ -std=c++11 -g -o prog Sprite.o affichage.o Vector2D.o Entite.o Mc.o Venera.o Drop.o Enemies.o BasicSkeleton.o SpawnPoint.o Attacks.o Map.o Stockeur.o Joueur2.o Bullets.o Input.o AudioManager.o SkeletonShooter.o Menu.o -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 
 Stockeur.o : Stockeur.cpp Stockeur.hpp Inc.hpp
 	g++ -std=c++11 -Wall Stockeur.cpp -c
 
 Sprite.o : Sprite.cpp Sprite.hpp affichage.hpp Map.hpp Stockeur.hpp
 	g++ -std=c++11 -Wall Sprite.cpp -c
+
+Menu.o : Menu.cpp Menu.hpp Sprite.hpp 
+	g++ -std=c++11 -Wall Menu.cpp -c
 
 Vector2D.o : Vector2D.cpp Vector2D.hpp
 	g++ -std=c++11 -Wall Vector2D.cpp -c
@@ -52,7 +55,7 @@ camera.o : Camera.cpp Camera.hpp
 AudioManager.o : AudioManager.cpp AudioManager.hpp
 	g++ -std=c++11 -Wall AudioManager.cpp -c
 
-Venera.o : Venera.cpp Venera.hpp affichage.hpp Mc.hpp SpawnPoint.hpp Joueur2.hpp Input.hpp AudioManager.hpp
+Venera.o : Venera.cpp Venera.hpp affichage.hpp Mc.hpp SpawnPoint.hpp Joueur2.hpp Input.hpp AudioManager.hpp Menu.hpp
 	g++ -std=c++11 -Wall Venera.cpp -c
 
 Map.o : Map.cpp Map.hpp Venera.hpp
