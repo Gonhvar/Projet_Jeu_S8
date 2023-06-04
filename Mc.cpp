@@ -12,8 +12,9 @@ const States* Mc::etatsMc;
 
 //Constructeur spécial pour le MC (renseigne Sprite::joueur)
 Mc::Mc() {
-    std::cout << "new Mc" << std::endl;
+    // std::cout << "new Mc" << std::endl;
     faction = MC_FACTION;
+
     
     PV = 20000;
     PVMax = PV;
@@ -179,7 +180,7 @@ int& Mc::getColor(){
 }
 
 
-// Inplementer l'interface Controle pour pouvoir gérer les appels de Input
+// Implementer l'interface Controle pour pouvoir gérer les appels de Input
 void Mc::zDown() {
     stockeur->getMc()->setPushForceH(1);
 }

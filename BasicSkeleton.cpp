@@ -19,12 +19,12 @@ BasicSkeleton::BasicSkeleton() {
 BasicSkeleton::BasicSkeleton(float _x, float _y) : BasicSkeleton() {
     faction = ENEMY_FACTION;
     PV = 10;
-    attackDamage = 5;
+    attackDamage = 2;
 
     //Selection des drops qu'il pourrait avoir 
-    items = {0, 1};
+    items = {1, 2, 3, 0};
     //Il faut que ça fasse 100% en tout
-    taux = {20, 80};
+    taux = {5, 5, 5, 75};
 
     depForce = BASICSKELETONSPEED;
     _hauteur = 64;
@@ -39,13 +39,13 @@ BasicSkeleton::BasicSkeleton(float _x, float _y) : BasicSkeleton() {
 
     maxDelay = 7; // Change de frame tous les 20 ticks
 
-    std::cout << "Création de BasicSkeleton : " << states->spriteName << std::endl;
+    // std::cout << "Création de BasicSkeleton : " << states->spriteName << std::endl;
 
     autoSetHitBox();
 }
 
 BasicSkeleton::~BasicSkeleton(){
-    std::cout << "Delete BasicSkeleton" << std::endl;
+    // std::cout << "Delete BasicSkeleton" << std::endl;
     new Drop(items, taux, _coord[0], _coord[1]);
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
@@ -107,7 +107,8 @@ void BasicSkeleton::reactionContact(Entite* other) {
 		std::cout << "Contact BasicSkeleton : " << this << "(" << states->spriteName << ")" << " ->" << other << std::endl;
 	}
     if (faction != other->getFaction()) {
-        other->changePV(1);
+        stockeur->getAudioManager()->playSound("punch");
+        other->changePV(attackDamage);
 	}
 }
 

@@ -52,10 +52,11 @@ Drop::Drop(std::vector<int> items, std::vector<int> taux, int x, int y) {
     // std::cout << "Random : " << random << std::endl; 
     int i = 0;
     for(int t : taux){
-        rate +=t;
         // std::cout << "rate : " << rate << std::endl;
+        rate +=t;
         if(random <= rate){
             item = items[i];
+            // std::cout << "Item : " << item << std::endl;
             break;
         }
         i++;
@@ -93,8 +94,6 @@ void Drop::initialisation() {
 void Drop::update(){
     // std::cout << "Update Item : " << _coord[1] << std::endl;
 
-    //Detection de prise du joueur à rajouter
-
     //Si il est récupéré 
     if(stillInUse){
         // std::cout << "Cd : " << a << std::endl;
@@ -102,7 +101,15 @@ void Drop::update(){
             std::cout << "Auto-Destruction Item" << std::endl;
             switch(item){
                 case 1 :
+                    stockeur->getMc()->getAttacks()->setAttackMultiplier(1);
+                    break;
+                
+                case 2 :
                     otherEntite->getDepForce() /= 1.5;
+                    break;
+
+                case 3 :
+                    stockeur->getMc()->getDashValue() = 1;
                     break;
                 
                 default :
@@ -115,7 +122,8 @@ void Drop::update(){
             //Si le joueur est toujours sous l'effet de l'effet, il reset la couleur du joueur
             resetColor();
         }
-    }else{
+    }
+    else{
         addForce(0, sin( 0.1 * SDL_GetTicks()) * 64);
     }
 }
@@ -123,15 +131,29 @@ void Drop::update(){
 
 //Charger ici les textures en fonction de l'item qui spawn
 void Drop::selectItem(){
-    item = !item ? 1 : item;
+    // item = !item ? 1 : item;
     switch(item){
         case 0 : 
             //Pas d'item
-            // std::cout << "Creation 0" << std::endl;
+            std::cout << "Creation 0" << std::endl;
+            states = (*Drop::etatsDrop)[0];
             markedForDeath = true;
             break;
         
         case 1 : 
+            //Dégats
+            std::cout << "Creation 1" << std::endl;
+            states = (*Drop::etatsDrop)[0];
+            break;
+        case 2 :
+            //Vitesse
+            std::cout << "Creation 2" << std::endl;
+            states = (*Drop::etatsDrop)[0];
+            break;
+        
+        case 3 :
+            //Dash
+            std::cout << "Creation 3" << std::endl;
             states = (*Drop::etatsDrop)[0];
             break;
 
@@ -150,11 +172,24 @@ void Drop::reactionContact(Entite* other) {
         std::cout << "Ramassé" << std::endl;
         switch(item){
             case 1 : 
-                other->getDepForce() *= 1.5;
-                cd = 1000;
+                //Dégats
+                stockeur->getMc()->getAttacks()->setAttackMultiplier(2);
+                cd = 10000;
+                break;
+            case 2 : 
+                //Vitesse 
+                other->getDepForce() *= 2;
+                cd = 5000;
+                break;
+
+            case 3 :
+                //Dash 
+                stockeur->getMc()->getDashValue() = 2;
+                cd = 15000;
                 break;
 
             default :
+                markedForDeath = true;
                 break;
         }
 
@@ -172,16 +207,21 @@ void Drop::reactionContact(Entite* other) {
 void Drop::resetColor(){
     switch(item){
         case 1 : 
-                stockeur->getMc()->getColor() = RED;
-                break;
+            stockeur->getMc()->getColor() = RED;
+            break;
+
+        case 2 :
+            stockeur->getMc()->getColor() = BLUE;
+            break;
+
+        case 3 :
+            stockeur->getMc()->getColor() = GREEN;
+            break;
 
         default :
-                break;
+            break;
     }
 }
-
-
-
 
 
 // Fonctions de sauvegarde de l'objet

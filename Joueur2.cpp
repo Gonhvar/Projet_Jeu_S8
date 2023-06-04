@@ -75,8 +75,6 @@ void Joueur2::newTir(int state, int directX, int directY){
     std::cout << "creation bullets" << std::endl;
     //std::cout << "Alors X : " << x - _coord[0] << " Y :" << y - _coord[0] << std::endl;
     new Bullets(0, directX-_coord[0], directY-_coord[1], this, MC_BULLET_FACTION);
-
-    Sprite::stockeur->getAudioManager()->playSound("01");
 }
 
 

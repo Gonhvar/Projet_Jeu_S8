@@ -19,12 +19,12 @@ SkeletonShooter::SkeletonShooter() {
 SkeletonShooter::SkeletonShooter(float _x, float _y) : SkeletonShooter() {
     faction = ENEMY_FACTION;
     PV = 5;
-    attackDamage = 2;
+    attackDamage = 1;
 
     //Selection des drops qu'il pourrait avoir 
-    items = {0, 1};
+    items = {1, 2, 3, 0};
     //Il faut que ça fasse 100% en tout
-    taux = {100, 0};
+    taux = {5, 10, 5, 80};
 
     depForce = BASICSKELETONSHOOTERSPEED;
     _hauteur = 64;
@@ -114,7 +114,8 @@ void SkeletonShooter::reactionContact(Entite* other) {
 		std::cout << "Contact SkeletonShooter : " << this << "(" << states->spriteName << ")" << " ->" << other << std::endl;
 	}
     if (faction != other->getFaction()) {
-        other->changePV(1);
+        stockeur->getAudioManager()->playSound("punch");
+        other->changePV(attackDamage);
 	}
 }
 

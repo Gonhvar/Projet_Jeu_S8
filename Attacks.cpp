@@ -94,21 +94,21 @@ void Attacks::findCombo(){
     //Peut etre une récursive avec les états en impair et pair ?
     if(combo == "l"){
         state = 1;
-        std::cout << "Combo l!" << std::endl;
+        // std::cout << "Combo l!" << std::endl;
     }
     else if(combo == "h"){
         state = 2;
-        std::cout << "Combo h!" << std::endl;
+        // std::cout << "Combo h!" << std::endl;
         needToClearCombo = true;
     }
     else if(combo == "lh"){
         state = 2;
-        std::cout << "Combo lh!" << std::endl;
+        // std::cout << "Combo lh!" << std::endl;
         needToClearCombo = true;
     }
     else if(combo == "ll"){
         state = 1;
-        std::cout << "Combo ll!" << std::endl;
+        // std::cout << "Combo ll!" << std::endl;
     }
     else if(combo == "llh"){
         state = 5;
@@ -144,7 +144,7 @@ void Attacks::applyCombo(){
             
         case 5 :
             // std::cout << "Combo llh!" << std::endl;
-            attackDamage = 30 * attackMultiplier;
+            attackDamage = 10 * attackMultiplier;
             range = 20;
             cdAttack = 100; 
             break;

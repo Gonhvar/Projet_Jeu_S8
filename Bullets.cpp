@@ -4,6 +4,8 @@ const States* Bullets::etatsBullets;
 
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 Bullets::Bullets() {
+	Sprite::stockeur->getAudioManager()->playSound("01");
+	
 	states = Bullets::etatsBullets;
 	stateRectIn.w = 256;
     stateRectIn.h = 128;

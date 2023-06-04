@@ -155,9 +155,7 @@ void Input::doKeyDown(SDL_KeyboardEvent &event){
             
             case SDLK_SPACE :
                 if( !(stockeur->getMc()->getDashOn())){
-                    
                     stockeur->getAudioManager()->playSound("dash_sound");
-
                     stockeur->getMc()->getDepForce() *= dashValue;
                     stockeur->getMc()->setStartDashTime(stockeur->getGameTime());
                     stockeur->getMc()->setDashOn(true);
