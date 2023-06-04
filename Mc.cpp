@@ -16,7 +16,7 @@ Mc::Mc() {
     faction = MC_FACTION;
 
     
-    PV = 20;
+    PV = 100;
     PVMax = PV;
 
     depForce = BASICSPEED;

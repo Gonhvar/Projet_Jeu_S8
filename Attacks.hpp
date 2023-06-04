@@ -32,11 +32,13 @@ protected:
 	float playerCoord[2];
 
 	bool needToClearCombo;
-	
+
 	int pushForceH; 
 	int pushForceB; 
 	int pushForceG; 
 	int pushForceD;
+
+	int debug;
 
 
 public:

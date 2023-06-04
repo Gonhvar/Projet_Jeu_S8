@@ -47,6 +47,9 @@ BasicSkeleton::BasicSkeleton(float _x, float _y) : BasicSkeleton() {
 BasicSkeleton::~BasicSkeleton(){
     // std::cout << "Delete BasicSkeleton" << std::endl;
     new Drop(items, taux, _coord[0], _coord[1]);
+    stockeur->removeEnemies(this);
+    stockeur->removeCircEntite(this);
+    stockeur->removeRectEntite(this);
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 
