@@ -46,7 +46,7 @@ SkeletonShooter::SkeletonShooter(float _x, float _y) : SkeletonShooter() {
 
 SkeletonShooter::~SkeletonShooter(){
     std::cout << "Delete SkeletonShooter" << std::endl;
-    new Drop(items, taux, _coord[0], _coord[1]);
+    // new Drop(items, taux, _coord[0], _coord[1]);
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 

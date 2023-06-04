@@ -159,15 +159,11 @@ void Venera::update() {
 			break;
 
 		case MODE_MAP :
-			std::cout << "Mode Map" <<	std::endl;
-			break;
-		
-		case MODE_MENU :
-			std::cout << "Mode menu" << std::endl;
+			// std::cout << "Mode Map" <<	std::endl;
 			break;
 		
 		case MODE_PAUSE :
-			std::cout << "Mode pause" << std::endl;
+			// std::cout << "Mode pause" << std::endl;
 			break;
 		
 		case MODE_LOADING :
@@ -178,10 +174,9 @@ void Venera::update() {
 			// Puis on recréer les objets grâce à la sauvegarde.
 			Sprite::stockeur->loadSave();
 			input = new Input(); // Input a été supprimé parce que c'est un Sprite mais ça ne coût pas cher de le recréer.
-			input->addMe(Sprite::stockeur->getMc());
-			menu = new Menu();
 			std::cout << "All loaded" << std::endl;
 			Sprite::mode = MODE_JEU;
+			Sprite::stockeur->getMenu()->setOnScreen(false);
 			break;
 
 		default : 

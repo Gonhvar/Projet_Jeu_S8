@@ -20,10 +20,9 @@ class Input;
 
 #define MODE_JEU 0
 #define MODE_MAP 1
-#define MODE_MENU 2
-#define MODE_PAUSE 3
-#define MODE_LOADING 4
-#define MODE_MAXNUM 5
+#define MODE_PAUSE 2
+#define MODE_LOADING 3
+#define MODE_MAXNUM 4
 
 
 #define PATH_TO_SAVE "save/"
@@ -54,7 +53,7 @@ protected:
 
 public:
 
-    bool printEverything = 0; // Sert au debug X(
+    bool printEverything = 1; // Sert au debug X(
 
     Stockeur();
 

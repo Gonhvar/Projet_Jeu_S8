@@ -1,4 +1,5 @@
 #include "affichage.hpp"
+#include "Menu.hpp"
 
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 
@@ -152,6 +153,11 @@ void Affichage::affiche_all() const{
 			SDL_RenderCopyEx(renderer, s->getTexture(), s->getRightRectangle(), &dest, 0, NULL, s->getFlip() ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 		}
 	}
+	Menu* m = Sprite::stockeur->getMenu();
+	if (m->getOnScreen()) {
+		SDL_RenderCopyEx(renderer, m->getTexture(), m->getRightRectangle(), NULL, 0, NULL, SDL_FLIP_NONE);
+	}
+	
 };
 
 

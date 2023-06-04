@@ -410,6 +410,12 @@ void Stockeur::loadSave(std::string path) {
             }
         }
         
+        if (mc == nullptr) {
+            mc = new Mc();
+        }
+        if (j2 == nullptr) {
+            j2 = new Joueur2();
+        }
     } else {
         std::cout << "Impossible d'ouvrir le fichier pour deserialisation" << std::endl;
         std::cout << "----> cherché à " << pathComplet << std::endl;

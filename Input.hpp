@@ -28,14 +28,12 @@ public:
 	void update();
 
 	void get_keypress();
-	void get_otherkeypress();
 	void doKeyDown(SDL_KeyboardEvent& event);
 	void doKeyUp(SDL_KeyboardEvent& event);
 	void mousePress(SDL_MouseButtonEvent& b);
-
-	void doOtherKeyDown(SDL_KeyboardEvent &event);
-	void get_menuKeypress();
+	void get_pauseKeypress();
 	void doPauseKeyDown(SDL_KeyboardEvent &event);
+
 
 	void addMe(Controle* toAdd);
 

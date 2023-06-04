@@ -28,6 +28,7 @@ Input::Input(){
 }
 
 Input::~Input() {
+    std::cout << "delete Input" << std::endl;
     stockeur->setInputLoaded(false);
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
@@ -45,7 +46,6 @@ void Input::initialisation() {
 
 
 void Input::update(){
-
     SDL_GetMouseState(&mouseX, &mouseY);
     _coord[0] = Sprite::afficheur->getCameraX() + mouseX / Sprite::afficheur->getZoom();
     _coord[1] = Sprite::afficheur->getCameraY() + mouseY / Sprite::afficheur->getZoom();
@@ -53,16 +53,12 @@ void Input::update(){
     mouseY = _coord[1];
 
     switch(Sprite::mode){
-        case (MODE_MENU) :
-            get_menuKeypress();
-            break;
-
         case (MODE_JEU) :
             get_keypress();
             break;
         
         case (MODE_PAUSE) :
-            get_otherkeypress();
+            get_pauseKeypress();
             break;
 
         default :
@@ -97,43 +93,28 @@ void Input::get_keypress(){
     //printf("dx : %f | dy : %f \n", dx, dy);
 }
 
-void Input::get_otherkeypress(){
-    SDL_Event event;
-
-    while(SDL_PollEvent(&event))
-    {   
-        switch(event.type){
-            case SDL_KEYDOWN :
-                doOtherKeyDown(event.key);
-            default : break;
-        }
-    }
-}
-
 void Input::doKeyDown(SDL_KeyboardEvent &event){   
     // Pour un seul press de button
 	if (event.repeat == 0)
 	{ 
         switch(event.keysym.sym) {
             case SDLK_ESCAPE :
-                exit(0);
-           
-            case SDLK_a :
                 std::cout << "menu swap" << std::endl;
                 Sprite::mode = MODE_PAUSE;
+                Sprite::stockeur->getMenu()->setOnScreen(true);
                 break;
 
-            case SDLK_w :
-                if (Sprite::mode == MODE_PAUSE) { // le jeu est en pause
-                    stockeur->saveGame();
-                }
-                break;
+            // case SDLK_w :
+            //     if (Sprite::mode == MODE_PAUSE) { // le jeu est en pause
+            //         stockeur->saveGame();
+            //     }
+            //     break;
 
-            case SDLK_l :
-                if (Sprite::mode == MODE_PAUSE) { // le jeu est en pause
-                    Sprite::mode = MODE_LOADING;
-                }
-                break;
+            // case SDLK_l :
+            //     if (Sprite::mode == MODE_PAUSE) { // le jeu est en pause
+            //         Sprite::mode = MODE_LOADING;
+            //     }
+            //     break;
             
             case SDLK_SPACE :
                 if( !(stockeur->getMc()->getDashOn())){
@@ -181,10 +162,7 @@ void Input::doKeyDown(SDL_KeyboardEvent &event){
 }
 
 void Input::doKeyUp(SDL_KeyboardEvent &event) {
-    switch(event.keysym.sym) {
-        case SDLK_ESCAPE : // a priori inutile mais autant le laisser là pour des raisons de sécurité
-            exit(0);
-        
+    switch(event.keysym.sym) {   
         case SDLK_SPACE :
             break;
 
@@ -210,63 +188,48 @@ void Input::mousePress(SDL_MouseButtonEvent& b){
     }
 }
 
-void Input::doOtherKeyDown(SDL_KeyboardEvent &event){
-    // Pour un seul press de button
-	if (event.repeat == 0)
-	{ 
-        switch(event.keysym.sym) {
-            case SDLK_ESCAPE :
-                exit(0);
-        }
-    }
-}
 
-void Input::addMe(Controle* toAdd) {
-    controleList.push_back(toAdd);
-}
-
-void Input::get_menuKeypress(){
+void Input::get_pauseKeypress(){
     SDL_Event event;
 
     while(SDL_PollEvent(&event))
     {   
         switch(event.type){
-
-            case SDL_KEYUP :
-                
-                break;
-
             case SDL_KEYDOWN :
                 doPauseKeyDown(event.key);
-
-            case SDL_MOUSEBUTTONDOWN:
-                //do whatever you want to do after a mouse button was pressed,
-                // mousePress(event.button);
-                break;
-
             default : break;
         }
     }
 }
-
 
 void Input::doPauseKeyDown(SDL_KeyboardEvent &event){
     if (event.repeat == 0)
 	{ 
         switch(event.keysym.sym) {
             case SDLK_ESCAPE :
-                exit(0);
-
-            case SDLK_z :
-                stockeur->getMenu()->addToEtat(1);
+                Sprite::mode = MODE_JEU;
+                Sprite::stockeur->getMenu()->setOnScreen(false);
                 break;
 
-            case SDLK_s :
+            case SDLK_z :
                 stockeur->getMenu()->addToEtat(-1);
                 break;
 
+            case SDLK_s :
+                stockeur->getMenu()->addToEtat(1);
+                break;
+
+            case SDLK_e :
+                stockeur->getMenu()->select();
+                break;
         }
     }
+    this->mouseX += 1;
+    std::cout << "fin doPauseKeyDown Input :" << this->mouseX << std::endl;
+}
+
+void Input::addMe(Controle* toAdd) {
+    controleList.push_back(toAdd);
 }
 
 

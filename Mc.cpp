@@ -1,4 +1,5 @@
 #include "Mc.hpp"
+#include "Menu.hpp"
 
 uint8_t tabState[3][3][2] = { // Représente l'état et le flip en fonction de la direction dans laquelle on pousse
 	{{3,1}, {5,0}, {3,0}},
@@ -61,7 +62,8 @@ Mc::~Mc() {
     delete attack;
 
     stockeur->addMc(nullptr);
-    Sprite::mode = MODE_MENU;
+    Sprite::mode = MODE_PAUSE;
+    Sprite::stockeur->getMenu()->setOnScreen(true);
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 

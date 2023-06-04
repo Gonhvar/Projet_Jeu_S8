@@ -21,6 +21,7 @@ public :
     void update();
 
     void addToEtat(int e);
+    void select();
 
     // Fonctions de sauvegarde de l'objet
     virtual std::string serialize(std::string& toWrite);
