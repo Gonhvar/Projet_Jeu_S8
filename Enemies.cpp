@@ -32,3 +32,59 @@ void Enemies::update() {
 		if (newEtat != etat) {setEtat(newEtat);}
     attackBehaviour();
 }
+
+
+
+
+
+// Fonctions de sauvegarde de l'objet
+std::string Enemies::serialize(std::string& toWrite) {
+	Entite::serialize(toWrite);
+	// On n'enregistre que les paramètres nécessaires. Certains constructeur renseignent déjà les autres 
+    // Ces paramètres nécessaires sont en fait les paramètres contextuels (susceptibles de changer à chaque instant)
+	std::ostringstream oss;
+    oss << items.size() << "|"; // On écrit la taille de la liste
+    for (unsigned int i=0; i<items.size(); i++) {
+        oss << items[i] << "|";
+    }
+    oss << taux.size() << "|";
+    for (unsigned int i=0; i<taux.size(); i++) {
+        oss << taux[i] << "|";
+    }
+    oss << invicibilityTimeStart << "|" << currentlyTakingDmg << "|";
+    toWrite += oss.str();
+    return "Enemies";
+}
+
+std::istringstream& Enemies::deSerialize(std::istringstream& iss) {
+    Entite::deSerialize(iss);
+    std::string token;
+    unsigned int itemsSize=0, tauxSize=0;
+    if (std::getline(iss, token, '|')) {
+        itemsSize = std::stoi(token);
+    }
+    items.resize(itemsSize);
+    for (unsigned int i=0; i<itemsSize; i++) {
+        if (std::getline(iss, token, '|')) {
+            items[i] = stoi(token);
+        }
+    }
+
+    if (std::getline(iss, token, '|')) {
+        tauxSize = std::stoi(token);
+    }
+    taux.resize(tauxSize);
+    for (unsigned int i=0; i<tauxSize; i++) {
+        if (std::getline(iss, token, '|')) {
+            taux[i] = stoi(token);
+        }
+    }
+   
+    if (std::getline(iss, token, '|')) {
+        invicibilityTimeStart = std::strtoul(iss.str().c_str(), nullptr, 10);
+    }
+    if (std::getline(iss, token, '|')) {
+        currentlyTakingDmg = readBool(token);
+    }
+	return iss;
+}

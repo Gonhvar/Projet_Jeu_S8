@@ -1,6 +1,19 @@
 #include "Bullets.hpp"
 
 /* CONSTRUCTEURS ET DESTRUCTEURS */
+Bullets::Bullets() {
+	States* newStates = new States(); // newStates est un pointeur temporaire
+	newStates->spriteName = "Glow_Bullet"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
+	newStates->nbEtats = 1;
+	newStates->nbFrameParEtat[0] = 1;
+	for (int i=1; i<newStates->nbEtats; i++) {
+		newStates->nbFrameParEtat[i] = 0;
+	}
+	states = newStates;
+
+	addSprite("Bullets");
+	Sprite::stockeur->addBullets(this);
+}
 
 Bullets::Bullets(int state, float directX, float directY, Entite* papa, short fact) {
 	//Mettre l'hitbox
@@ -21,8 +34,6 @@ Bullets::Bullets(int state, float directX, float directY, Entite* papa, short fa
 		}
 		states = newStates;
 
-	_coord[0] = papa->getX();
-	_coord[1] = papa->getY();
 
 	stateRectIn.w = 256;
     stateRectIn.h = 128;
@@ -34,9 +45,12 @@ Bullets::Bullets(int state, float directX, float directY, Entite* papa, short fa
 	masse = 1;
 	frottements = 0;
 	rayon = 8;	
+	_coord[0] = papa->getX();
+	_coord[1] = papa->getY();
 	autoSetHitBox();
 	hitBoxType(1, 0);
 	addSprite("Bullets");
+	Sprite::stockeur->addBullets(this);
 }
 
 Bullets::~Bullets() {

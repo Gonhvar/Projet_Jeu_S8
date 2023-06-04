@@ -153,8 +153,8 @@ std::string Sprite::serialize(std::string& toWrite) {
     return "Sprite";
 }
 
-void Sprite::deSerialize(std::string& toRead) {
-    std::istringstream iss(toRead);
+std::istringstream& Sprite::deSerialize(std::istringstream& iss) {
+    // std::istringstream iss(toRead);
     std::string token;
     if (std::getline(iss, token, '|')) {
         _coord[0] = std::stof(token);
@@ -168,8 +168,18 @@ void Sprite::deSerialize(std::string& toRead) {
     if (std::getline(iss, token, '|')) {
         onScreen = readBool(token);
     }
+    if (std::getline(iss, token, '|')) {
+        etat = std::stoi(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        frame = std::stoi(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        flip = readBool(token);
+    }
     
-    std::cout << "fin deSerialize : ";
+    std::cout << "fin deSerialize Sprite" << std::endl;
+	return iss;
 }
 
 bool Sprite::readBool(std::string& toRead) {

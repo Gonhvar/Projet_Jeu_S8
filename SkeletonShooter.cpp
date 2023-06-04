@@ -1,6 +1,17 @@
 #include "SkeletonShooter.hpp"
 
 
+SkeletonShooter::SkeletonShooter() {
+    States* newStates = new States(); // newStates est un pointeur temporaire
+    newStates->spriteName = "SkeletonShooter"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
+    newStates->nbEtats = 0;
+    newStates->nbFrameParEtat[0] = 1;
+
+    states = newStates;
+    
+    addSprite("BasicSkeleton");
+}
+
 SkeletonShooter::SkeletonShooter(float _x, float _y) {
     faction = ENEMY_FACTION;
     PV = 5;
@@ -50,7 +61,7 @@ SkeletonShooter::SkeletonShooter(float _x, float _y) {
 
 SkeletonShooter::~SkeletonShooter(){
     std::cout << "Delete SkeletonShooter" << std::endl;
-    new Drop(items, taux, _coord[0], _coord[1]);
+    // new Drop(items, taux, _coord[0], _coord[1]);
 }
 
 Vector2D SkeletonShooter::deplacementBehaviour(){
@@ -110,4 +121,34 @@ void SkeletonShooter::reactionContact(Entite* other) {
     if (faction != other->getFaction()) {
         other->changePV(1);
 	}
+}
+
+
+
+
+
+// Fonctions de sauvegarde de l'objet
+std::string SkeletonShooter::serialize(std::string& toWrite) {
+	Entite::serialize(toWrite);
+	// On n'enregistre que les paramètres nécessaires. Certains constructeur renseignent déjà les autres 
+    // Ces paramètres nécessaires sont en fait les paramètres contextuels (susceptibles de changer à chaque instant)
+	std::ostringstream oss;
+    oss << knockback << "|" << cooldown << "|" << startShooting << "|";
+    toWrite += oss.str();
+    return "SkeletonShooter";
+}
+
+std::istringstream& SkeletonShooter::deSerialize(std::istringstream& iss) {
+    Entite::deSerialize(iss);
+    std::string token;
+    if (std::getline(iss, token, '|')) {
+        knockback = std::stof(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        cooldown = std::strtoul(iss.str().c_str(), nullptr, 10);
+    }
+    if (std::getline(iss, token, '|')) {
+        startShooting = std::strtoul(iss.str().c_str(), nullptr, 10);
+    }
+	return iss;
 }

@@ -1,6 +1,15 @@
 #include "SpawnPoint.hpp"
 
-SpawnPoint::SpawnPoint(){};
+SpawnPoint::SpawnPoint(){
+    States* newStates = new States(); // newStates est un pointeur temporaire
+    newStates->spriteName = "SpawnPoint"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
+    newStates->nbEtats = 1;
+    newStates->nbFrameParEtat[0] = 1;
+    for (int i=1; i<newStates->nbEtats; i++) {
+        newStates->nbFrameParEtat[i] = 0;
+    }
+    states = newStates;  
+};
 
 SpawnPoint::SpawnPoint(float x, float y, int wave) {
     _coord[0] = x;
@@ -17,10 +26,9 @@ SpawnPoint::SpawnPoint(float x, float y, int wave) {
 		for (int i=1; i<newStates->nbEtats; i++) {
 			newStates->nbFrameParEtat[i] = 0;
 		}
-
-		this->wave = wave;
         states = newStates;  
         
+		this->wave = wave;
         onScreen = true;  
 		std::cout << "Création de SpawnPoint : " << states->spriteName << std::endl;
 }
@@ -31,7 +39,7 @@ void SpawnPoint::spawn(int number, int select, float timing){
         if(SDL_GetTicks()-FrameStartTimeMs > timing){
             switch(select){
                 case 0 :
-                    //BasicSkeleton 
+                    //BasicSkeleton
                     new BasicSkeleton(_coord[0], _coord[1]); // push automatiquement l'Enemy dans les listes :
                                             // sprites
                                             // circEntities
@@ -64,7 +72,7 @@ void SpawnPoint::spawnWave(int selectWave){
             switch(phase){
                 case 0 : 
                     //std::cout << "Phase 0" << std::endl;
-                    spawn(0, 0, 1000.0);
+                    spawn(1, 0, 1000.0);
                     break;
                 case 1 :
                     //Rien pour l'instant mais à remplir pour faire le jeu
@@ -101,6 +109,6 @@ void SpawnPoint::spawnWave(int selectWave){
 
 void SpawnPoint::update(){
     //A modifier en fonction des besoins
-    //spawnWave(wave);
+    spawnWave(wave);
 }
 

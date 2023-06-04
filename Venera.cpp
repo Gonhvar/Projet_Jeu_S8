@@ -12,6 +12,7 @@ Venera::Venera() {
 	}
 	else {
 		stockeur = new Stockeur();
+		stockeur->removeSprites(nullptr);
 		Sprite::stockeur = stockeur;
 		stockeur->setMode(MODE_JEU);
 
@@ -76,8 +77,6 @@ void Venera::initialisation() {
 	bord3->setOnScreen(true);
 	bord3->autoSetHitBox();
 	bord3->hitBoxType(0, 1);
-
-
 }
 
 void Venera::update() {
@@ -128,12 +127,13 @@ void Venera::update() {
 					}
 				}
 
-				// Les Sprite sont mis à jour ou supprimé selon
+				// Les Sprite sont mis à jour ou supprimés selon
 				for (unsigned int s=0; s < spriteListe.size(); s++) {
 					if (stockeur->printEverything) {
 						std::cout << "eval " << s << " : " << spriteListe[s] << " ";
 					}
 					if (spriteListe[s]->markedForDeath) {
+					// if (true) {
 						if (stockeur->printEverything) {
 							std::cout << "Marked (" << spriteListe[s]->getStates()->spriteName << ")" << std::endl;
 						}

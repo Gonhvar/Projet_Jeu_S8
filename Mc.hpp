@@ -19,7 +19,7 @@ class Mc : public Entite, public Controle {
 protected :
 	
 	//Multiplicateur de depForce
-	float dashValue = 0;
+	float dashValue = 1;
 
 	uint32_t startDashTime;
 	uint32_t actualDashTime;
@@ -69,7 +69,7 @@ public :
 
     // Fonctions de sauvegarde de l'objet
     virtual std::string serialize(std::string& toWrite);
-    virtual void deSerialize(std::string& toRead);
+    virtual std::istringstream& deSerialize(std::istringstream& iss);
 };
 
 #endif

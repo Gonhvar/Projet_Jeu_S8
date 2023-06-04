@@ -2,7 +2,7 @@
 #define BULLETS_HPP
 
 #pragma once
-#define BASICBULLETSPEED 5.0
+#define BASICBULLETSPEED 50.0
 #include "Entite.hpp"
 
 /*
@@ -16,6 +16,7 @@ const States etatsDeBullets = {
 class Bullets : public Entite {
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
+	Bullets();
 	Bullets(int state, float directX, float directY, Entite* papa, short fact);
 
 	virtual ~Bullets() override;

@@ -56,6 +56,9 @@ public :
 
 	void autoSetHitBox();
 	void hitBoxType(bool circ, bool rect); // Met dans les listes mais n'enlève pas
+	bool getIsRect();
+	bool getIsCirc();
+
 
 	int getPV();
 	int getPVMax();
@@ -90,7 +93,7 @@ public :
 
     // Fonctions de sauvegarde de l'objet
     virtual std::string serialize(std::string& toWrite);
-    virtual void deSerialize(std::string& toRead);
+    virtual std::istringstream& deSerialize(std::istringstream& iss);
 };
 
 #endif

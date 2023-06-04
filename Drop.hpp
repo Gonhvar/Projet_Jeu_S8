@@ -14,7 +14,7 @@ protected:
 
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
-	Drop() = default;
+	Drop();
 	Drop(std::vector<int> items, std::vector<int> taux, int x, int y);
 	virtual ~Drop() override;
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
@@ -24,6 +24,10 @@ public:
 	virtual void reactionContact(Entite* other);
 
 	void resetColor();
+
+    // Fonctions de sauvegarde de l'objet
+    virtual std::string serialize(std::string& toWrite);
+    virtual std::istringstream& deSerialize(std::istringstream& iss);
 };
 
 #endif

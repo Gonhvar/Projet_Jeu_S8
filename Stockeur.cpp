@@ -1,5 +1,7 @@
 #include "Stockeur.hpp"
 #include "Enemies.hpp"
+#include "SkeletonShooter.hpp"
+#include "BasicSkeleton.hpp"
 
 
 Stockeur::Stockeur(){}
@@ -189,6 +191,58 @@ void Stockeur::deleteAllEnemies(){
     enemies.clear();
 }
 
+
+void Stockeur::deleteAll() {
+    
+    std::cout << "deleting all enemies (" << enemies.size() << ")" << std::endl;
+    for(Enemies* en : enemies){
+        delete en;
+    }
+    enemies.clear();
+
+    // std::cout << "deleting all sprites (" << sprites.size() << ")" << std::endl;
+    // for(Sprite* sp : sprites){
+    //     delete sp;
+    // }
+    // sprites.clear();
+
+    std::cout << "deleting all circEntities (" << circEntities.size() << ")" << std::endl;
+    for(Entite* en : circEntities){
+        delete en;
+    }
+    circEntities.clear();
+
+    std::cout << "deleting all rectEntities (" << rectEntities.size() << ")" << std::endl;
+    for(Entite* en : rectEntities){
+        delete en;
+    }
+    rectEntities.clear();
+    
+    std::cout << "deleting all items (" << items.size() << ")" << std::endl;
+    for(Drop* dp : items){
+        delete dp;
+    }
+    items.clear();
+
+    std::cout << "deleting all bullets (" << bullets.size() << ")" << std::endl;
+    for(Bullets* bu : bullets){
+        delete bu;
+    }
+    bullets.clear();
+    
+    // std::cout << "deleting mc" << std::endl;
+    // if (mc != nullptr) delete mc;
+    std::cout << "deleting j2" << std::endl;
+    if (j2 != nullptr) delete j2;
+    std::cout << "success" << std::endl;
+    
+
+    // for (unsigned int s=0; s < sprites.size(); s++) {
+    //     delete(sprites[s]);
+    //     s--;
+    // }
+}
+
 void Stockeur::setMenuOff(bool toBe) {
     menuOff = toBe;
 }
@@ -220,18 +274,21 @@ void Stockeur::saveGame() {
     std::string className = "";
     if (mc!= nullptr) {
         className = mc->serialize(serialized);
-        className += "|";
+        className += CLASSNAME_SEPARATOR;
         savedState += className;
         savedState += serialized;
-        savedState += "\n*";
+        savedState += "\n";
+        savedState += OBJECT_SEPARATOR;
+        
     }
-
+    serialized = "";
     if (j2!= nullptr) {
         className = j2->serialize(serialized);
-        className += "|";
+        className += CLASSNAME_SEPARATOR;
         savedState += className;
         savedState += serialized;
-        savedState += "\n*";
+        savedState += "\n";
+        savedState += OBJECT_SEPARATOR;
     }
 
 
@@ -250,9 +307,10 @@ void Stockeur::saveGame() {
 
 
 void Stockeur::loadSave(std::string path) {
-    std::string pathComplet = PATH_TO_SAVE;
-    pathComplet += path;
-    std::ifstream inputFile(path);
+    // deleteAll();
+    std::cout << "LOADING ------------------------" << std::endl;
+    std::string pathComplet = PATH_TO_SAVE + path;
+    std::ifstream inputFile(pathComplet);
 
     if (inputFile.is_open()) {
         std::string content((std::istreambuf_iterator<char>(inputFile)),
@@ -264,23 +322,91 @@ void Stockeur::loadSave(std::string path) {
         // On lit le type de ce que l'on va construire
         std::istringstream iss(content);
         std::string objectToken;
-        while (std::getline(iss, objectToken, '*')) {
+        while (std::getline(iss, objectToken, OBJECT_SEPARATOR)) {
+            std::cout << "on doit deserialiser :\n" << objectToken << std::endl;
             std::istringstream iss(objectToken);
             std::string classToken; // On va vérifier la classe à laquelle appartient l'objet
-            if (std::getline(iss, classToken, '|')) {
+            if (std::getline(iss, classToken, CLASSNAME_SEPARATOR)) {
                 if (classToken == "Mc") {
-                    mc = new Mc();
-                    mc->serialize(classToken);
+                    if (std::getline(iss, classToken, CLASSNAME_SEPARATOR)) {
+                        mc = new Mc();
+
+                        std::istringstream iss(classToken);
+                        mc->deSerialize(iss);
+                    };
                 }
                 
                 else if (classToken == "Joueur2") {
-                    j2 = new Joueur2();
-                    j2->serialize(classToken);
+                    if (std::getline(iss, classToken, CLASSNAME_SEPARATOR)) {
+                        j2 = new Joueur2();
+
+                        std::istringstream iss(classToken);
+                        j2->deSerialize(iss);
+                    }
+                }
+
+                else if (classToken == "Sprite") {
+                    if (std::getline(iss, classToken, CLASSNAME_SEPARATOR)) {
+                        Sprite* s = new Sprite(); // S'ajoute tout seul à sprites
+
+                        std::istringstream iss(classToken);
+                        s->deSerialize(iss);
+                    }
+                }
+
+                else if (classToken == "Entite") {
+                    if (std::getline(iss, classToken, CLASSNAME_SEPARATOR)) {
+                        Entite* e = new Entite(); // S'ajoute tout seul à sprites
+
+                        std::istringstream iss(classToken);
+                        e->deSerialize(iss);
+                        e->hitBoxType(e->getIsCirc(), e->getIsRect());
+                    }
+                }
+                
+                else if (classToken == "Drop") {
+                    if (std::getline(iss, classToken, CLASSNAME_SEPARATOR)) {
+                        Drop* e = new Drop(); // S'ajoute tout seul à sprites
+
+                        std::istringstream iss(classToken);
+                        e->deSerialize(iss);
+                        e->hitBoxType(e->getIsCirc(), e->getIsRect());
+                        e->addSprite("Drop");
+                    }
+                }
+                
+                else if (classToken == "SkeletonShooter") {
+                    if (std::getline(iss, classToken, CLASSNAME_SEPARATOR)) {
+                        SkeletonShooter* e = new SkeletonShooter(); // S'ajoute tout seul aux listes appropriées
+
+                        std::istringstream iss(classToken);
+                        e->deSerialize(iss);
+                    }
+                }
+                
+                else if (classToken == "BasicSkeleton") {
+                    if (std::getline(iss, classToken, CLASSNAME_SEPARATOR)) {
+                        BasicSkeleton* e = new BasicSkeleton(); // S'ajoute tout seul aux listes appropriées
+
+                        std::istringstream iss(classToken);
+                        e->deSerialize(iss);
+                    }
+                }
+                
+                else if (classToken == "Bullets") {
+                    if (std::getline(iss, classToken, CLASSNAME_SEPARATOR)) {
+                        Bullets* e = new Bullets(); // S'ajoute tout seul aux listes appropriées
+
+                        std::istringstream iss(classToken);
+                        e->deSerialize(iss);
+                    }
                 }
             }
         }
         
     } else {
-        std::cout << "Impossible d'ouvrir le fichier." << std::endl;
+        std::cout << "Impossible d'ouvrir le fichier pour deserialisation" << std::endl;
+        std::cout << "----> cherché à " << pathComplet << std::endl;
     }
+    std::cout << "Fin loading" << std::endl;
 }

@@ -13,7 +13,7 @@ Mc::Mc() {
     std::cout << "new Mc" << std::endl;
     faction = MC_FACTION;
     
-    PV = 20;
+    PV = 20000;
     PVMax = PV;
 
     depForce = BASICSPEED;
@@ -226,18 +226,25 @@ std::string Mc::serialize(std::string& toWrite) {
     return "Mc";
 }
 
-void Mc::deSerialize(std::string& toRead) {
-	Sprite::deSerialize(toRead);
-    std::istringstream iss(toRead);
+std::istringstream& Mc::deSerialize(std::istringstream& iss) {
+    std::cout << "Deserializing Mc : " << iss.str() << std::endl;
+	// toRead = Entite::deSerialize(toRead);
+    Entite::deSerialize(iss);
+    std::cout << "Ce qu'il reste à Mc : " << iss.str() << std::endl;
+    // std::istringstream iss(toRead);
     std::string token;
     if (std::getline(iss, token, '|')) {
-        dashValue = std::stof(token);
+        dashValue = std::stoi(token);
+        std::cout << "dashValue : " << dashValue << std::endl;
     }
     if (std::getline(iss, token, '|')) {
         dashOn = readBool(token);
+        std::cout << "dashOn : " << dashOn << std::endl;
     }
     if (std::getline(iss, token, '|')) {
         color = std::stoi(token);
+        std::cout << "color : " << color << std::endl;
     }
-    std::cout << "fin deSerialize : ";
+    std::cout << "fin deSerialize Mc" << std::endl;
+	return iss;
 }

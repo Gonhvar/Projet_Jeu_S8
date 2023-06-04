@@ -2,13 +2,18 @@
 #include "Mc.hpp"
 
 /* CONSTRUCTEURS ET DESTRUCTEURS */
+Drop::Drop() {
+    hitBoxType(1, 0);
+    stockeur->addItem(this);
+}
+
+
 Drop::Drop(std::vector<int> items, std::vector<int> taux, int x, int y){
     faction = MC_FRIENDLY_FACTION;
 
     std::srand(time(NULL));
     int random = 1 + (rand()%100);
     int rate = 0;
-    int i = 0;
     
     masse = 100;
     frottements = 100;
@@ -23,6 +28,7 @@ Drop::Drop(std::vector<int> items, std::vector<int> taux, int x, int y){
     hitBoxType(1, 0);
 
     // std::cout << "Random : " << random << std::endl; 
+    int i = 0;
     for(int t : taux){
         rate +=t;
         // std::cout << "rate : " << rate << std::endl;
@@ -37,6 +43,8 @@ Drop::Drop(std::vector<int> items, std::vector<int> taux, int x, int y){
     stockeur->addItem(this);
 
     stillInUse = false;
+    
+    addSprite("Drop");
 }
 
 Drop::~Drop() {
@@ -117,8 +125,6 @@ void Drop::selectItem(){
     // stateRect.h = 32;
     states = newStates;
     onScreen = true;
-    
-    addSprite("Drop");
     // std::cout << "fin creation Item" << std::endl;
 }
 
@@ -158,4 +164,37 @@ void Drop::resetColor(){
         default :
                 break;
     }
+}
+
+
+
+
+
+// Fonctions de sauvegarde de l'objet
+std::string Drop::serialize(std::string& toWrite) {
+	Entite::serialize(toWrite);
+	// On n'enregistre que les paramètres nécessaires. Certains constructeur renseignent déjà les autres 
+    // Ces paramètres nécessaires sont en fait les paramètres contextuels (susceptibles de changer à chaque instant)
+	std::ostringstream oss;
+    oss << item << "|" << stillInUse << "|" << cd << "|" << startUse << "|";
+    toWrite += oss.str();
+    return "Drop";
+}
+
+std::istringstream& Drop::deSerialize(std::istringstream& iss) {
+    Entite::deSerialize(iss);
+    std::string token;
+    if (std::getline(iss, token, '|')) {
+        item = std::stoi(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        stillInUse = readBool(token);
+    }
+    if (std::getline(iss, token, '|')) {
+        cd = std::strtoul(iss.str().c_str(), nullptr, 10);
+    }
+    if (std::getline(iss, token, '|')) {
+        startUse = std::strtoul(iss.str().c_str(), nullptr, 10);
+    }
+	return iss;
 }

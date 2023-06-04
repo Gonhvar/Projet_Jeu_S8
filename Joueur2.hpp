@@ -37,7 +37,7 @@ public:
 	
     // Fonctions de sauvegarde de l'objet
     virtual std::string serialize(std::string& toWrite);
-    virtual void deSerialize(std::string& toRead);
+    virtual std::istringstream& deSerialize(std::istringstream& iss);
 };
 
 #endif

@@ -12,12 +12,16 @@ class Mc;
 class Joueur2;
 class AudioManager;
 class Bullets;
+class SkeletonShooter;
+class BasicSkeleton;
 
 #define MODE_JEU 0
 #define MODE_MAP 1
 #define MODE_MAXNUM 2
 
 #define PATH_TO_SAVE "save/"
+#define OBJECT_SEPARATOR '*'
+#define CLASSNAME_SEPARATOR '>'
 
 class Stockeur {
 protected:
@@ -75,6 +79,7 @@ public:
 
 
     void deleteAllEnemies();
+    void deleteAll();
 
     void setMenuOff(bool toBe);
     bool getMenuOff();
@@ -85,7 +90,7 @@ public:
     uint32_t& getGameTime();
 
     void saveGame();
-    void loadSave(std::string path = "game");
+    void loadSave(std::string path = "game.txt");
     void loadMc();
 };
 

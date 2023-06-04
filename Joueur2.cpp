@@ -69,7 +69,7 @@ void Joueur2::newTir(int state, int directX, int directY){
     
     std::cout << "creation bullets" << std::endl;
     //std::cout << "Alors X : " << x - _coord[0] << " Y :" << y - _coord[0] << std::endl;
-    stockeur->addBullets(new Bullets(0, directX-_coord[0], directY-_coord[1], this, MC_BULLET_FACTION));
+    new Bullets(0, directX-_coord[0], directY-_coord[1], this, MC_BULLET_FACTION);
 
     Sprite::stockeur->getAudioManager()->playSound("01");
 }
@@ -79,6 +79,7 @@ void Joueur2::newTir(int state, int directX, int directY){
 
 std::string Joueur2::serialize(std::string& toWrite) {
 	std::cout << "Serialisation" << std::endl;
+	Sprite::serialize(toWrite);
 	// On n'enregistre que les paramètres nécessaires. Certains constructeur renseignent déjà les autres 
     // Ces paramètres nécessaires sont en fait les paramètres contextuels (susceptibles de changer à chaque instant)
 	std::ostringstream oss;
@@ -89,21 +90,30 @@ std::string Joueur2::serialize(std::string& toWrite) {
     return "Joueur2";
 }
 
-void Joueur2::deSerialize(std::string& toRead) {
-    std::istringstream iss(toRead);
+std::istringstream& Joueur2::deSerialize(std::istringstream& iss) {
+    std::cout << "Deserializing Joueur2 : " << iss.str() << std::endl;
+	// toRead = Sprite::deSerialize(toRead);
+    Sprite::deSerialize(iss);
+    std::cout << "Ce qu'il reste à Joueur2 : " << iss.str() << std::endl;
+    // std::istringstream iss(toRead);
     std::string token;
     if (std::getline(iss, token, '|')) {
         k = std::stof(token);
+        std::cout << "k : " << k << std::endl;
     }
     if (std::getline(iss, token, '|')) {
         frottement = std::stof(token);
+        std::cout << "frottement : " << frottement << std::endl;
     }
     if (std::getline(iss, token, '|')) {
         vitesseActuelle[0] = std::stof(token);
+        std::cout << "vitesseActuelle[0] : " << vitesseActuelle[0] << std::endl;
     }
     if (std::getline(iss, token, '|')) {
         vitesseActuelle[1] = std::stof(token);
+        std::cout << "vitesseActuelle[1] : " << vitesseActuelle[1] << std::endl;
     }
     
-    std::cout << "fin deSerialize : ";
+    std::cout << "fin deSerialize : " << std::endl;
+    return iss;
 }

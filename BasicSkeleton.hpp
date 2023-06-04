@@ -19,6 +19,7 @@ protected:
 
 public:
     /* CONSTRUCTEURS ET DESTRUCTEURS */
+	BasicSkeleton();
 	BasicSkeleton(float _x, float _y);
 	virtual ~BasicSkeleton() override;
 	/* FIN CONSTRUCTEURS ET DESTRUCTEURS */
@@ -29,6 +30,10 @@ public:
 	void takingDamage(Entite* other);
 
 	void reactionContact(Entite* other);
+
+    // Fonctions de sauvegarde de l'objet
+    virtual std::string serialize(std::string& toWrite);
+    virtual std::istringstream& deSerialize(std::istringstream& iss);
 };
 
 #endif

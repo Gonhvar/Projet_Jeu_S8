@@ -24,6 +24,9 @@ public:
 	virtual void attackBehaviour() = 0;
 	virtual void takingDamage(Entite* other) = 0;
 
+    // Fonctions de sauvegarde de l'objet
+    virtual std::string serialize(std::string& toWrite);
+    virtual std::istringstream& deSerialize(std::istringstream& iss);
 };
 
 #endif

@@ -1,6 +1,26 @@
 #include "BasicSkeleton.hpp"
 
 
+BasicSkeleton::BasicSkeleton() {
+    States* newStates = new States(); // newStates est un pointeur temporaire
+    newStates->spriteName = "BasicSkeleton"; // Il n'est pas const donc on peut modifier ce qu'il y a à l'adresse
+    newStates->nbEtats = 4;
+    newStates->nbFrameParEtat[0] = 2;
+    newStates->nbFrameParEtat[1] = 2;
+    newStates->nbFrameParEtat[2] = 2;
+    newStates->nbFrameParEtat[3] = 2;
+    newStates->nbFrameParEtat[4] = 0;
+    newStates->nbFrameParEtat[5] = 0;
+    newStates->nbFrameParEtat[6] = 0;
+    newStates->nbFrameParEtat[7] = 0;
+    newStates->nbFrameParEtat[8] = 0;
+    newStates->nbFrameParEtat[9] = 0;
+
+    states = newStates;
+
+    addSprite("BasicSkeleton");
+}
+
 BasicSkeleton::BasicSkeleton(float _x, float _y) {
     faction = ENEMY_FACTION;
     PV = 10;
@@ -103,4 +123,28 @@ void BasicSkeleton::reactionContact(Entite* other) {
     if (faction != other->getFaction()) {
         other->changePV(1);
 	}
+}
+
+
+
+
+
+// Fonctions de sauvegarde de l'objet
+std::string BasicSkeleton::serialize(std::string& toWrite) {
+	Entite::serialize(toWrite);
+	// On n'enregistre que les paramètres nécessaires. Certains constructeur renseignent déjà les autres 
+    // Ces paramètres nécessaires sont en fait les paramètres contextuels (susceptibles de changer à chaque instant)
+	std::ostringstream oss;
+    oss << knockback << "|";
+    toWrite += oss.str();
+    return "BasicSkeleton";
+}
+
+std::istringstream& BasicSkeleton::deSerialize(std::istringstream& iss) {
+    Entite::deSerialize(iss);
+    std::string token;
+    if (std::getline(iss, token, '|')) {
+        knockback = std::stof(token);
+    }
+	return iss;
 }
