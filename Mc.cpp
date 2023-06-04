@@ -16,7 +16,7 @@ Mc::Mc() {
     faction = MC_FACTION;
 
     
-    PV = 20000;
+    PV = 20;
     PVMax = PV;
 
     depForce = BASICSPEED;
@@ -61,7 +61,7 @@ Mc::~Mc() {
     delete attack;
 
     stockeur->addMc(nullptr);
-    stockeur->setMode(MODE_MENU);
+    Sprite::mode = MODE_MENU;
 }
 /* FIN CONSTRUCTEURS ET DESTRUCTEURS */
 

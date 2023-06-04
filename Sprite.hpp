@@ -57,6 +57,8 @@ public:
 
     static Stockeur* stockeur;
 
+    static int mode; // variable globale définissant l'état du jeu;
+
     bool markedForDeath = false;
 
     /* CONSTRUCTEURS ET DESTRUCTEURS */

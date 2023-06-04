@@ -7,7 +7,6 @@
 class Menu : public Sprite {
 protected :
     static const States* etatsMenu;
-    int mode;
     int etat;
 
     //Nombre de selection possible dans le menu
@@ -21,7 +20,6 @@ public :
 
     void update();
 
-    void setMode(int m);
     void addToEtat(int e);
 
     // Fonctions de sauvegarde de l'objet

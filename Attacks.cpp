@@ -9,6 +9,8 @@ Attacks::Attacks(){
     
     _hauteur = 64;
     _largeur = 48;
+    autoSetHitBox();
+    hitBoxType(1, 0);
 
 	directionX = 0;
     directionY = 0;
@@ -208,6 +210,11 @@ void Attacks::updateAttack(int attack){
     else{
         std::cout << "Cooldown d'attaque en cours" << std::endl;
     }
+}
+
+void Attacks::reactionContact(Entite* other) {
+    stockeur->getAudioManager()->playSound("punch");
+    other->changePV(attackMultiplier);
 }
 
 

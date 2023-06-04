@@ -262,44 +262,6 @@ void Stockeur::deleteAll() {
     j2 = nullptr;
 }
 
-void Stockeur::setMenuOff(bool toBe) {
-    menuOff = toBe;
-}
-
-bool Stockeur::getMenuOff() {
-    return menuOff;
-}
-
-void Stockeur::swapMenuOff() {
-    menuOff = !menuOff;
-}
-
-void Stockeur::setMode(int toBe) {
-    mode = toBe;
-    switch(mode){
-        case MODE_JEU :
-            input->setMode(MODE_JEU);
-            break;
-
-        case MODE_MAP :
-            input->setMode(MODE_JEU);
-            break;
-
-        case MODE_PAUSE :
-            input->setMode(MODE_PAUSE);
-            break;
-
-        case MODE_MENU :
-            input->setMode(MODE_MENU);
-            break;
-
-    }
-}
-
-int Stockeur::getMode() {
-    return mode;
-}
-
 uint32_t& Stockeur::getGameTime(){
     return gameTime;
 }

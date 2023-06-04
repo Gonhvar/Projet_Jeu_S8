@@ -35,7 +35,7 @@ Venera::Venera() {
 		stockeur->addAudioManager(audioM);
 
 		//Le stockeur gére tous les modes de jeu (en cascade)
-		stockeur->setMode(MODE_JEU);
+		Sprite::mode = MODE_JEU;
 		initialisation();
 	}
 }
@@ -98,94 +98,97 @@ void Venera::update() {
 	input->update();
 	menu->update();
 
-	if (Sprite::stockeur->getMenuOff()) { // Pas le menu
-		std::vector<Sprite*>& spriteListe = *(stockeur->getSpriteVector());
-		switch (Sprite::stockeur->getMode()) {
-
-			
-			case MODE_JEU :
-				//On arrete les enemy et les sprites car ils utilisent la position du joueur 
-				//Solution possible : Mettre une variable dans stockeur de la position du MC qu'on mettrait à jour 
-				if(Sprite::stockeur->getMc() != nullptr){
-					
-					Sprite::stockeur->getMc()->update();
-					Sprite::stockeur->getJ2()->update();
-
-					// Les Enemies prennent leur décisions
-					for (Enemies* enemy : *(stockeur->getEnemiesVector())) {
-						enemy->update();
-					}
-
-					// Frottements, collisions et déplacement des CircEntite
-					std::vector<Entite*>& liste = *(stockeur->getCircEntiteVector());
-					for (unsigned int i=0; i<liste.size(); i++) {
-						liste[i]->updateSpeedWithRectCollisions();
-						for (unsigned int j=i+1; j<liste.size(); j++) {
-							liste[i]->moveCollisionCercle2(liste[j]);
-						}
-						liste[i]->autoTranslate();
-					}
-
-					// Les SpawnPoints font spawner
-					for (SpawnPoint* sp : *(stockeur->getSpawnVector())) {
-						sp->update();
-					}
-
-					for(Drop* d : *(stockeur->getItemVector())){
-						d->update();
-					}
-				}
-
-				// Les Sprite sont mis à jour ou supprimés selon
-				for (unsigned int s=0; s < spriteListe.size(); s++) {
-					if (stockeur->printEverything) {
-						std::cout << "eval " << s << " : " << spriteListe[s] << " ";
-					}
-					if (spriteListe[s]->markedForDeath) {
-					// if (true) {
-						if (stockeur->printEverything) {
-							std::cout << "Marked (" << spriteListe[s]->getStates()->spriteName << ")" << std::endl;
-						}
-						delete(spriteListe[s]);
-						s--;
-					}
-					else {
-						if (stockeur->printEverything){
-							std::cout << "Not Marked (" << spriteListe[s]->getStates()->spriteName << ")" << std::endl;
-						}
-						spriteListe[s]->update();
-					}
-				}
-
-				stockeur->getGameTime() = SDL_GetTicks();
+	std::vector<Sprite*>& spriteListe = *(stockeur->getSpriteVector());
+	switch (Sprite::mode) {
+		case MODE_JEU :
+			//On arrete les enemy et les sprites car ils utilisent la position du joueur 
+			//Solution possible : Mettre une variable dans stockeur de la position du MC qu'on mettrait à jour 
+			if(Sprite::stockeur->getMc() != nullptr){
 				
-				break;
+				Sprite::stockeur->getMc()->update();
+				Sprite::stockeur->getJ2()->update();
 
-			case MODE_MAP :
-				std::cout << "Mode Map" <<	std::endl;
-				break;
+				// Les Enemies prennent leur décisions
+				for (Enemies* enemy : *(stockeur->getEnemiesVector())) {
+					enemy->update();
+				}
+
+				// Frottements, collisions et déplacement des CircEntite
+				std::vector<Entite*>& liste = *(stockeur->getCircEntiteVector());
+				for (unsigned int i=0; i<liste.size(); i++) {
+					liste[i]->updateSpeedWithRectCollisions();
+					for (unsigned int j=i+1; j<liste.size(); j++) {
+						liste[i]->moveCollisionCercle2(liste[j]);
+					}
+					liste[i]->autoTranslate();
+				}
+
+				// Les SpawnPoints font spawner
+				for (SpawnPoint* sp : *(stockeur->getSpawnVector())) {
+					sp->update();
+				}
+
+				for(Drop* d : *(stockeur->getItemVector())){
+					d->update();
+				}
+			}
+
+			// Les Sprite sont mis à jour ou supprimés selon
+			for (unsigned int s=0; s < spriteListe.size(); s++) {
+				if (stockeur->printEverything) {
+					std::cout << "eval " << s << " : " << spriteListe[s] << " ";
+				}
+				if (spriteListe[s]->markedForDeath) {
+				// if (true) {
+					if (stockeur->printEverything) {
+						std::cout << "Marked (" << spriteListe[s]->getStates()->spriteName << ")" << std::endl;
+					}
+					delete(spriteListe[s]);
+					s--;
+				}
+				else {
+					if (stockeur->printEverything){
+						std::cout << "Not Marked (" << spriteListe[s]->getStates()->spriteName << ")" << std::endl;
+					}
+					spriteListe[s]->update();
+				}
+			}
+
+			stockeur->getGameTime() = SDL_GetTicks();
 			
-			case MODE_LOADING :
-				std::cout << "Mode loading" <<	std::endl;
-				// On doit tout supprimer :
-				Sprite::stockeur->deleteAll();
-				std::cout << "All deleted" << std::endl;
-				// Puis on recréer les objets grâce à la sauvegarde.
-				Sprite::stockeur->loadSave();
-				input = new Input(); // Input a été supprimé parce que c'est un Sprite mais ça ne coût pas cher de le recréer.
-				input->addMe(Sprite::stockeur->getMc());
-				menu = new Menu();
-				std::cout << "All loaded" << std::endl;
-				stockeur->setMode(MODE_JEU);
-				break;
-			default : 
-				std::cout << "Mode noMode :(" <<	std::endl;
-				break; 
-		}
-	}
-	else { // Mode menu
+			break;
+
+		case MODE_MAP :
+			std::cout << "Mode Map" <<	std::endl;
+			break;
 		
+		case MODE_MENU :
+			std::cout << "Mode menu" << std::endl;
+			break;
+		
+		case MODE_PAUSE :
+			std::cout << "Mode pause" << std::endl;
+			break;
+		
+		case MODE_LOADING :
+			std::cout << "Mode loading" <<	std::endl;
+			// On doit tout supprimer :
+			Sprite::stockeur->deleteAll();
+			std::cout << "All deleted" << std::endl;
+			// Puis on recréer les objets grâce à la sauvegarde.
+			Sprite::stockeur->loadSave();
+			input = new Input(); // Input a été supprimé parce que c'est un Sprite mais ça ne coût pas cher de le recréer.
+			input->addMe(Sprite::stockeur->getMc());
+			menu = new Menu();
+			std::cout << "All loaded" << std::endl;
+			Sprite::mode = MODE_JEU;
+			break;
+
+		default : 
+			std::cout << "Mode noMode :(" <<	std::endl;
+			break; 
 	}
+
 	// Le reste est affiché
 	afficheur->update();
 }

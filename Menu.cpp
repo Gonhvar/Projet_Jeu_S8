@@ -18,7 +18,6 @@ Menu::Menu(){
 
     onScreen = false;
     etat = 0;
-    mode = MODE_JEU;
     max_menu = 3;
     // std::cout << "Creation Menu" << std::endl;   
     addSprite("Menu");
@@ -36,31 +35,13 @@ void Menu::initialisation() {
 }
 
 void Menu::update(){
-    switch(mode){
+    switch(Sprite::mode){
         case MODE_MENU :
     
             break;
 
         case MODE_PAUSE :
 
-            break;
-        
-        default :
-            break;
-    }
-}
-
-
-void Menu::setMode(int m){
-    mode = m;
-
-    switch(mode){
-        case MODE_MENU :
-            max_menu = 3;
-            break;
-
-        case MODE_PAUSE :
-            max_menu = 2;
             break;
         
         default :

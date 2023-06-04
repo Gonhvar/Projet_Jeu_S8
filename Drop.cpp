@@ -79,14 +79,24 @@ Drop::~Drop() {
 void Drop::initialisation() {
     std::vector<States*>* vect = new std::vector<States*>();
     vect->resize(0);
-	States* newStates = new States(); // newStates est un pointeur temporaire
-    newStates->spriteName = "Bonus_degats"; 
-    newStates->nbEtats = 1;
-    newStates->nbFrameParEtat[0] = 1;
-    for (int i=1; i<newStates->nbEtats; i++) {
-        newStates->nbFrameParEtat[i] = 0;
+    std::vector<std::string> noms = {
+        "Bonus_degats",
+        "Bonus_dash",
+        "Bonus_mouvement"
+    };
+
+    States* newStates;
+    for (uint8_t i=0; i<noms.size(); i++) {
+        newStates = new States();
+        newStates->spriteName = noms[i]; 
+        newStates->nbEtats = 1;
+        newStates->nbFrameParEtat[0] = 1;
+        for (int j=1; j<newStates->nbEtats; j++) {
+            newStates->nbFrameParEtat[j] = 0;
+        }
+        vect->push_back(newStates);
     }
-	vect->push_back(newStates);
+
     Drop::etatsDrop = vect;
 }
 
@@ -131,7 +141,6 @@ void Drop::update(){
 
 //Charger ici les textures en fonction de l'item qui spawn
 void Drop::selectItem(){
-    // item = !item ? 1 : item;
     switch(item){
         case 0 : 
             //Pas d'item
@@ -148,7 +157,7 @@ void Drop::selectItem(){
         case 2 :
             //Vitesse
             std::cout << "Creation 2" << std::endl;
-            states = (*Drop::etatsDrop)[0];
+            states = (*Drop::etatsDrop)[1];
             break;
         
         case 3 :

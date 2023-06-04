@@ -6,6 +6,9 @@ Affichage* Sprite::afficheur;
 Map* Sprite::map;
 Stockeur* Sprite::stockeur;
 
+int Sprite::mode = MODE_JEU; // variable globale définissant l'état du jeu;
+
+
 /* CONSTRUCTEURS ET DESTRUCTEURS */
 Sprite::Sprite() {
 	Sprite::stockeur->addSprites(this);

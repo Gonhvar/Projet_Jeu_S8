@@ -27,7 +27,7 @@ protected:
 	int directionX = 0;
     int directionY = 0;
 
-	int attackMultiplier;
+	int attackMultiplier = 1;
 
 	float playerCoord[2];
 
@@ -50,6 +50,8 @@ public:
 	void findCombo();
 	void applyCombo();
 	void findDirection(int pushForceH, int pushForceB, int pushForceG, int pushForceD);
+
+	void reactionContact(Entite* other);
 
     // Fonctions de sauvegarde de l'objet
     virtual std::string serialize(std::string& toWrite);

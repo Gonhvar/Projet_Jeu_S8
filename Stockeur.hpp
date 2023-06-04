@@ -20,10 +20,10 @@ class Input;
 
 #define MODE_JEU 0
 #define MODE_MAP 1
-#define MODE_MAXNUM 2
-#define MODE_MENU 3
-#define MODE_PAUSE 4
-#define MODE_LOADING 5
+#define MODE_MENU 2
+#define MODE_PAUSE 3
+#define MODE_LOADING 4
+#define MODE_MAXNUM 5
 
 
 #define PATH_TO_SAVE "save/"
@@ -49,9 +49,6 @@ protected:
     Input* input;
 
     uint32_t gameTime;
-
-    bool menuOff = true; // Pas de menu de base
-    int mode = MODE_JEU;
 
     bool inputLoaded = false; // Existe pour vérifier que Input a bien été créer.
 
@@ -102,12 +99,6 @@ public:
     void deleteAllEnemies();
     void deleteAll();
 
-    void setMenuOff(bool toBe);
-    bool getMenuOff();
-    void swapMenuOff();
-
-    void setMode(int toBe);
-    int getMode();
     uint32_t& getGameTime();
 
     void saveGame();

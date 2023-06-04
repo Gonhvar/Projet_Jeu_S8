@@ -9,8 +9,6 @@ class Input : public Sprite {
 protected:
 	static const States* etatsInput;
 	
-	int mode;
-
 	int mouseX;
 	int mouseY;
 
@@ -28,7 +26,6 @@ public:
 	static void initialisation();
 	
 	void update();
-	void setMode(int m);
 
 	void get_keypress();
 	void get_otherkeypress();

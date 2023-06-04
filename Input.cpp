@@ -25,7 +25,6 @@ Input::Input(){
 	onScreen = true;
 	addSprite("Input");
     controleList.resize(1);
-    mode = MODE_JEU;
 }
 
 Input::~Input() {
@@ -53,7 +52,7 @@ void Input::update(){
     mouseX = _coord[0];
     mouseY = _coord[1];
 
-    switch(mode){
+    switch(Sprite::mode){
         case (MODE_MENU) :
             get_menuKeypress();
             break;
@@ -67,23 +66,6 @@ void Input::update(){
             break;
 
         default :
-            break;
-    }
-}
-
-void Input::setMode(int m){
-    mode = m;
-    switch(mode){
-        case MODE_MENU :
-            stockeur->getMenu()->setMode(MODE_MENU);
-            break;
-
-        case MODE_JEU :
-            stockeur->getMenu()->setMode(MODE_JEU);
-            break;
-
-        case MODE_PAUSE :
-            stockeur->getMenu()->setMode(MODE_PAUSE);
             break;
     }
 }
@@ -138,18 +120,18 @@ void Input::doKeyDown(SDL_KeyboardEvent &event){
            
             case SDLK_a :
                 std::cout << "menu swap" << std::endl;
-                stockeur->swapMenuOff();
+                Sprite::mode = MODE_PAUSE;
                 break;
 
             case SDLK_w :
-                if (!stockeur->getMenuOff()) { // le jeu est en pause
+                if (Sprite::mode == MODE_PAUSE) { // le jeu est en pause
                     stockeur->saveGame();
                 }
                 break;
 
             case SDLK_l :
-                if (!stockeur->getMenuOff()) { // le jeu est en pause
-                    stockeur->setMode(MODE_LOADING);
+                if (Sprite::mode == MODE_PAUSE) { // le jeu est en pause
+                    Sprite::mode = MODE_LOADING;
                 }
                 break;
             
