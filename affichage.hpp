@@ -20,8 +20,10 @@ protected :
 
     std::string imageFormat = ".png";
 
-    SDL_Rect camera {0, 0, 512, 512}; // Position et taille de la caméra
+    int windowSize[2] = {512, 512}; 
+    SDL_Rect camera {0, 0, 512, 512}; // Position (centre) et taille de la caméra
     float rayonDistMc = 50;
+    float zoom = 1;
 
     SDL_Texture* noTexture; // Texture mise par défaut lorsqu'aucune n'a été trouvée
     TTF_Font* font;

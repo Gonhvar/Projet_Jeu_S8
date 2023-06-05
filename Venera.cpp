@@ -38,45 +38,80 @@ Venera::Venera() {
 
 void Venera::initialisation() {
 	// enemies.push_back(new BasicSkeleton(100, 100));
-	// spawnPoints.push_back(new SpawnPoint(50, 50, 0));
-	spawnPoints.push_back(new SpawnPoint(50, 50, 1));
+	spawnPoints.push_back(new SpawnPoint(1000, 100, 0));
+	spawnPoints.push_back(new SpawnPoint(1000, 115, 1));
+	spawnPoints.push_back(new SpawnPoint(1900, 1900, 0));
 	
 
 	// ça c'est juste un exemple de bordure de map pour voir si ça marche un peu
 	uint8_t liste[MAX_FPE] = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	std::cout << "création de la bordure" << std::endl;
 	Entite* bord0 = new Entite("Bord0", 1, liste);
-	bord0->setLargeur(600);
+	bord0->setLargeur(2000);
 	bord0->setHauteur(50);
-	bord0->setCoord(300, -25, 0);
+	bord0->setCoord(1000, -25, 0);
 	bord0->setOnScreen(true);
 	bord0->autoSetHitBox();
 	bord0->hitBoxType(0, 1);
 
 	Entite* bord1 = new Entite("Bord1", 1, liste);
 	bord1->setLargeur(50);
-	bord1->setHauteur(600);
-	bord1->setCoord(625, 300, 0);
+	bord1->setHauteur(2000);
+	bord1->setCoord(2025, 1000, 0);
 	bord1->setOnScreen(true);
 	bord1->autoSetHitBox();
 	bord1->hitBoxType(0, 1);
 
 
 	Entite* bord2 = new Entite("Bord2", 1, liste);
-	bord2->setLargeur(600);
+	bord2->setLargeur(2000);
 	bord2->setHauteur(50);
-	bord2->setCoord(300, 625, 0);
+	bord2->setCoord(1000, 2025, 0);
 	bord2->setOnScreen(true);
 	bord2->autoSetHitBox();
 	bord2->hitBoxType(0, 1);
 
 	Entite* bord3 = new Entite("Bord3", 1, liste);
 	bord3->setLargeur(50);
-	bord3->setHauteur(600);
-	bord3->setCoord(-25, 300, 0);
+	bord3->setHauteur(2000);
+	bord3->setCoord(-25, 1000, 0);
 	bord3->setOnScreen(true);
 	bord3->autoSetHitBox();
 	bord3->hitBoxType(0, 1);
+
+	Entite* Cube1 = new Entite("Cube1", 1, liste);
+	Cube1->setLargeur(1000);
+	Cube1->setHauteur(30);
+	Cube1->setCoord(600, 215, 0);
+	Cube1->setOnScreen(true);
+	Cube1->autoSetHitBox();
+	Cube1->hitBoxType(0, 1);
+	
+	Entite* Cube2 = new Entite("Cube2", 1, liste);
+	Cube2->setLargeur(30);
+	Cube2->setHauteur(400);
+	Cube2->setCoord(600, 430, 0);
+	Cube2->setOnScreen(true);
+	Cube2->autoSetHitBox();
+	Cube2->hitBoxType(0, 1);
+
+	Entite* Cube3 = new Entite("Cube3", 1, liste);
+	Cube3->setLargeur(300);
+	Cube3->setHauteur(10);
+	Cube3->setCoord(1750, 1600, 0);
+	Cube3->setOnScreen(true);
+	Cube3->autoSetHitBox();
+	Cube3->hitBoxType(0, 1);
+
+	Entite* Cube4 = new Entite("Cube4", 1, liste);
+	Cube4->setLargeur(10);
+	Cube4->setHauteur(300);
+	Cube4->setCoord(1600, 1750, 0);
+	Cube4->setOnScreen(true);
+	Cube4->autoSetHitBox();
+	Cube4->hitBoxType(0, 1);
+
+	stockeur->getAudioManager()->playMusic("Music_01");
 
 }
 

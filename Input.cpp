@@ -106,6 +106,8 @@ void Input::doKeyDown(SDL_KeyboardEvent &event)
                     stockeur->getMc()->getDepForce() *= dashValue;
                     stockeur->getMc()->setStartDashTime(SDL_GetTicks());
                     stockeur->getMc()->setDashOn(true);
+
+                    stockeur->getAudioManager()->playSound("dash_sound");
 	            }
                 break;
 

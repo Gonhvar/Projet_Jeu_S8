@@ -101,6 +101,7 @@ void BasicSkeleton::reactionContact(Entite* other) {
 		std::cout << "Contact BasicSkeleton : " << this << "(" << states->spriteName << ")" << " ->" << other << std::endl;
 	}
     if (faction != other->getFaction()) {
+        stockeur->getAudioManager()->playSound("punch");
         other->changePV(1);
 	}
 }

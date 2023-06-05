@@ -12,7 +12,7 @@ uint8_t tabState[3][3][2] = { // Représente l'état et le flip en fonction de l
 Mc::Mc() {
     faction = MC_FACTION;
     
-    PV = 20;
+    PV = 20000;
     PVMax = PV;
 
     depForce = BASICSPEED;
@@ -93,7 +93,8 @@ void Mc::update() {
     }
 
     //faire test de direction ici;
-    attack->update(pushForceH, pushForceB, pushForceG, pushForceD);
+    this->attack->updateDirection(pushForceH, pushForceB, pushForceG, pushForceD);
+    this->attack->update();
 
     //Décision de l'état
     int newEtat;

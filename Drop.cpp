@@ -124,6 +124,9 @@ void Drop::reactionContact(Entite* other) {
             case 1 : 
                 other->getDepForce() *= 1.5;
                 cd = 1000;
+                if (static_cast <float> (rand()) / static_cast <float> (RAND_MAX) > 0.9) {
+                    other->changePV(-1);
+                }
                 break;
 
             default :

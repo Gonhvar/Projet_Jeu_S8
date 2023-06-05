@@ -61,21 +61,28 @@ void Affichage::visit(Sprite* s, std::string className, const std::string sprite
 void Affichage::update(){
 	//if (!player->dashOn) SDL_RenderClear(renderer);
 	// Suivi du Mc
-	Vector2D dep(
-		Sprite::stockeur->getMc()->getX() - (camera.x + camera.w/2),
-		Sprite::stockeur->getMc()->getY() - (camera.y + camera.h/2)
-	);
-	if (dep.norme > rayonDistMc) {
-		dep.normeToV(dep.norme - rayonDistMc);
-		camera.x += dep.x;
-		camera.y += dep.y;
-	}
+	Vector2D dep(0,0);
+	if (Sprite::stockeur->getMc() != nullptr) {
+		// Suivi du Mc et placement de la caméra
+		SDL_GetWindowSize(window, windowSize, windowSize+1);
+		camera.w = windowSize[0] / zoom;
+		camera.h = windowSize[1] / zoom;
 
+		dep.redef(
+			Sprite::stockeur->getMc()->getX() - (camera.x + camera.w/2),
+			Sprite::stockeur->getMc()->getY() - (camera.y + camera.h/2)
+		);
+		if (dep.norme > rayonDistMc) {
+			dep.normeToV(dep.norme - rayonDistMc);
+			camera.x += dep.x;
+			camera.y += dep.y;
+		}
+	}
 	SDL_RenderClear(renderer);
 	if(Sprite::stockeur->getMc() != nullptr){
 		afficheHealth();
 		
-		// setMcColor();
+		setMcColor();
 	}
 	affiche_all();
 }
@@ -118,15 +125,12 @@ void Affichage::affiche_all() const{
 			// position relative du Sprite par rapport à la caméra
 			SDL_GetWindowSize(window, &winW, &winH);
 
-			// dest.x = (s->getSpriteX() - camera.x) * winW / camera.w;
-			// dest.w = s->getLargeur() * winW / camera.w;
-			// dest.y = (s->getSpriteY() - camera.y) * winW / camera.h;
-			// dest.h = s->getHauteur() * winW / camera.h;
-
-			dest.x = (s->getSpriteX() - camera.x);
-			dest.w = s->getLargeur();
-			dest.y = (s->getSpriteY() - camera.y);
-			dest.h = s->getHauteur();
+			float coefX = (s->getSpriteX() - camera.x) / camera.w + 1/2;
+			float coefY = (s->getSpriteY() - camera.y) / camera.h + 1/2;
+			dest.x = coefX * windowSize[0];
+			dest.y = coefY * windowSize[1];
+			dest.w = s->getLargeur() * zoom;
+			dest.h = s->getHauteur() * zoom;
 
 			//SDL_RenderCopy(renderer, s->getRightTexture(), NULL, &dest);
 			SDL_RenderCopyEx(renderer, s->getTexture(), s->getRightRectangle(), &dest, 0, NULL, s->getFlip() ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);

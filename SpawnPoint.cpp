@@ -64,7 +64,7 @@ void SpawnPoint::spawnWave(int selectWave){
             switch(phase){
                 case 0 : 
                     //std::cout << "Phase 0" << std::endl;
-                    spawn(0, 0, 1000.0);
+                    spawn(500, 0, 1000.0);
                     break;
                 case 1 :
                     //Rien pour l'instant mais à remplir pour faire le jeu
@@ -82,7 +82,7 @@ void SpawnPoint::spawnWave(int selectWave){
             switch(phase){
                 case 0 : 
                     //std::cout << "Phase 0" << std::endl;
-                    spawn(1, 1, 500.0);
+                    spawn(20, 1, 7000.0);
                     break;
                 case 1 :
                     //Rien pour l'instant mais à remplir pour faire le jeu

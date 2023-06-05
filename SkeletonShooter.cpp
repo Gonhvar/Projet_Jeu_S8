@@ -86,8 +86,7 @@ void SkeletonShooter::attackBehaviour(){
 
     if(SDL_GetTicks() - startShooting > cooldown){
         std::cout << "Creation bullet SkeletonShooter" << std::endl;
-        stockeur->addBullets(new Bullets(0, stockeur->getMc()->getX(), stockeur->getMc()->getY(), this, ENEMY_BULLET_FACTION));
-        startShooting = SDL_GetTicks();
+        stockeur->addBullets(new Bullets(0, stockeur->getMc()->getX() - _coord[0], stockeur->getMc()->getY() -_coord[1], this, ENEMY_BULLET_FACTION));        startShooting = SDL_GetTicks();
     }
 }
 
@@ -108,6 +107,7 @@ void SkeletonShooter::reactionContact(Entite* other) {
 		std::cout << "Contact SkeletonShooter : " << this << "(" << states->spriteName << ")" << " ->" << other << std::endl;
 	}
     if (faction != other->getFaction()) {
+        stockeur->getAudioManager()->playSound("punch");
         other->changePV(1);
 	}
 }
